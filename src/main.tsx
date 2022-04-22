@@ -1,60 +1,39 @@
-import "@logseq/libs";
-import "virtual:windi.css";
+import '@logseq/libs';
+import React from 'react';
+import * as ReactDOM from 'react-dom/client';
+import { logseq as plugin } from '../package.json';
+import App from './App';
 
-import React from "react";
-import * as ReactDOM from "react-dom/client";
-import App from "./App";
-
-import { logseq as PL } from "../package.json";
-
-// @ts-expect-error
-const css = (t, ...args) => String.raw(t, ...args);
-
-const pluginId = PL.id;
+function createModel() {
+  return {
+    openTaskPanel: (e: any) => {
+      const { rect } = e;
+      logseq.showMainUI();
+    },
+  };
+}
 
 function main() {
-  console.info(`#${pluginId}: MAIN`);
-  const root = ReactDOM.createRoot(document.getElementById("app")!);
-
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
-
-  function createModel() {
-    return {
-      show() {
-        logseq.showMainUI();
-      },
-    };
-  }
-
-  logseq.provideModel(createModel());
   logseq.setMainUIInlineStyle({
+    position: 'fixed',
     zIndex: 11,
   });
 
-  const openIconName = "template-plugin-open";
-
-  logseq.provideStyle(css`
-    .${openIconName} {
-      opacity: 0.55;
-      font-size: 20px;
-      margin-top: 4px;
-    }
-
-    .${openIconName}:hover {
-      opacity: 0.9;
-    }
-  `);
-
-  logseq.App.registerUIItem("toolbar", {
-    key: openIconName,
+  logseq.App.registerUIItem('toolbar', {
+    key: plugin.id,
     template: `
-      <div data-on-click="show" class="${openIconName}">⚙️</div>
+      <a data-on-click="openTaskPanel" class="button" id="logseq-plugin-tasks-icon">
+        <i class="ti ti-checkbox" style="font-size: 20px"></i>
+      </a>
     `,
   });
+
+  const root = ReactDOM.createRoot(document.getElementById('app')!);
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  );
 }
 
-logseq.ready(main).catch(console.error);
+logseq.ready(createModel()).then(main).catch(console.error);
