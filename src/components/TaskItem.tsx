@@ -13,7 +13,8 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   const { item: task, onChange } = props;
   const [checked, setChecked] = React.useState(task.isDone());
 
-  const handleTaskChange = () => {
+  const handleTaskChange = async () => {
+    await task.toggle();
     setChecked(!checked);
     onChange(task);
   };

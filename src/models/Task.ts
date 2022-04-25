@@ -10,7 +10,6 @@ export enum TaskMarker {
 
 class Task {
   private block: BlockEntity;
-  private markerStack: TaskMarker[] = [];
 
   constructor(block: BlockEntity) {
     this.block = block;
@@ -19,21 +18,75 @@ class Task {
   public static getTodayTaskQuery(): string {
     const today = dayjs().format('YYYYMMDD');
     const query = `
-      [:find (pull ?h [*])
+      [:find (pull ?b [*])
        :where
-       [?h :block/marker ?marker]
+       [?b :block/marker ?marker]
        [(contains? #{"NOW" "LATER" "TODO" "DONE"} ?marker)]
-       [?h :block/page ?p]
+       [?b :block/page ?p]
        (or
          (and
           [?p :block/journal? true]
           [?p :block/journal-day ?d]
+          (not [?b :block/scheduled])
+          (not [?b :block/deadline])
           [(= ?d ${today})])
          (and
           (or
-            [?h :block/scheduled ?d]
-            [?h :block/deadline ?d])
+            [?b :block/scheduled ?d]
+            [?b :block/deadline ?d])
           [(= ?d ${today})]))]
+    `
+    return query;
+  }
+
+  public static getExpiredTaskQuery(): string {
+    const today = dayjs().format('YYYYMMDD');
+    const query = `
+      [:find (pull ?b [*])
+       :where
+       [?b :block/marker ?marker]
+       [(contains? #{"NOW" "LATER" "TODO"} ?marker)]
+       [?b :block/page ?p]
+       (or
+         (and
+          [?p :block/journal? true]
+          [?p :block/journal-day ?d]
+          [(< ?d ${today})])
+         (and
+          (or
+            [?b :block/scheduled ?d]
+            [?b :block/deadline ?d])
+          [(< ?d ${today})]))]
+    `
+    return query;
+  }
+
+  public static getScheduledTaskQuery(): string {
+    const today = dayjs().format('YYYYMMDD');
+    const query = `
+      [:find (pull ?b [*])
+       :where
+       [?b :block/marker ?marker]
+       [(contains? #{"NOW" "LATER" "TODO"} ?marker)]
+       [?b :block/page ?p]
+       (or
+         [?b :block/scheduled ?d]
+         [?b :block/deadline ?d])
+       [(> ?d ${today})]]
+    `
+    return query;
+  }
+
+  public static getNoScheduledTaskQuery(): string {
+    const query = `
+      [:find (pull ?b [*])
+       :where
+       [?b :block/marker ?marker]
+       [(contains? #{"NOW" "LATER" "TODO"} ?marker)]
+       [?b :block/page ?p]
+       (not [?p :block/journal? true])]
+       (not [?b :block/scheduled])
+       (not [?b :block/deadline])]
     `
     return query;
   }
@@ -49,6 +102,10 @@ class Task {
   public get content(): string {
     let content = this.block.content;
     content = content.replace(this.marker, '');
+    content = content.replace(/SCHEDULED: <[^>]+>/, '');
+    content = content.replace(/DEADLINE: <[^>]+>/, '');
+    content = content.replace(/(:LOGBOOK:)|(\*\s.*)|(:END:)|(CLOCK:.*)/gm, '');
+    content = content.replace(/\[\[([^\]]+)\]\]/g, '\n');
     return content.trim();
   }
 

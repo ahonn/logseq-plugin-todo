@@ -1,33 +1,23 @@
 import 'virtual:windi.css';
 import React, { useRef } from 'react';
 import useAppVisible from './hooks/useAppVisible';
-import useTaskQuery from './hooks/useTaskQuery';
 import useIconPosition from './hooks/useIconPosition';
 import dayjs from 'dayjs';
-import isToday from 'dayjs/plugin/isToday';
 import TaskInput from './components/TaskInput';
 import useUserConfigs from './hooks/useUserConfigs';
 import TaskSection from './components/TaskSection';
 import Task from './models/Task';
-
-dayjs.extend(isToday);
 
 function App() {
   const innerRef = useRef<HTMLDivElement>(null);
   const visible = useAppVisible();
   const position = useIconPosition('logseq-plugin-tasks-icon');
   const userConfigs = useUserConfigs();
-  const { data: todayTasks, mutate } = useTaskQuery(Task.getTodayTaskQuery());
 
   const handleClickOutside = (e: React.MouseEvent) => {
     if (!innerRef.current?.contains(e.target as any)) {
       window.logseq.hideMainUI();
     }
-  };
-
-  const handleTaskChange = async (task: Task) => {
-    await task.toggle();
-    mutate();
   };
 
   const createNewTask = async (content: string) => {
@@ -72,7 +62,10 @@ function App() {
       >
         <TaskInput onCreateTask={createNewTask} />
         <div>
-          <TaskSection title="Today" tasks={todayTasks} onTaskChange={handleTaskChange} />
+          <TaskSection title="Today" query={Task.getTodayTaskQuery()} />
+          <TaskSection title="Expired" query={Task.getExpiredTaskQuery()} />
+          <TaskSection title="Scheduled" query={Task.getScheduledTaskQuery()} />
+          <TaskSection title="No Scheduled" query={Task.getNoScheduledTaskQuery()} />
         </div>
       </div>
     </main>
