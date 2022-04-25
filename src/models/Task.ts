@@ -1,4 +1,4 @@
-import { BlockEntity } from '@logseq/libs/dist/LSPlugin';
+import { BlockEntity, PageEntity } from '@logseq/libs/dist/LSPlugin';
 import dayjs, { Dayjs } from 'dayjs';
 
 export enum TaskMarker {
@@ -118,6 +118,21 @@ class Task {
 
   public isDone(): boolean {
     return this.block.marker === TaskMarker.DONE;
+  }
+
+  public async getScheduledDate(): Promise<Date | null> {
+    if (this.block.scheduled) {
+      return dayjs(this.block.scheduled.toString(), 'YYYYMMDD').toDate();
+    }
+
+    const block = await window.logseq.Editor.getBlock(this.uuid, { includeChildren: true });
+    const page = block?.page as PageEntity | undefined;
+    console.log(block);
+    if (page?.journalDay) {
+      return dayjs(page.journalDay.toString(), 'YYYYMMDD').toDate();
+    }
+
+    return null;
   }
 
   public async toggle(): Promise<void> {
