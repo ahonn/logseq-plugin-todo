@@ -1,5 +1,5 @@
-import { BlockEntity } from "@logseq/libs/dist/LSPlugin";
-import dayjs from "dayjs";
+import { BlockEntity } from '@logseq/libs/dist/LSPlugin';
+import dayjs, { Dayjs } from 'dayjs';
 
 export enum TaskMarker {
   LATER = 'LATER',
@@ -35,7 +35,7 @@ class Task {
             [?b :block/scheduled ?d]
             [?b :block/deadline ?d])
           [(= ?d ${today})]))]
-    `
+    `;
     return query;
   }
 
@@ -57,7 +57,7 @@ class Task {
             [?b :block/scheduled ?d]
             [?b :block/deadline ?d])
           [(< ?d ${today})]))]
-    `
+    `;
     return query;
   }
 
@@ -73,7 +73,7 @@ class Task {
          [?b :block/scheduled ?d]
          [?b :block/deadline ?d])
        [(> ?d ${today})]]
-    `
+    `;
     return query;
   }
 
@@ -87,12 +87,12 @@ class Task {
        (not [?p :block/journal? true])]
        (not [?b :block/scheduled])
        (not [?b :block/deadline])]
-    `
+    `;
     return query;
   }
 
   public get uuid(): string {
-    if (typeof this.block.uuid === "string") {
+    if (typeof this.block.uuid === 'string') {
       return this.block.uuid;
     }
     // @ts-ignore
@@ -105,12 +105,15 @@ class Task {
     content = content.replace(/SCHEDULED: <[^>]+>/, '');
     content = content.replace(/DEADLINE: <[^>]+>/, '');
     content = content.replace(/(:LOGBOOK:)|(\*\s.*)|(:END:)|(CLOCK:.*)/gm, '');
-    content = content.replace(/\[\[([^\]]+)\]\]/g, '\n');
     return content.trim();
   }
 
   public get marker(): TaskMarker {
     return this.block.marker;
+  }
+
+  public get scheduled(): Dayjs {
+    return this.block.scheduled;
   }
 
   public isDone(): boolean {

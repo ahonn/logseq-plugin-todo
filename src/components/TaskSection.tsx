@@ -20,7 +20,7 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
   };
 
   return (
-    <div>
+    <div className="py-2">
       <h2 className="py-1 text-red-500 font-semibold">{title}</h2>
       <div>
         {tasks.map((task) => (

@@ -4,7 +4,7 @@ import useAppVisible from './hooks/useAppVisible';
 import useIconPosition from './hooks/useIconPosition';
 import dayjs from 'dayjs';
 import TaskInput from './components/TaskInput';
-import useUserConfigs from './hooks/useUserConfigs';
+import useUserConfigs, { withUserConfigs } from './hooks/useUserConfigs';
 import TaskSection from './components/TaskSection';
 import Task from './models/Task';
 
@@ -22,15 +22,7 @@ function App() {
 
   const createNewTask = async (content: string) => {
     const { preferredDateFormat, preferredTodo } = userConfigs!;
-    const format = preferredDateFormat
-      .replace('yyyy', 'YYYY')
-      .replace('dd', 'DD')
-      .replace('do', 'Do')
-      .replace('EEEE', 'dddd')
-      .replace('EEE', 'ddd')
-      .replace('EE', 'dd')
-      .replace('E', 'dd');
-    const date = dayjs().format(format);
+    const date = dayjs().format(preferredDateFormat);
     let page = await window.logseq.Editor.getPage(date);
     if (page === null) {
       page = await window.logseq.Editor.createPage(date, {
@@ -72,4 +64,4 @@ function App() {
   );
 }
 
-export default App;
+export default withUserConfigs(App);
