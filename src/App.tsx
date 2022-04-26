@@ -1,7 +1,6 @@
 import 'virtual:windi.css';
 import React, { useEffect, useRef } from 'react';
 import useAppVisible from './hooks/useAppVisible';
-import useIconPosition from './hooks/useIconPosition';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import TaskInput from './components/TaskInput';
@@ -16,10 +15,9 @@ import { useSWRConfig } from 'swr';
 dayjs.extend(advancedFormat);
 
 function App() {
-  const { mutate } = useSWRConfig()
+  const { mutate } = useSWRConfig();
   const innerRef = useRef<HTMLDivElement>(null);
   const visible = useAppVisible();
-  const position = useIconPosition(plugin.id);
   const userConfigs = useUserConfigs();
 
   useEffect(() => {
@@ -61,13 +59,8 @@ function App() {
     >
       <div
         ref={innerRef}
-        id="task-panel"
+        id={plugin.id}
         className="p-4 w-90 h-120 bg-white shadow rounded-lg overflow-y-auto border border-gray-100"
-        style={{
-          position: 'fixed',
-          top: position.bottom + 30,
-          left: position.right - 400,
-        }}
       >
         <TaskInput onCreateTask={createNewTask} />
         <div>
