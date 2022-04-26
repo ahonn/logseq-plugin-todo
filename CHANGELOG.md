@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/ahonn/logseq-plugin-todo/compare/v1.1.1...v1.1.2) (2022-04-26)
+
+
+### Bug Fixes
+
+* add error bounday and show error message when throw error ([7f59e7f](https://github.com/ahonn/logseq-plugin-todo/commit/7f59e7f816ec05687ee94ac002d680113a99aff5))
+
 ## [1.1.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.1.0...v1.1.1) (2022-04-26)
 
 
