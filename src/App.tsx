@@ -9,11 +9,12 @@ import TaskSection from './components/TaskSection';
 import getAnytimeTaskQuery from './querys/anytime';
 import getScheduledTaskQuery from './querys/scheduled';
 import getTodayTaskQuery from './querys/today';
+import { logseq as plugin } from '../package.json';
 
 function App() {
   const innerRef = useRef<HTMLDivElement>(null);
   const visible = useAppVisible();
-  const position = useIconPosition('logseq-plugin-tasks-icon');
+  const position = useIconPosition(plugin.id);
   const userConfigs = useUserConfigs();
 
   const handleClickOutside = (e: React.MouseEvent) => {

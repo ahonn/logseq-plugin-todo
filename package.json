@@ -1,6 +1,6 @@
 {
-  "name": "logseq-plugin-task",
-  "version": "1.0.0",
+  "name": "logseq-plugin-todo",
+  "version": "0.1.0",
   "main": "dist/index.html",
   "scripts": {
     "dev": "vite",
@@ -42,7 +42,7 @@
     "windicss": "3.5.1"
   },
   "logseq": {
-    "id": "logseq-plugin-task",
+    "id": "logseq-plugin-todo",
     "icon": "./logo.svg"
   }
 }

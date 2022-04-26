@@ -6,8 +6,7 @@ import App from './App';
 
 function createModel() {
   return {
-    openTaskPanel: (e: any) => {
-      const { rect } = e;
+    openTaskPanel: () => {
       logseq.showMainUI();
     },
   };
@@ -22,7 +21,7 @@ function main() {
   logseq.App.registerUIItem('toolbar', {
     key: plugin.id,
     template: `
-      <a data-on-click="openTaskPanel" class="button" id="logseq-plugin-tasks-icon">
+      <a data-on-click="openTaskPanel" class="button" id="${plugin.id}">
         <i class="ti ti-checkbox" style="font-size: 20px"></i>
       </a>
     `,
