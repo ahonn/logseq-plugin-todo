@@ -16,7 +16,7 @@ const useTaskQuery = (query: string) => {
       collections.map(async ([block]) => {
         const uuid = getBlockUUID(block);
         const taskBlock = await window.logseq.Editor.getBlock(uuid, { includeChildren: true });
-        const scheduled = taskBlock?.scheduled ?? (taskBlock?.page as PageEntity)?.journalDay;
+        const scheduled = taskBlock?.scheduled ?? taskBlock?.deadline ?? (taskBlock?.page as PageEntity)?.journalDay;
         return {
           ...taskBlock,
           scheduled,
