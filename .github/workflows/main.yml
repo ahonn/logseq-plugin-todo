@@ -3,13 +3,13 @@
 name: Releases
 
 env:
-  PLUGIN_NAME: logseq-plugin-template-react
+  PLUGIN_NAME: logseq-plugin-todo
 
 # Controls when the action will run.
 on:
-  push:
-    branches:
-      - "master"
+  # push:
+  #   branches:
+  #     - "master"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 

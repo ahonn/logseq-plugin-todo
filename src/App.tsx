@@ -1,8 +1,9 @@
 import 'virtual:windi.css';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import useAppVisible from './hooks/useAppVisible';
 import useIconPosition from './hooks/useIconPosition';
 import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import TaskInput from './components/TaskInput';
 import useUserConfigs, { withUserConfigs } from './hooks/useUserConfigs';
 import TaskSection from './components/TaskSection';
@@ -10,12 +11,24 @@ import getAnytimeTaskQuery from './querys/anytime';
 import getScheduledTaskQuery from './querys/scheduled';
 import getTodayTaskQuery from './querys/today';
 import { logseq as plugin } from '../package.json';
+import { useSWRConfig } from 'swr';
+
+dayjs.extend(advancedFormat);
 
 function App() {
+  const { mutate } = useSWRConfig()
   const innerRef = useRef<HTMLDivElement>(null);
   const visible = useAppVisible();
   const position = useIconPosition(plugin.id);
   const userConfigs = useUserConfigs();
+
+  useEffect(() => {
+    if (visible) {
+      mutate(getTodayTaskQuery());
+      mutate(getScheduledTaskQuery());
+      mutate(getAnytimeTaskQuery());
+    }
+  }, [visible]);
 
   const handleClickOutside = (e: React.MouseEvent) => {
     if (!innerRef.current?.contains(e.target as any)) {
@@ -38,6 +51,7 @@ function App() {
       `${preferredTodo} ${content}`,
       { isPageBlock: true, before: false },
     );
+    mutate(getTodayTaskQuery());
   };
 
   return (

@@ -43,6 +43,7 @@
   },
   "logseq": {
     "id": "logseq-plugin-todo",
+    "title": "Todo list",
     "icon": "./logo.svg"
   }
 }
