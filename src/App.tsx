@@ -6,7 +6,9 @@ import dayjs from 'dayjs';
 import TaskInput from './components/TaskInput';
 import useUserConfigs, { withUserConfigs } from './hooks/useUserConfigs';
 import TaskSection from './components/TaskSection';
-import Task from './models/Task';
+import getAnytimeTaskQuery from './querys/anytime';
+import getScheduledTaskQuery from './querys/scheduled';
+import getTodayTaskQuery from './querys/today';
 
 function App() {
   const innerRef = useRef<HTMLDivElement>(null);
@@ -54,10 +56,9 @@ function App() {
       >
         <TaskInput onCreateTask={createNewTask} />
         <div>
-          <TaskSection title="Today" query={Task.getTodayTaskQuery()} />
-          <TaskSection title="Expired" query={Task.getExpiredTaskQuery()} />
-          <TaskSection title="Scheduled" query={Task.getScheduledTaskQuery()} />
-          <TaskSection title="No Scheduled" query={Task.getNoScheduledTaskQuery()} />
+          <TaskSection title="Today" query={getTodayTaskQuery()} />
+          <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
+          <TaskSection title="Anytime" query={getAnytimeTaskQuery()} />
         </div>
       </div>
     </main>

@@ -1,16 +1,19 @@
 import React, { useContext } from 'react';
 import { AppUserConfigs } from '@logseq/libs/dist/LSPlugin';
 import { useEffect, useState } from 'react';
+import useAppVisible from './useAppVisible';
 
-// @ts-ignore
-const UserConfigsContext = React.createContext<AppUserConfigs>({
+const DEFAULT_USER_CONFIGS: AppUserConfigs = {
   preferredLanguage: 'en',
   preferredThemeMode: 'light',
   preferredFormat: 'markdown',
   preferredWorkflow: 'now',
   preferredTodo: 'LATER',
   preferredDateFormat: 'MMM do, yyyy',
-});
+};
+
+// @ts-ignore
+const UserConfigsContext = React.createContext<AppUserConfigs>(DEFAULT_USER_CONFIGS);
 
 function fixPreferredDateFormat(preferredDateFormat: string) {
   const format = preferredDateFormat
@@ -28,16 +31,19 @@ export const withUserConfigs = <P extends {}>(
   WrapComponent: React.ComponentType<P>,
 ) => {
   const WithUserConfigsComponent: typeof WrapComponent = (props) => {
-    const [configs, setConfigs] = useState<AppUserConfigs>();
+  const visible = useAppVisible();
+    const [configs, setConfigs] = useState<AppUserConfigs>(DEFAULT_USER_CONFIGS);
 
     useEffect(() => {
-      window.logseq.App.getUserConfigs().then((configs) => {
-        setConfigs({
-          ...configs,
-          preferredDateFormat: fixPreferredDateFormat(configs.preferredDateFormat),
+      if (visible) {
+        window.logseq.App.getUserConfigs().then((configs) => {
+          setConfigs({
+            ...configs,
+            preferredDateFormat: fixPreferredDateFormat(configs.preferredDateFormat),
+          });
         });
-      });
-    }, []);
+      }
+    }, [visible]);
 
     return (
       <UserConfigsContext.Provider value={configs!}>

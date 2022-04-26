@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 import classnames from 'classnames';
 import dayjs from 'dayjs';
 import Checkbox from 'rc-checkbox';
-import Task from '../models/Task';
 import { InfoCircle } from 'tabler-icons-react';
 import useUserConfigs from '../hooks/useUserConfigs';
+import useTask, { Task } from '../hooks/useTask';
 import 'rc-checkbox/assets/index.css';
 
 export interface ITaskItemProps {
@@ -14,34 +14,36 @@ export interface ITaskItemProps {
 
 const TaskItem: React.FC<ITaskItemProps> = (props) => {
   const { item: task, onChange } = props;
-  const [checked, setChecked] = React.useState(task.isDone());
   const { preferredDateFormat } = useUserConfigs();
-  const [scheduled, setScheduled] = React.useState<Date | null>(null);
+  const { uuid, isDone, scheduled, content, toggle } = useTask(task);
+  const [checked, setChecked] = React.useState(isDone);
 
-  useEffect(() => {
-    task.getScheduledDate().then(setScheduled);
-  }, [task]);
+  const isExpiredTask = useMemo(() => {
+    if (!scheduled) {
+      return false;
+    }
+    const date = dayjs(scheduled.toString(), 'YYYYMMDD');
+    return date.isBefore(dayjs(), 'day');
+  }, [scheduled]);
 
   const handleTaskChange = async () => {
-    await task.toggle();
+    await toggle();
     setChecked(!checked);
     onChange(task);
   };
 
   const openTaskBlock = () => {
-    window.logseq.Editor.openInRightSidebar(task.uuid);
+    window.logseq.Editor.openInRightSidebar(uuid);
+    window.logseq.hideMainUI();
   };
 
-  const contentClassName = classnames(
-    'flex-1 border-b border-gray-100 pb-2 pt-1 text-sm leading-normal',
-    {
-      'line-through': checked,
-      'text-gray-400': checked,
-    },
-  );
+  const contentClassName = classnames({
+    'line-through': checked,
+    'text-gray-400': checked,
+  });
 
   return (
-    <div key={task.uuid} className="flex flex-row pb-1">
+    <div key={uuid} className="flex flex-row pb-1" data-uuid={uuid}>
       <div>
         <Checkbox
           checked={checked}
@@ -49,13 +51,18 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
           className="pt-1 mr-2"
         />
       </div>
-      <div className={contentClassName}>
+      <div className="flex-1 border-b border-gray-100 pb-2 pt-1 text-sm leading-normal">
         <div className="flex justify-between items-center">
           <div className="flex-col">
-            <p>{task.content}</p>
+            <p className={contentClassName}>{content}</p>
             {scheduled && (
-              <time className="text-xs text-gray-400">
-                {dayjs(scheduled).format(preferredDateFormat)}
+              <time
+                className={classnames('text-xs', {
+                  'text-gray-400': !isExpiredTask,
+                  'text-red-400': isExpiredTask,
+                })}
+              >
+                {dayjs(scheduled.toString(), 'YYYYMMDD').format(preferredDateFormat)}
               </time>
             )}
           </div>

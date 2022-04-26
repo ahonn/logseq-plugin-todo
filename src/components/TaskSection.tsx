@@ -24,7 +24,11 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
       <h2 className="py-1 text-red-500 font-semibold">{title}</h2>
       <div>
         {tasks.map((task) => (
-          <TaskItem key={task.uuid} item={task} onChange={handleTaskChange} />
+          <TaskItem
+            key={task.uuid}
+            item={task}
+            onChange={handleTaskChange}
+          />
         ))}
       </div>
     </div>
