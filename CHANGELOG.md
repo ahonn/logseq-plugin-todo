@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.1.0...v1.1.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* fix panel position style and auto focus task input when plugin visible ([f79562b](https://github.com/ahonn/logseq-plugin-todo/commit/f79562bddda0535a4bc0dcb453c7c295b984ccfc))
+* fix panel position when right sidebar opend ([eaa8a4e](https://github.com/ahonn/logseq-plugin-todo/commit/eaa8a4e2245768571003d8c662c72f1ebeb92fce))
+
 # [1.1.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.0.0...v1.1.0) (2022-04-26)
 
 
