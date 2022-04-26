@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.0.0...v1.1.0) (2022-04-26)
+
+
+### Features
+
+* add line-clamp style ([2968e7d](https://github.com/ahonn/logseq-plugin-todo/commit/2968e7daa2c71fc846f714d419dbcf5a929b82ee))
+* add TaskEntity ([f235703](https://github.com/ahonn/logseq-plugin-todo/commit/f23570302cc43749f10ec06e2ea35c3a419d9ae5))
+
 # 1.0.0 (2022-04-26)
 
 
