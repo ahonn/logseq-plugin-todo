@@ -2,6 +2,8 @@
 
 A simple to-do list plugin for logseq
 
+![](./todo-demo.gif)
+
 ## How to use?
 
 ### Option 1: directly install via Marketplace
