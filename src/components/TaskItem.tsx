@@ -37,7 +37,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
     window.logseq.hideMainUI();
   };
 
-  const contentClassName = classnames({
+  const contentClassName = classnames('line-clamp-4', {
     'line-through': checked,
     'text-gray-400': checked,
   });
@@ -51,7 +51,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
           className="pt-1 mr-2"
         />
       </div>
-      <div className="flex-1 border-b border-gray-100 pb-2 pt-1 text-sm leading-normal">
+      <div className="flex-1 border-b border-gray-100 pb-2 pt-1 text-sm leading-normal break-all">
         <div className="flex justify-between items-center">
           <div className="flex-col">
             <p className={contentClassName}>{content}</p>
@@ -66,7 +66,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
               </time>
             )}
           </div>
-          <div className="px-1" onClick={openTaskBlock}>
+          <div className="pl-2 pr-1" onClick={openTaskBlock}>
             <InfoCircle size={20} className="stroke-gray-300 cursor-pointer" />
           </div>
         </div>
