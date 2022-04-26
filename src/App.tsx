@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import useAppVisible from './hooks/useAppVisible';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import TaskInput from './components/TaskInput';
+import TaskInput, { ITaskInputRef } from './components/TaskInput';
 import useUserConfigs, { withUserConfigs } from './hooks/useUserConfigs';
 import TaskSection from './components/TaskSection';
 import getAnytimeTaskQuery from './querys/anytime';
@@ -17,6 +17,7 @@ dayjs.extend(advancedFormat);
 function App() {
   const { mutate } = useSWRConfig();
   const innerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<ITaskInputRef>(null);
   const visible = useAppVisible();
   const userConfigs = useUserConfigs();
 
@@ -25,6 +26,7 @@ function App() {
       mutate(getTodayTaskQuery());
       mutate(getScheduledTaskQuery());
       mutate(getAnytimeTaskQuery());
+      inputRef.current?.focus();
     }
   }, [visible]);
 
@@ -57,16 +59,14 @@ function App() {
       className={`w-screen h-screen ${visible ? 'block' : 'hidden'}`}
       onClick={handleClickOutside}
     >
-      <div
-        ref={innerRef}
-        id={plugin.id}
-        className="p-4 w-90 h-120 bg-white shadow rounded-lg overflow-y-auto border border-gray-100"
-      >
-        <TaskInput onCreateTask={createNewTask} />
-        <div>
-          <TaskSection title="Today" query={getTodayTaskQuery()} />
-          <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
-          <TaskSection title="Anytime" query={getAnytimeTaskQuery()} />
+      <div ref={innerRef} id={plugin.id}>
+        <div className="absolute p-4 w-90 h-120 -left-13rem bg-white shadow rounded-lg overflow-y-auto border border-gray-100">
+          <TaskInput ref={inputRef} onCreateTask={createNewTask} />
+          <div>
+            <TaskSection title="Today" query={getTodayTaskQuery()} />
+            <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
+            <TaskSection title="Anytime" query={getAnytimeTaskQuery()} />
+          </div>
         </div>
       </div>
     </main>

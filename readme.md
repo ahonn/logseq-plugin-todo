@@ -2,6 +2,12 @@
 
 A simple to-do list plugin for logseq
 
+### Feature
+- quick add new to-do items to today's journal page
+- show all today's to-do items (include scheduled & today's journal page)
+- show all to-do's without schedule
+- ignore to-do items in the specified page
+
 ![](./todo-demo.gif)
 
 ## Install

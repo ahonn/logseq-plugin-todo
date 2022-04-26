@@ -14,7 +14,7 @@ function createModel() {
       Object.assign(taskPanel.style, {
         position: 'fixed',
         top: `${rect.top + 40}px`,
-        left: `${rect.left - 180}px`,
+        right: window.screen.width - rect.right + (rect.width / 2) + 'px',
       });
 
       logseq.showMainUI();

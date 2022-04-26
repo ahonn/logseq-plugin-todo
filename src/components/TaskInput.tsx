@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useImperativeHandle, useRef } from 'react';
 import { CirclePlus } from 'tabler-icons-react';
+
+export interface ITaskInputRef {
+  focus: () => void;
+}
 
 export interface ITaskInputProps {
   onCreateTask(content: string): void;
 }
 
-const TaskInput: React.FC<ITaskInputProps> = (props) => {
+const TaskInput: React.ForwardRefRenderFunction<ITaskInputRef, ITaskInputProps> = (props, ref) => {
   const [content, setContent] = React.useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focus = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    focus,
+  }));
 
   return (
     <div className="flex mb-2">
@@ -14,6 +29,7 @@ const TaskInput: React.FC<ITaskInputProps> = (props) => {
         <CirclePlus size={20} className="stroke-gray-400" />
         <input
           type="text"
+          ref={inputRef}
           className="flex-1 bg-transparent p-1 outline-none text-sm"
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -31,4 +47,4 @@ const TaskInput: React.FC<ITaskInputProps> = (props) => {
   );
 };
 
-export default TaskInput;
+export default React.forwardRef(TaskInput);

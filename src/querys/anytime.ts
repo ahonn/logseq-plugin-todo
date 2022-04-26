@@ -5,7 +5,7 @@ export default function getAnytimeTaskQuery() {
      [?b :block/marker ?marker]
      [(contains? #{"NOW" "LATER" "TODO"} ?marker)]
      [?b :block/page ?p]
-     (not [?p :block/journal? true])]
+     (not [?p :block/journalDay])
      (not [?b :block/scheduled])
      (not [?b :block/deadline])]
   `;
