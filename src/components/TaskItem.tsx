@@ -4,19 +4,20 @@ import dayjs from 'dayjs';
 import Checkbox from 'rc-checkbox';
 import { InfoCircle } from 'tabler-icons-react';
 import useUserConfigs from '../hooks/useUserConfigs';
-import useTask, { Task } from '../hooks/useTask';
+import useTask from '../hooks/useTask';
 import 'rc-checkbox/assets/index.css';
+import { TaskEntityObject } from '../models/TaskEntity';
 
 export interface ITaskItemProps {
-  item: Task;
-  onChange(task: Task): void;
+  item: TaskEntityObject;
+  onChange(task: TaskEntityObject): void;
 }
 
 const TaskItem: React.FC<ITaskItemProps> = (props) => {
   const { item: task, onChange } = props;
   const { preferredDateFormat } = useUserConfigs();
-  const { uuid, isDone, scheduled, content, toggle } = useTask(task);
-  const [checked, setChecked] = React.useState(isDone);
+  const { uuid, completed, scheduled, content, toggle } = useTask(task);
+  const [checked, setChecked] = React.useState(completed);
 
   const isExpiredTask = useMemo(() => {
     if (!scheduled) {
@@ -37,7 +38,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
     window.logseq.hideMainUI();
   };
 
-  const contentClassName = classnames('line-clamp-4', {
+  const contentClassName = classnames('line-clamp-3', {
     'line-through': checked,
     'text-gray-400': checked,
   });

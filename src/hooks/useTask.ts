@@ -1,18 +1,9 @@
-import { BlockEntity } from '@logseq/libs/dist/LSPlugin.user';
 import { useCallback, useMemo } from 'react';
+import { TaskEntityObject, TaskMarker } from '../models/TaskEntity';
 import useUserConfigs from './useUserConfigs';
 
-export type Task = BlockEntity;
-
-export enum TaskMarker {
-  LATER = 'LATER',
-  NOW = 'NOW',
-  TODO = 'TODO',
-  DONE = 'DONE',
-}
-
-const useTask = (task: Task) => {
-  const { uuid, marker, scheduled } = task;
+const useTask = (task: TaskEntityObject) => {
+  const { uuid, marker, scheduled, completed } = task;
   const { preferredTodo } = useUserConfigs();
 
   const content = useMemo(() => {
@@ -24,22 +15,20 @@ const useTask = (task: Task) => {
     return content.trim();
   }, [task]);
 
-  const isDone = useMemo(() => task.marker === TaskMarker.DONE, [task]);
-
   const toggle = useCallback(async () => {
-    const nextMarker = isDone ? preferredTodo : TaskMarker.DONE;
+    const nextMarker = completed ? preferredTodo : TaskMarker.DONE;
     await window.logseq.Editor.updateBlock(
       uuid,
-      task.content.replace(task.marker, nextMarker),
+      task.content.replace(marker, nextMarker),
     );
-  }, [isDone, preferredTodo, task]);
+  }, [completed, preferredTodo, task]);
 
   return {
     uuid,
     marker,
     content,
     scheduled,
-    isDone,
+    completed,
     toggle,
   };
 };
