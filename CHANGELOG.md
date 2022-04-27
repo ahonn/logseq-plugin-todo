@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.1.4...v1.2.0) (2022-04-27)
+
+
+### Features
+
+* add button to schedule/cancel to-do items to today ([5909096](https://github.com/ahonn/logseq-plugin-todo/commit/590909691172622750e57c8bb39a39cb9aac7c7d))
+
 ## [1.1.4](https://github.com/ahonn/logseq-plugin-todo/compare/v1.1.3...v1.1.4) (2022-04-27)
 
 
