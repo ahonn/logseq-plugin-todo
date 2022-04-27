@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/ahonn/logseq-plugin-todo/compare/v1.1.3...v1.1.4) (2022-04-27)
+
+
+### Bug Fixes
+
+* fix anytime task query ([294b77a](https://github.com/ahonn/logseq-plugin-todo/commit/294b77a6ae2370713d7a8c56abfee1b844c87ff5))
+
 ## [1.1.3](https://github.com/ahonn/logseq-plugin-todo/compare/v1.1.2...v1.1.3) (2022-04-27)
 
 
