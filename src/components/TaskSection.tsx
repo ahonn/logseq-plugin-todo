@@ -1,33 +1,27 @@
 import React from 'react';
-import useTaskQuery from '../hooks/useTaskQuery';
+import { TaskEntityObject } from '../models/TaskEntity';
 import TaskItem from './TaskItem';
 
 export interface ITaskSectionProps {
   title: string;
-  query: string;
+  tasks: TaskEntityObject[];
 }
 
 const TaskSection: React.FC<ITaskSectionProps> = (props) => {
-  const { title, query } = props;
-  const { data: tasks, mutate } = useTaskQuery(query);
+  const { title, tasks } = props;
 
   if (tasks.length === 0) {
     return null;
   }
 
-  const handleTaskChange = () => {
-    mutate();
-  };
-
   return (
-    <div className="py-2">
+    <div className="py-1">
       <h2 className="py-1 text-red-500">{title}</h2>
       <div>
         {tasks.map((task) => (
           <TaskItem
             key={task.uuid}
             item={task}
-            onChange={handleTaskChange}
           />
         ))}
       </div>

@@ -14,6 +14,10 @@ export interface TaskEntityObject {
   marker: TaskMarker;
   scheduled: number;
   completed: boolean;
+  page: {
+    name: string;
+    uuid: string;
+  }
 }
 
 class TaskEntity {
@@ -57,6 +61,10 @@ class TaskEntity {
       marker: this.marker,
       scheduled: this.scheduled,
       completed: this.completed,
+      page: {
+        name: this.page.name,
+        uuid: this.page.uuid,
+      },
     };
   }
 }

@@ -5,13 +5,9 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import useAppVisible from './hooks/useAppVisible';
 import TaskInput, { ITaskInputRef } from './components/TaskInput';
-import useUserConfigs, { withUserConfigs } from './hooks/useUserConfigs';
 import TaskSection from './components/TaskSection';
-import getAnytimeTaskQuery from './querys/anytime';
-import getScheduledTaskQuery from './querys/scheduled';
-import getTodayTaskQuery from './querys/today';
 import { logseq as plugin } from '../package.json';
-import { useSWRConfig } from 'swr';
+import useAppState, { withAppState } from './hooks/useAppState';
 
 dayjs.extend(advancedFormat);
 
@@ -29,17 +25,14 @@ function ErrorFallback({ error }: FallbackProps) {
 }
 
 function App() {
-  const { mutate } = useSWRConfig();
   const innerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<ITaskInputRef>(null);
   const visible = useAppVisible();
-  const userConfigs = useUserConfigs();
+  const { userConfigs, refresh, tasks } = useAppState();
 
   useEffect(() => {
     if (visible) {
-      mutate(getTodayTaskQuery());
-      mutate(getScheduledTaskQuery());
-      mutate(getAnytimeTaskQuery());
+      refresh();
       inputRef.current?.focus();
     }
   }, [visible]);
@@ -65,7 +58,7 @@ function App() {
       `${preferredTodo} ${content}`,
       { isPageBlock: true, before: false },
     );
-    mutate(getTodayTaskQuery());
+    refresh();
   };
 
   return (
@@ -78,9 +71,9 @@ function App() {
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <TaskInput ref={inputRef} onCreateTask={createNewTask} />
             <div>
-              <TaskSection title="Today" query={getTodayTaskQuery()} />
-              <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
-              <TaskSection title="Anytime" query={getAnytimeTaskQuery()} />
+              <TaskSection title="Today" tasks={tasks.today} />
+              <TaskSection title="Scheduled" tasks={tasks.scheduled} />
+              <TaskSection title="Anytime" tasks={tasks.anytime} />
             </div>
           </ErrorBoundary>
         </div>
@@ -89,4 +82,4 @@ function App() {
   );
 }
 
-export default withUserConfigs(App);
+export default withAppState(App);

@@ -2,49 +2,47 @@ import React, { useMemo } from 'react';
 import classnames from 'classnames';
 import dayjs from 'dayjs';
 import Checkbox from 'rc-checkbox';
-import { InfoCircle } from 'tabler-icons-react';
+import { ArrowDownCircle, BrightnessUp } from 'tabler-icons-react';
 import useUserConfigs from '../hooks/useUserConfigs';
 import useTask from '../hooks/useTask';
-import 'rc-checkbox/assets/index.css';
 import { TaskEntityObject } from '../models/TaskEntity';
+import 'rc-checkbox/assets/index.css';
 
 export interface ITaskItemProps {
   item: TaskEntityObject;
-  onChange(task: TaskEntityObject): void;
 }
 
 const TaskItem: React.FC<ITaskItemProps> = (props) => {
-  const { item: task, onChange } = props;
+  const { item } = props;
   const { preferredDateFormat } = useUserConfigs();
-  const { uuid, completed, scheduled, content, toggle } = useTask(task);
-  const [checked, setChecked] = React.useState(completed);
+  const task = useTask(item);
+  const [checked, setChecked] = React.useState(task.completed);
 
   const isExpiredTask = useMemo(() => {
-    if (!scheduled) {
+    if (!task.scheduled) {
       return false;
     }
-    const date = dayjs(scheduled.toString(), 'YYYYMMDD');
+    const date = dayjs(task.scheduled.toString(), 'YYYYMMDD');
     return date.isBefore(dayjs(), 'day');
-  }, [scheduled]);
+  }, [task.scheduled]);
 
   const handleTaskChange = async () => {
-    await toggle();
+    await task.toggle();
     setChecked(!checked);
-    onChange(task);
   };
 
   const openTaskBlock = () => {
-    window.logseq.Editor.openInRightSidebar(uuid);
+    task.openTask();
     window.logseq.hideMainUI();
   };
 
-  const contentClassName = classnames('line-clamp-3', {
+  const contentClassName = classnames('line-clamp-3 cursor-pointer', {
     'line-through': checked,
     'text-gray-400': checked,
   });
 
   return (
-    <div key={uuid} className="flex flex-row pb-1" data-uuid={uuid}>
+    <div key={task.uuid} className="flex flex-row pb-1">
       <div>
         <Checkbox
           checked={checked}
@@ -55,21 +53,31 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
       <div className="flex-1 border-b border-gray-100 pb-2 pt-1 text-sm leading-normal break-all">
         <div className="flex justify-between items-center">
           <div className="flex-col">
-            <p className={contentClassName}>{content}</p>
-            {scheduled && (
+            <p className={contentClassName} onClick={openTaskBlock}>
+              {task.content}
+            </p>
+            {task.scheduled && (
               <time
                 className={classnames('text-xs', {
                   'text-gray-400': !isExpiredTask,
                   'text-red-400': isExpiredTask,
                 })}
               >
-                {dayjs(scheduled.toString(), 'YYYYMMDD').format(preferredDateFormat)}
+                {dayjs(task.scheduled.toString(), 'YYYYMMDD').format(
+                  preferredDateFormat,
+                )}
               </time>
             )}
           </div>
-          <div className="pl-2 pr-1" onClick={openTaskBlock}>
-            <InfoCircle size={20} className="stroke-gray-300 cursor-pointer" />
-          </div>
+          {task.isTodayScheduled ? (
+            <div className="pl-2 pr-1" onClick={() => task.setScheduled(null)}>
+              <ArrowDownCircle size={22} className="stroke-gray-300 cursor-pointer" />
+            </div>
+          ) : (
+            <div className="pl-2 pr-1" onClick={() => task.setScheduled(new Date())}>
+              <BrightnessUp size={22} className="stroke-gray-300 cursor-pointer" />
+            </div>
+          )}
         </div>
       </div>
     </div>
