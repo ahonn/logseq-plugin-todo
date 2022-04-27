@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/ahonn/logseq-plugin-todo/compare/v1.1.2...v1.1.3) (2022-04-27)
+
+
+### Bug Fixes
+
+* fix task panel position ([ff2ff95](https://github.com/ahonn/logseq-plugin-todo/commit/ff2ff95d072b7a529800d09eaa3a7887c3f7e088))
+
 ## [1.1.2](https://github.com/ahonn/logseq-plugin-todo/compare/v1.1.1...v1.1.2) (2022-04-26)
 
 
