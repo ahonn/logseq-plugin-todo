@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@logseq/libs': ^0.0.1-alpha.35
+  '@logseq/libs': ^0.0.2
   '@semantic-release/changelog': 6.0.1
   '@semantic-release/exec': 6.0.3
   '@semantic-release/git': 10.0.1
@@ -33,7 +33,7 @@ specifiers:
   windicss: 3.5.1
 
 dependencies:
-  '@logseq/libs': 0.0.1-alpha.35
+  '@logseq/libs': 0.0.2
   classnames: 2.3.1
   dayjs: 1.11.1
   rc-checkbox: 2.3.2_react-dom@18.0.0+react@18.0.0
@@ -387,8 +387,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.11
     dev: true
 
-  /@logseq/libs/0.0.1-alpha.35:
-    resolution: {integrity: sha512-KikcqgolrTFqlEWoiprAdRsz9kwUX3XwcjzWa9usBGLwgGCpq6E/1UvvhQweJJAXAGDUVUHIzdJ6Cm6pvuOBWQ==}
+  /@logseq/libs/0.0.2:
+    resolution: {integrity: sha512-cRABnS/UbrT+Pw7LkkYemX1RO5qgG2txNoZqZ3x1uFD8AXdv2hhpkxV7GNF/XHttYi1tcBjaFwW7pMD87Iyp/w==}
     dependencies:
       csstype: 3.0.8
       debug: 4.3.1
@@ -2207,7 +2207,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.15.3
+      uglify-js: 3.15.4
     dev: true
 
   /hard-rejection/2.1.0:
@@ -2335,7 +2335,7 @@ packages:
     dev: true
 
   /inherits/2.0.3:
-    resolution: {integrity: sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=}
+    resolution: {integrity: sha512-x00IRNXNy63jwGkJmzPigoySHbaqpNuzKbBOmzK+g2OdZpQ9w+sxCN+VSB3ja7IAge2OP2qpfxTjeNcyjmW1uw==}
     dev: false
 
   /inherits/2.0.4:
@@ -3238,7 +3238,7 @@ packages:
     dev: true
 
   /path/0.12.7:
-    resolution: {integrity: sha1-1NwqUGxM4hl+tIHr/NWzbAFAsQ8=}
+    resolution: {integrity: sha512-aXXC6s+1w7otVF9UletFkFcDsJeO7lSZBPUQhtb5O0xJe8LtYhj/GxldoL09bBj9+ZmE2hNoHqQSFMN5fikh4Q==}
     dependencies:
       process: 0.11.10
       util: 0.10.4
@@ -3285,7 +3285,7 @@ packages:
     dev: true
 
   /process/0.11.10:
-    resolution: {integrity: sha1-czIwDoQBYb2j5podHZGn1LwW8YI=}
+    resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
     dev: false
 
@@ -4069,8 +4069,8 @@ packages:
     hasBin: true
     dev: true
 
-  /uglify-js/3.15.3:
-    resolution: {integrity: sha512-6iCVm2omGJbsu3JWac+p6kUiOpg3wFO2f8lIXjfEb8RrmLjzog1wTPMmwKB7swfzzqxj9YM+sGUM++u1qN4qJg==}
+  /uglify-js/3.15.4:
+    resolution: {integrity: sha512-vMOPGDuvXecPs34V74qDKk4iJ/SN4vL3Ow/23ixafENYvtrNvtbcgUeugTcUGRGsOF/5fU8/NYSL5Hyb3l1OJA==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true
