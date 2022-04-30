@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.2.0...v1.2.1) (2022-04-30)
+
+
+### Bug Fixes
+
+* fix missing logo.svg after build dist ([6d228dc](https://github.com/ahonn/logseq-plugin-todo/commit/6d228dc9238acfef1f0e66f16e63ff04a0049816))
+
 # [1.2.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.1.4...v1.2.0) (2022-04-27)
 
 
