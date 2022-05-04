@@ -1,3 +1,16 @@
+# [1.3.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.2.1...v1.3.0) (2022-05-04)
+
+
+### Bug Fixes
+
+* fix none priority task error ([48a32cc](https://github.com/ahonn/logseq-plugin-todo/commit/48a32ccc12c26fc10d70c22eaf0cf974a59435a7))
+
+
+### Features
+
+* show priority color to make task more visually appealing ([573cb7d](https://github.com/ahonn/logseq-plugin-todo/commit/573cb7d227ead7e92e18bb09578cca5832ae7289))
+* sort by priority when same scheduled task ([98d4398](https://github.com/ahonn/logseq-plugin-todo/commit/98d439805b53cc0ac7336e10687e11826b1bec39))
+
 ## [1.2.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.2.0...v1.2.1) (2022-04-30)
 
 
