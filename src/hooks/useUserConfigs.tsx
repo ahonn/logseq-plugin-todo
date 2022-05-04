@@ -2,7 +2,7 @@ import { AppUserConfigs } from '@logseq/libs/dist/LSPlugin';
 import { useEffect, useState } from 'react';
 import useAppVisible from './useAppVisible';
 
-export const DEFAULT_USER_CONFIGS: AppUserConfigs = {
+export const DEFAULT_USER_CONFIGS: Partial<AppUserConfigs> = {
   preferredLanguage: 'en',
   preferredThemeMode: 'light',
   preferredFormat: 'markdown',
@@ -25,7 +25,9 @@ function fixPreferredDateFormat(preferredDateFormat: string) {
 
 const useUserConfigs = () => {
   const visible = useAppVisible();
-  const [configs, setConfigs] = useState<AppUserConfigs>(DEFAULT_USER_CONFIGS);
+  const [configs, setConfigs] = useState<Partial<AppUserConfigs>>(DEFAULT_USER_CONFIGS);
+
+  console.log(configs);
 
   useEffect(() => {
     if (visible) {

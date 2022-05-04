@@ -3,9 +3,9 @@ import classnames from 'classnames';
 import dayjs from 'dayjs';
 import Checkbox from 'rc-checkbox';
 import { ArrowDownCircle, BrightnessUp } from 'tabler-icons-react';
-import useUserConfigs from '../hooks/useUserConfigs';
 import useTaskManager from '../hooks/useTaskManager';
-import { TaskEntityObject, TaskPriority } from '../models/TaskEntity';
+import { TaskEntityObject } from '../models/TaskEntity';
+import useAppState from '../hooks/useAppState';
 import 'rc-checkbox/assets/index.css';
 
 export interface ITaskItemProps {
@@ -13,7 +13,7 @@ export interface ITaskItemProps {
 }
 
 const TaskItem: React.FC<ITaskItemProps> = (props) => {
-  const { preferredDateFormat } = useUserConfigs();
+  const { userConfigs: { preferredDateFormat } } = useAppState();
   const task = useTaskManager(props.item);
   const [checked, setChecked] = React.useState(task.completed);
 

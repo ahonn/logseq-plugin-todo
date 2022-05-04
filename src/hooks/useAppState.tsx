@@ -8,7 +8,7 @@ import useTaskQuery from './useTaskQuery';
 import useUserConfigs, { DEFAULT_USER_CONFIGS } from './useUserConfigs';
 
 export interface IAppState {
-  userConfigs: AppUserConfigs,
+  userConfigs: Partial<AppUserConfigs>,
   tasks: {
     today: TaskEntityObject[],
     scheduled: TaskEntityObject[],
