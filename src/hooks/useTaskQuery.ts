@@ -14,6 +14,7 @@ const useTaskQuery = (query: string) => {
         return new TaskEntity(block!, page!);
       }),
     );
+
     return (
       tasks
         // @ts-ignore

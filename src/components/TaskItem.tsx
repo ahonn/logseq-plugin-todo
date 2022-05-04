@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import Checkbox from 'rc-checkbox';
 import { ArrowDownCircle, BrightnessUp } from 'tabler-icons-react';
 import useUserConfigs from '../hooks/useUserConfigs';
-import useTask from '../hooks/useTask';
+import useTaskManager from '../hooks/useTaskManager';
 import { TaskEntityObject } from '../models/TaskEntity';
 import 'rc-checkbox/assets/index.css';
 
@@ -13,9 +13,8 @@ export interface ITaskItemProps {
 }
 
 const TaskItem: React.FC<ITaskItemProps> = (props) => {
-  const { item } = props;
   const { preferredDateFormat } = useUserConfigs();
-  const task = useTask(item);
+  const task = useTaskManager(props.item);
   const [checked, setChecked] = React.useState(task.completed);
 
   const isExpiredTask = useMemo(() => {
@@ -42,7 +41,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   });
 
   return (
-    <div key={task.uuid} className="flex flex-row pb-1">
+    <div key={task.uuid} className={`flex flex-row pb-1 priority-${task.priority.toLowerCase()}`}>
       <div>
         <Checkbox
           checked={checked}
@@ -69,13 +68,25 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
               </time>
             )}
           </div>
-          {task.isTodayScheduled ? (
+          {task.isToday ? (
             <div className="pl-2 pr-1" onClick={() => task.setScheduled(null)}>
-              <ArrowDownCircle size={22} className="stroke-gray-300 cursor-pointer" />
+              <ArrowDownCircle
+                size={22}
+                className={classnames('stroke-gray-300', {
+                  'cursor-pointer': !task.page.journal,
+                  'cursor-not-allowed': task.page.journal,
+                })}
+              />
             </div>
           ) : (
-            <div className="pl-2 pr-1" onClick={() => task.setScheduled(new Date())}>
-              <BrightnessUp size={22} className="stroke-gray-300 cursor-pointer" />
+            <div
+              className="pl-2 pr-1"
+              onClick={() => task.setScheduled(new Date())}
+            >
+              <BrightnessUp
+                size={22}
+                className="stroke-gray-300 cursor-pointer"
+              />
             </div>
           )}
         </div>

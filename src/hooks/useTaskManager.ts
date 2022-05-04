@@ -3,30 +3,21 @@ import { useCallback, useMemo } from 'react';
 import { TaskEntityObject, TaskMarker } from '../models/TaskEntity';
 import useAppState from './useAppState';
 
-const useTask = (task: TaskEntityObject) => {
-  const { uuid, marker, scheduled, completed, page } = task;
+const useTaskManager = (task: TaskEntityObject) => {
+  const { uuid, marker, scheduled, completed } = task;
   const { userConfigs, refresh } = useAppState();
   const { preferredTodo } = userConfigs;
 
-  const isTodayScheduled = useMemo(() => {
+  const isToday = useMemo(() => {
     if (!scheduled) return false;
     return dayjs(new Date()).format('YYYYMMDD') === scheduled.toString();
   }, [scheduled]);
-
-  const content = useMemo(() => {
-    let content = task.content;
-    content = content.replace(task.marker, '');
-    content = content.replace(/SCHEDULED: <[^>]+>/, '');
-    content = content.replace(/DEADLINE: <[^>]+>/, '');
-    content = content.replace(/(:LOGBOOK:)|(\*\s.*)|(:END:)|(CLOCK:.*)/gm, '');
-    return content.trim();
-  }, [task]);
 
   const toggle = useCallback(async () => {
     const nextMarker = completed ? preferredTodo : TaskMarker.DONE;
     await window.logseq.Editor.updateBlock(
       uuid,
-      task.content.replace(marker, nextMarker),
+      task.rawContent.replace(marker, nextMarker),
     );
     refresh();
   }, [completed, preferredTodo, task, refresh]);
@@ -36,22 +27,22 @@ const useTask = (task: TaskEntityObject) => {
   }, [uuid]);
 
   const setScheduled = useCallback(async (date: Date | null) => {
-    let nextContent = task.content;
+    let nextContent = task.rawContent;
     if (date === null) {
-      nextContent = task.content.replace(/SCHEDULED: <[^>]+>/, '');
+      nextContent = task.rawContent.replace(/SCHEDULED: <[^>]+>/, '');
       await window.logseq.Editor.updateBlock(uuid, nextContent);
       refresh();
       return;
     }
 
     const scheduledString = `SCHEDULED: <${dayjs(date).format('YYYY-MM-DD ddd')}>`;
-    if (task.content.includes('SCHEDULED')) {
-      nextContent = task.content.replace(
+    if (task.rawContent.includes('SCHEDULED')) {
+      nextContent = task.rawContent.replace(
         /SCHEDULED: <[^>]+>/,
         scheduledString,
       );
     } else {
-      const lines = task.content.split('\n');
+      const lines = task.rawContent.split('\n');
       lines.splice(1, 0, scheduledString);
       nextContent = lines.join('\n');
     }
@@ -61,17 +52,12 @@ const useTask = (task: TaskEntityObject) => {
   }, [task, refresh]);
 
   return {
-    uuid,
-    marker,
-    content,
-    scheduled,
-    completed,
-    page,
-    isTodayScheduled,
+    ...task,
+    isToday,
     toggle,
     openTask,
     setScheduled,
   };
 };
 
-export default useTask;
+export default useTaskManager;

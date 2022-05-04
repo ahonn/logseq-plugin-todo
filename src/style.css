@@ -1,0 +1,17 @@
+.priority-a {
+  .rc-checkbox-inner {
+    @apply border-red-500 !important;
+  }
+}
+
+.priority-b {
+  .rc-checkbox-inner {
+    @apply border-yellow-500 !important;
+  }
+}
+
+.priority-c {
+  .rc-checkbox-inner {
+    @apply border-blue-500 !important;
+  }
+}

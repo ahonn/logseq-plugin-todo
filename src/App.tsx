@@ -8,6 +8,7 @@ import TaskInput, { ITaskInputRef } from './components/TaskInput';
 import TaskSection from './components/TaskSection';
 import { logseq as plugin } from '../package.json';
 import useAppState, { withAppState } from './hooks/useAppState';
+import './style.css';
 
 dayjs.extend(advancedFormat);
 
@@ -29,6 +30,8 @@ function App() {
   const inputRef = useRef<ITaskInputRef>(null);
   const visible = useAppVisible();
   const { userConfigs, refresh, tasks } = useAppState();
+
+  console.log(tasks);
 
   useEffect(() => {
     if (visible) {
