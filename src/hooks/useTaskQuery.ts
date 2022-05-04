@@ -25,7 +25,6 @@ const useTaskQuery = (query: string) => {
         .filter((task) => !task.getPageProperty('todoIgnore'))
         .map((task) => task.toObject())
         .sort((a, b) => {
-          console.log(a, b);
           if (a.scheduled === b.scheduled) {
             return TASK_PRIORITY_WEIGHT[b.priority] - TASK_PRIORITY_WEIGHT[a.priority];
           }
