@@ -1,6 +1,6 @@
 import { BlockEntity, PageEntity } from '@logseq/libs/dist/LSPlugin.user';
 import useSwr from 'swr';
-import TaskEntity from '../models/TaskEntity';
+import TaskEntity, { TASK_PRIORITY_WEIGHT } from '../models/TaskEntity';
 import { getBlockUUID } from '../utils';
 
 const useTaskQuery = (query: string) => {
@@ -9,8 +9,12 @@ const useTaskQuery = (query: string) => {
     const tasks = await Promise.all(
       collections.map(async ([item]) => {
         const uuid = getBlockUUID(item);
-        const block = await window.logseq.Editor.getBlock(uuid, { includeChildren: true });
-        const page = await window.logseq.Editor.getPage((block?.page as PageEntity).name);
+        const block = await window.logseq.Editor.getBlock(uuid, {
+          includeChildren: true,
+        });
+        const page = await window.logseq.Editor.getPage(
+          (block?.page as PageEntity).name,
+        );
         return new TaskEntity(block!, page!);
       }),
     );
@@ -19,8 +23,14 @@ const useTaskQuery = (query: string) => {
       tasks
         // @ts-ignore
         .filter((task) => !task.getPageProperty('todoIgnore'))
-        .sort((a, b) => b.scheduled - a.scheduled)
         .map((task) => task.toObject())
+        .sort((a, b) => {
+          console.log(a, b);
+          if (a.scheduled === b.scheduled) {
+            return TASK_PRIORITY_WEIGHT[b.priority] - TASK_PRIORITY_WEIGHT[a.priority];
+          }
+          return b.scheduled - a.scheduled;
+        })
     );
   });
 

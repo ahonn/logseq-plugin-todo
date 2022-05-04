@@ -41,7 +41,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   });
 
   return (
-    <div key={task.uuid} className={`flex flex-row pb-1 priority-${(task.priority ?? TaskPriority.NONE).toLowerCase()}`}>
+    <div key={task.uuid} className={`flex flex-row pb-1 priority-${task.priority.toLowerCase()}`}>
       <div>
         <Checkbox
           checked={checked}

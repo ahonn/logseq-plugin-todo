@@ -15,6 +15,13 @@ export enum TaskPriority {
   NONE = 'NONE'
 }
 
+export const TASK_PRIORITY_WEIGHT = {
+  [TaskPriority.HIGH]: 100,
+  [TaskPriority.MEDIUM]: 50,
+  [TaskPriority.LOW]: 10,
+  [TaskPriority.NONE]: 0,
+};
+
 export interface TaskEntityObject {
   uuid: string;
   content: string;
@@ -45,8 +52,8 @@ class TaskEntity {
 
   public get content(): string {
     let content = this.rawContent;
-    content = content.replace(this.marker, '');
-    content = content.replace(`[#${this.priority}]`, '');
+    content = content.replace(this.block.marker, '');
+    content = content.replace(`[#${this.block.priority}]`, '');
     content = content.replace(/SCHEDULED: <[^>]+>/, '');
     content = content.replace(/DEADLINE: <[^>]+>/, '');
     content = content.replace(/(:LOGBOOK:)|(\*\s.*)|(:END:)|(CLOCK:.*)/gm, '');
@@ -62,7 +69,7 @@ class TaskEntity {
   }
 
   public get priority(): TaskPriority {
-    return this.block.priority;
+    return this.block.priority ?? TaskPriority.NONE;
   }
 
   public get scheduled(): number {
