@@ -12,6 +12,7 @@ export enum TaskPriority {
   HIGH = 'A',
   MEDIUM = 'B',
   LOW = 'C',
+  NONE = 'NONE'
 }
 
 export interface TaskEntityObject {

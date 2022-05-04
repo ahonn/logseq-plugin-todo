@@ -31,8 +31,6 @@ function App() {
   const visible = useAppVisible();
   const { userConfigs, refresh, tasks } = useAppState();
 
-  console.log(tasks);
-
   useEffect(() => {
     if (visible) {
       refresh();

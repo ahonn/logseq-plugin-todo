@@ -5,7 +5,7 @@ import Checkbox from 'rc-checkbox';
 import { ArrowDownCircle, BrightnessUp } from 'tabler-icons-react';
 import useUserConfigs from '../hooks/useUserConfigs';
 import useTaskManager from '../hooks/useTaskManager';
-import { TaskEntityObject } from '../models/TaskEntity';
+import { TaskEntityObject, TaskPriority } from '../models/TaskEntity';
 import 'rc-checkbox/assets/index.css';
 
 export interface ITaskItemProps {
@@ -41,7 +41,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   });
 
   return (
-    <div key={task.uuid} className={`flex flex-row pb-1 priority-${task.priority.toLowerCase()}`}>
+    <div key={task.uuid} className={`flex flex-row pb-1 priority-${(task.priority ?? TaskPriority.NONE).toLowerCase()}`}>
       <div>
         <Checkbox
           checked={checked}
