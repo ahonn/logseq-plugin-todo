@@ -1,3 +1,11 @@
+## [1.3.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.3.0...v1.3.1) (2022-05-06)
+
+
+### Bug Fixes
+
+* clean content id property when task has ref id ([61b3afd](https://github.com/ahonn/logseq-plugin-todo/commit/61b3afd1b15f0262719baf3ceec0b7977e0e5833))
+* fix cursor pointer styling ([1eefd41](https://github.com/ahonn/logseq-plugin-todo/commit/1eefd413fa745d3eb4ced25aace34465ec5b45a1))
+
 # [1.3.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.2.1...v1.3.0) (2022-05-04)
 
 
