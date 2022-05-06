@@ -57,6 +57,7 @@ class TaskEntity {
     content = content.replace(/SCHEDULED: <[^>]+>/, '');
     content = content.replace(/DEADLINE: <[^>]+>/, '');
     content = content.replace(/(:LOGBOOK:)|(\*\s.*)|(:END:)|(CLOCK:.*)/gm, '');
+    content = content.replace(/id::[^:]+/, '');
     return content.trim();
   }
 
