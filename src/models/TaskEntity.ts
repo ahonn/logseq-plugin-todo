@@ -33,7 +33,7 @@ export interface TaskEntityObject {
   page: {
     name: string;
     uuid: string;
-    journal: boolean;
+    journalDay: number | undefined;
   }
 }
 
@@ -97,7 +97,7 @@ class TaskEntity {
       page: {
         name: this.page.name,
         uuid: this.page.uuid,
-        journal: this.page['journal?'],
+        journalDay: this.page['journalDay'],
       },
     };
   }

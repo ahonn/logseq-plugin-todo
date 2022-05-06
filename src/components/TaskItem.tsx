@@ -73,8 +73,8 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
               <ArrowDownCircle
                 size={22}
                 className={classnames('stroke-gray-300', {
-                  'cursor-pointer': !task.page.journal,
-                  'cursor-not-allowed': task.page.journal,
+                  'cursor-pointer': task.page.journalDay !== task.scheduled,
+                  'cursor-not-allowed': task.page.journalDay === task.scheduled,
                 })}
               />
             </div>
