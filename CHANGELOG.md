@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.4.0...v1.5.0) (2022-06-06)
+
+
+### Features
+
+* support quick open task panel ([c648e2f](https://github.com/ahonn/logseq-plugin-todo/commit/c648e2fc1329edbf81e87a66f808b5b96c5522af))
+
 # [1.4.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.3.1...v1.4.0) (2022-06-06)
 
 
