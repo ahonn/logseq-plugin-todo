@@ -6,7 +6,7 @@ export default function getScheduledTaskQuery() {
     [:find (pull ?b [*])
      :where
      [?b :block/marker ?marker]
-     [(contains? #{"NOW" "LATER" "TODO"} ?marker)]
+     [(contains? #{"NOW" "LATER" "TODO" "DOING"} ?marker)]
      [?b :block/page ?p]
      (or
        [?b :block/scheduled ?d]

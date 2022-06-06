@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import Checkbox from 'rc-checkbox';
 import { ArrowDownCircle, BrightnessUp } from 'tabler-icons-react';
 import useTaskManager from '../hooks/useTaskManager';
-import { TaskEntityObject } from '../models/TaskEntity';
+import { TaskEntityObject, TaskMarker } from '../models/TaskEntity';
 import useAppState from '../hooks/useAppState';
 import 'rc-checkbox/assets/index.css';
 
@@ -13,7 +13,7 @@ export interface ITaskItemProps {
 }
 
 const TaskItem: React.FC<ITaskItemProps> = (props) => {
-  const { userConfigs: { preferredDateFormat } } = useAppState();
+  const { userConfigs: { preferredDateFormat, preferredWorkflow } } = useAppState();
   const task = useTaskManager(props.item);
   const [checked, setChecked] = React.useState(task.completed);
 
@@ -35,7 +35,15 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
     window.logseq.hideMainUI();
   };
 
-  const contentClassName = classnames('line-clamp-3 cursor-pointer', {
+  const toggleMarker = () => {
+    if (preferredWorkflow === 'now') {
+      task.setMarker(task.marker === TaskMarker.NOW ? TaskMarker.LATER : TaskMarker.NOW);
+      return;
+    }
+    task.setMarker(task.marker === TaskMarker.TODO ? TaskMarker.DOING : TaskMarker.TODO);
+  }
+
+  const contentClassName = classnames('mb-1 line-clamp-3 cursor-pointer', {
     'line-through': checked,
     'text-gray-400': checked,
   });
@@ -46,27 +54,34 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
         <Checkbox
           checked={checked}
           onChange={handleTaskChange}
-          className="pt-1 mr-2"
+          className="pt-1 mr-1"
         />
       </div>
       <div className="flex-1 border-b border-gray-100 pb-2 pt-1 text-sm leading-normal break-all">
         <div className="flex justify-between items-center">
           <div className="flex-col">
-            <p className={contentClassName} onClick={openTaskBlock}>
-              {task.content}
+            <div className={contentClassName}>
+              <span className="py-0.5 px-1 mr-1 text-xs font-gray-300 bg-gray-200 rounded" onClick={toggleMarker}>
+                {task.marker}
+              </span>
+              <span onClick={openTaskBlock}>
+                {task.content}
+              </span>
+            </div>
+            <p>
+              {task.scheduled && (
+                <time
+                  className={classnames('text-sm', {
+                    'text-gray-400': !isExpiredTask,
+                    'text-red-400': isExpiredTask,
+                  })}
+                >
+                  {dayjs(task.scheduled.toString(), 'YYYYMMDD').format(
+                    preferredDateFormat,
+                  )}
+                </time>
+              )}
             </p>
-            {task.scheduled && (
-              <time
-                className={classnames('text-xs', {
-                  'text-gray-400': !isExpiredTask,
-                  'text-red-400': isExpiredTask,
-                })}
-              >
-                {dayjs(task.scheduled.toString(), 'YYYYMMDD').format(
-                  preferredDateFormat,
-                )}
-              </time>
-            )}
           </div>
           {task.isToday ? (
             <div className="pl-2 pr-1" onClick={() => task.setScheduled(null)}>

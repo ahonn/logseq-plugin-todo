@@ -26,6 +26,13 @@ const useTaskManager = (task: TaskEntityObject) => {
     window.logseq.Editor.scrollToBlockInPage(task.page.uuid, uuid);
   }, [uuid]);
 
+  const setMarker = useCallback(async (newMarker: TaskMarker) => {
+    console.log('setMarker', newMarker);
+    const nextContent = task.rawContent.replace(new RegExp(`^${marker}`), newMarker);
+    await window.logseq.Editor.updateBlock(uuid, nextContent);
+    refresh();
+  }, [uuid])
+
   const setScheduled = useCallback(async (date: Date | null) => {
     let nextContent = task.rawContent;
     if (date === null) {
@@ -56,6 +63,7 @@ const useTaskManager = (task: TaskEntityObject) => {
     isToday,
     toggle,
     openTask,
+    setMarker,
     setScheduled,
   };
 };

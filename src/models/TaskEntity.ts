@@ -1,3 +1,4 @@
+import removeMarkdown from 'remove-markdown';
 import { BlockEntity, PageEntity } from '@logseq/libs/dist/LSPlugin.user';
 import { getBlockUUID } from '../utils';
 
@@ -5,6 +6,7 @@ export enum TaskMarker {
   LATER = 'LATER',
   NOW = 'NOW',
   TODO = 'TODO',
+  DOING = 'DOING',
   DONE = 'DONE',
 }
 
@@ -58,6 +60,7 @@ class TaskEntity {
     content = content.replace(/DEADLINE: <[^>]+>/, '');
     content = content.replace(/(:LOGBOOK:)|(\*\s.*)|(:END:)|(CLOCK:.*)/gm, '');
     content = content.replace(/id::[^:]+/, '');
+    content = removeMarkdown(content);
     return content.trim();
   }
 
