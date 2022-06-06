@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.3.1...v1.4.0) (2022-06-06)
+
+
+### Features
+
+* show task marker and toggle when click marker label, [#11](https://github.com/ahonn/logseq-plugin-todo/issues/11) ([34e4a86](https://github.com/ahonn/logseq-plugin-todo/commit/34e4a868a9938e7398f74ff5a0f1b8574392b860))
+
 ## [1.3.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.3.0...v1.3.1) (2022-05-06)
 
 
