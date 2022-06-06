@@ -4,21 +4,23 @@ import * as ReactDOM from 'react-dom/client';
 import { logseq as plugin } from '../package.json';
 import App from './App';
 
+async function openTaskPanel() {
+  const rect = await logseq.App.queryElementRect('#' + plugin.id);
+  const taskPanel = document.querySelector('#' + plugin.id)!;
+
+  // @ts-ignore
+  Object.assign(taskPanel.style, {
+    position: 'fixed',
+    top: `${rect.top + 40}px`,
+    left: rect.left + 'px',
+  });
+
+  logseq.showMainUI();
+}
+
 function createModel() {
   return {
-    openTaskPanel: (e: any) => {
-      const { rect } = e;
-      const taskPanel = document.querySelector('#' + plugin.id)!;
-
-      // @ts-ignore
-      Object.assign(taskPanel.style, {
-        position: 'fixed',
-        top: `${rect.top + 40}px`,
-        left: rect.left + 'px',
-      });
-
-      logseq.showMainUI();
-    },
+    openTaskPanel,
   };
 }
 
@@ -32,11 +34,28 @@ function main() {
     logseq.App.registerUIItem('toolbar', {
       key: plugin.id,
       template: `
-        <a data-on-click="openTaskPanel" data-rect class="button">
+        <a id="${plugin.id}" data-on-click="openTaskPanel" data-rect class="button">
           <i class="ti ti-checkbox" style="font-size: 20px"></i>
         </a>
       `,
     });
+
+    logseq.App.registerCommandPalette(
+      {
+        key: 'logseq-plugin-todo',
+        label: 'Quick open task panel',
+        keybinding: {
+          binding: "mod+shift+t",
+        },
+      },
+      () => {
+        if (logseq.isMainUIVisible) {
+          logseq.hideMainUI();
+        } else {
+          openTaskPanel();
+        }
+      },
+    );
 
     const root = ReactDOM.createRoot(document.getElementById('app')!);
     root.render(

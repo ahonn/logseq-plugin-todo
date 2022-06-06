@@ -27,8 +27,6 @@ const useUserConfigs = () => {
   const visible = useAppVisible();
   const [configs, setConfigs] = useState<Partial<AppUserConfigs>>(DEFAULT_USER_CONFIGS);
 
-  console.log(configs);
-
   useEffect(() => {
     if (visible) {
       window.logseq.App.getUserConfigs().then((configs) => {

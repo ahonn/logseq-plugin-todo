@@ -27,7 +27,6 @@ const useTaskManager = (task: TaskEntityObject) => {
   }, [uuid]);
 
   const setMarker = useCallback(async (newMarker: TaskMarker) => {
-    console.log('setMarker', newMarker);
     const nextContent = task.rawContent.replace(new RegExp(`^${marker}`), newMarker);
     await window.logseq.Editor.updateBlock(uuid, nextContent);
     refresh();

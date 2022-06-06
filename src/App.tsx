@@ -1,5 +1,5 @@
 import 'virtual:windi.css';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
@@ -35,6 +35,16 @@ function App() {
     if (visible) {
       refresh();
       inputRef.current?.focus();
+
+      const keydownHandler = (ev: KeyboardEvent) => {
+        if (ev.key === 'Escape') {
+          window.logseq.hideMainUI();
+        }
+      };
+      document.addEventListener('keydown', keydownHandler);
+      return () => {
+        document.removeEventListener('keydown', keydownHandler);
+      };
     }
   }, [visible]);
 
