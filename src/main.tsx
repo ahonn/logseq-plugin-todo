@@ -3,6 +3,7 @@ import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { logseq as plugin } from '../package.json';
 import App from './App';
+import settings from './settings';
 
 async function openTaskPanel() {
   const rect = await logseq.App.queryElementRect('#' + plugin.id);
@@ -45,7 +46,7 @@ function main() {
         key: 'logseq-plugin-todo',
         label: 'Quick open task panel',
         keybinding: {
-          binding: "mod+shift+t",
+          binding: 'mod+shift+t',
         },
       },
       () => {
@@ -68,4 +69,8 @@ function main() {
   }
 }
 
-logseq.ready(createModel()).then(main).catch(console.error);
+logseq
+  .useSettingsSchema(settings)
+  .ready(createModel())
+  .then(main)
+  .catch(console.error);

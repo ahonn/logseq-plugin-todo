@@ -1,4 +1,5 @@
 import React from 'react';
+import useThemeStyle from '../hooks/useThemeStyle';
 import { TaskEntityObject } from '../models/TaskEntity';
 import TaskItem from './TaskItem';
 
@@ -9,6 +10,7 @@ export interface ITaskSectionProps {
 
 const TaskSection: React.FC<ITaskSectionProps> = (props) => {
   const { title, tasks } = props;
+  const themeStyle = useThemeStyle();
 
   if (tasks.length === 0) {
     return null;
@@ -16,13 +18,17 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
 
   return (
     <div className="py-1">
-      <h2 className="py-1 text-red-500">{title}</h2>
+      <h2
+        className="py-1 text-blue-400"
+        style={{
+          color: themeStyle.sectionTitleColor,
+        }}
+      >
+        {title}
+      </h2>
       <div>
         {tasks.map((task) => (
-          <TaskItem
-            key={task.uuid}
-            item={task}
-          />
+          <TaskItem key={task.uuid} item={task} />
         ))}
       </div>
     </div>
