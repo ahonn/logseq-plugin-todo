@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.5.0...v1.6.0) (2022-08-06)
+
+
+### Features
+
+* add plugin settings to customize theme colors, [#18](https://github.com/ahonn/logseq-plugin-todo/issues/18) ([3f0d862](https://github.com/ahonn/logseq-plugin-todo/commit/3f0d86292305ebf543c5a149b378f15c49b414b1))
+
 # [1.5.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.4.0...v1.5.0) (2022-06-06)
 
 
