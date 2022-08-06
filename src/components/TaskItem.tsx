@@ -7,15 +7,19 @@ import useTaskManager from '../hooks/useTaskManager';
 import { TaskEntityObject, TaskMarker } from '../models/TaskEntity';
 import useAppState from '../hooks/useAppState';
 import 'rc-checkbox/assets/index.css';
+import useThemeStyle from '../hooks/useThemeStyle';
 
 export interface ITaskItemProps {
   item: TaskEntityObject;
 }
 
 const TaskItem: React.FC<ITaskItemProps> = (props) => {
-  const { userConfigs: { preferredDateFormat, preferredWorkflow } } = useAppState();
+  const {
+    userConfigs: { preferredDateFormat, preferredWorkflow },
+  } = useAppState();
   const task = useTaskManager(props.item);
   const [checked, setChecked] = React.useState(task.completed);
+  const themeStyle = useThemeStyle();
 
   const isExpiredTask = useMemo(() => {
     if (!task.scheduled) {
@@ -37,11 +41,15 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
 
   const toggleMarker = () => {
     if (preferredWorkflow === 'now') {
-      task.setMarker(task.marker === TaskMarker.NOW ? TaskMarker.LATER : TaskMarker.NOW);
+      task.setMarker(
+        task.marker === TaskMarker.NOW ? TaskMarker.LATER : TaskMarker.NOW,
+      );
       return;
     }
-    task.setMarker(task.marker === TaskMarker.TODO ? TaskMarker.DOING : TaskMarker.TODO);
-  }
+    task.setMarker(
+      task.marker === TaskMarker.TODO ? TaskMarker.DOING : TaskMarker.TODO,
+    );
+  };
 
   const contentClassName = classnames('mb-1 line-clamp-3 cursor-pointer', {
     'line-through': checked,
@@ -49,7 +57,10 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   });
 
   return (
-    <div key={task.uuid} className={`flex flex-row pb-1 priority-${task.priority.toLowerCase()}`}>
+    <div
+      key={task.uuid}
+      className={`flex flex-row pb-1 dark:text-gray-100 priority-${task.priority.toLowerCase()}`}
+    >
       <div>
         <Checkbox
           checked={checked}
@@ -57,16 +68,18 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
           className="pt-1 mr-1"
         />
       </div>
-      <div className="flex-1 border-b border-gray-100 pb-2 pt-1 text-sm leading-normal break-all">
+      <div className="flex-1 border-b border-gray-100 dark:border-gray-400 pb-2 pt-1 text-sm leading-normal break-all">
         <div className="flex justify-between items-center">
           <div className="flex-col">
             <div className={contentClassName}>
-              <span className="py-0.5 px-1 mr-1 text-xs font-gray-300 bg-gray-200 rounded" onClick={toggleMarker}>
+              <span
+                className="py-0.5 px-1 mr-1 text-xs font-gray-300 rounded"
+                style={{ backgroundColor: themeStyle.secondaryBackgroundColor }}
+                onClick={toggleMarker}
+              >
                 {task.marker}
               </span>
-              <span onClick={openTaskBlock}>
-                {task.content}
-              </span>
+              <span onClick={openTaskBlock}>{task.content}</span>
             </div>
             <p>
               {task.scheduled && (

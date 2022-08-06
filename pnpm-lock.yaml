@@ -18,6 +18,7 @@ specifiers:
   dayjs: ^1.11.1
   eslint: 8.13.0
   eslint-plugin-react: 7.29.4
+  eslint-plugin-react-hooks: ^4.6.0
   node-fetch: 3.2.3
   rc-checkbox: ^2.3.2
   react: ^18.0.0
@@ -62,6 +63,7 @@ devDependencies:
   conventional-changelog-conventionalcommits: 4.6.3
   eslint: 8.13.0
   eslint-plugin-react: 7.29.4_eslint@8.13.0
+  eslint-plugin-react-hooks: 4.6.0_eslint@8.13.0
   node-fetch: 3.2.3
   semantic-release: 19.0.2
   typescript: 4.6.3
@@ -303,6 +305,13 @@ packages:
 
   /@babel/runtime/7.17.7:
     resolution: {integrity: sha512-L6rvG9GDxaLgFjg41K+5Yv9OMrU98sWe+Ykmc6FDJW/+vYZMhdOMKkISgzptMaERHvS2Y2lw9MDRm2gHhlQQoA==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.9
+    dev: false
+
+  /@babel/runtime/7.18.9:
+    resolution: {integrity: sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.9
@@ -1757,6 +1766,15 @@ packages:
   /escape-string-regexp/4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+    dev: true
+
+  /eslint-plugin-react-hooks/4.6.0_eslint@8.13.0:
+    resolution: {integrity: sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
+    dependencies:
+      eslint: 8.13.0
     dev: true
 
   /eslint-plugin-react/7.29.4_eslint@8.13.0:
@@ -3568,7 +3586,7 @@ packages:
   /rtl-css-js/1.15.0:
     resolution: {integrity: sha512-99Cu4wNNIhrI10xxUaABHsdDqzalrSRTie4GeCmbGVuehm4oj+fIy8fTzB+16pmKe8Bv9rl+hxIBez6KxExTew==}
     dependencies:
-      '@babel/runtime': 7.17.7
+      '@babel/runtime': 7.18.9
     dev: false
 
   /run-parallel/1.2.0:
