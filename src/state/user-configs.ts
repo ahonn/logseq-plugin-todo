@@ -1,6 +1,5 @@
 import { AppUserConfigs } from '@logseq/libs/dist/LSPlugin';
 import { atom, AtomEffect } from 'recoil';
-import { visibleState } from './visible';
 
 export const DEFAULT_USER_CONFIGS: Partial<AppUserConfigs> = {
   preferredLanguage: 'en',

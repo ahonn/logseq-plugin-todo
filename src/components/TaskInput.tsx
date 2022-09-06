@@ -1,6 +1,7 @@
 import React, { useImperativeHandle, useRef } from 'react';
+import { useRecoilValue } from 'recoil';
 import { CirclePlus } from 'tabler-icons-react';
-import useThemeStyle from '../hooks/useThemeStyle';
+import { themeStyleState } from '../state/theme';
 
 export interface ITaskInputRef {
   focus: () => void;
@@ -16,7 +17,7 @@ const TaskInput: React.ForwardRefRenderFunction<
 > = (props, ref) => {
   const [content, setContent] = React.useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const themeStyle = useThemeStyle();
+  const themeStyle = useRecoilValue(themeStyleState);
 
   const focus = () => {
     if (inputRef.current) {

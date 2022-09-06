@@ -6,14 +6,13 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import TaskInput, { ITaskInputRef } from './components/TaskInput';
 import TaskSection from './components/TaskSection';
 import { logseq as plugin } from '../package.json';
-import { withAppState } from './hooks/useAppState';
-import './style.css';
-import useThemeStyle from './hooks/useThemeStyle';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import { visibleState } from './state/visible';
 import { tasksState } from './state/tasks';
-import getTodayTaskQuery from './querys/today';
 import { userConfigsState } from './state/user-configs';
+import { themeStyleState } from './state/theme';
+import getTodayTaskQuery from './querys/today';
+import './style.css';
 
 dayjs.extend(advancedFormat);
 
@@ -33,7 +32,7 @@ function ErrorFallback({ error }: FallbackProps) {
 function App() {
   const visible = useRecoilValue(visibleState);
   const userConfigs = useRecoilValue(userConfigsState);
-  const themeStyle = useThemeStyle();
+  const themeStyle = useRecoilValue(themeStyleState);
   const innerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<ITaskInputRef>(null);
 
@@ -108,4 +107,4 @@ function App() {
   );
 }
 
-export default withAppState(App);
+export default App;

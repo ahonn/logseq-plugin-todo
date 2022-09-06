@@ -35,4 +35,7 @@ async function getTaskEntitiesByQuery(query: string) {
 export const tasksState = selectorFamily({
   key: 'tasks',
   get: (query: string) => () => getTaskEntitiesByQuery(query),
+  cachePolicy_UNSTABLE: {
+    eviction: 'most-recent',
+  },
 });

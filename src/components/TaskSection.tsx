@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
-import useThemeStyle from '../hooks/useThemeStyle';
 import { tasksState } from '../state/tasks';
+import { themeStyleState } from '../state/theme';
 import { visibleState } from '../state/visible';
 import TaskItem from './TaskItem';
 
@@ -15,7 +15,7 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
   const visible = useRecoilValue(visibleState);
   const tasks = useRecoilValue(tasksState(query));
   const refresh = useRecoilRefresher_UNSTABLE(tasksState(query));
-  const themeStyle = useThemeStyle();
+  const themeStyle = useRecoilValue(themeStyleState);
 
   useEffect(() => {
     if (visible) {

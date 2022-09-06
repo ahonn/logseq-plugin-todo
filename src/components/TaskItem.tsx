@@ -5,9 +5,10 @@ import Checkbox from 'rc-checkbox';
 import { ArrowDownCircle, BrightnessUp } from 'tabler-icons-react';
 import useTaskManager from '../hooks/useTaskManager';
 import { TaskEntityObject, TaskMarker } from '../models/TaskEntity';
-import useAppState from '../hooks/useAppState';
 import 'rc-checkbox/assets/index.css';
-import useThemeStyle from '../hooks/useThemeStyle';
+import { useRecoilValue } from 'recoil';
+import { userConfigsState } from '../state/user-configs';
+import { themeStyleState } from '../state/theme';
 
 export interface ITaskItemProps {
   item: TaskEntityObject;
@@ -15,12 +16,10 @@ export interface ITaskItemProps {
 }
 
 const TaskItem: React.FC<ITaskItemProps> = (props) => {
-  const {
-    userConfigs: { preferredDateFormat, preferredWorkflow },
-  } = useAppState();
+  const themeStyle = useRecoilValue(themeStyleState);
   const task = useTaskManager(props.item, props.onChange);
+  const { preferredDateFormat, preferredWorkflow } = useRecoilValue(userConfigsState);
   const [checked, setChecked] = React.useState(task.completed);
-  const themeStyle = useThemeStyle();
 
   const isExpiredTask = useMemo(() => {
     if (!task.scheduled) {
