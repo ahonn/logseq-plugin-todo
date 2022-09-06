@@ -3,13 +3,17 @@ import React, { useEffect, useRef } from 'react';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import useAppVisible from './hooks/useAppVisible';
 import TaskInput, { ITaskInputRef } from './components/TaskInput';
 import TaskSection from './components/TaskSection';
 import { logseq as plugin } from '../package.json';
-import useAppState, { withAppState } from './hooks/useAppState';
+import { withAppState } from './hooks/useAppState';
 import './style.css';
 import useThemeStyle from './hooks/useThemeStyle';
+import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
+import { visibleState } from './state/visible';
+import { tasksState } from './state/tasks';
+import getTodayTaskQuery from './querys/today';
+import { userConfigsState } from './state/user-configs';
 
 dayjs.extend(advancedFormat);
 
@@ -27,15 +31,16 @@ function ErrorFallback({ error }: FallbackProps) {
 }
 
 function App() {
+  const visible = useRecoilValue(visibleState);
+  const userConfigs = useRecoilValue(userConfigsState);
+  const themeStyle = useThemeStyle();
   const innerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<ITaskInputRef>(null);
-  const visible = useAppVisible();
-  const { userConfigs, refresh, tasks } = useAppState();
-  const themeStyle = useThemeStyle();
+
+  const refreshTodayTasks = useRecoilRefresher_UNSTABLE(tasksState(getTodayTaskQuery()));
 
   useEffect(() => {
     if (visible) {
-      refresh();
       inputRef.current?.focus();
 
       const keydownHandler = (ev: KeyboardEvent) => {
@@ -48,7 +53,11 @@ function App() {
         document.removeEventListener('keydown', keydownHandler);
       };
     }
-  }, [refresh, visible]);
+  }, [visible]);
+
+  const refreshAll = () => {
+    refreshTodayTasks();
+  };
 
   const handleClickOutside = (e: React.MouseEvent) => {
     if (!innerRef.current?.contains(e.target as any)) {
@@ -71,7 +80,7 @@ function App() {
       `${preferredTodo} ${content}`,
       { isPageBlock: true, before: false },
     );
-    refresh();
+    refreshAll();
   };
 
   return (
@@ -89,11 +98,9 @@ function App() {
         >
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <TaskInput ref={inputRef} onCreateTask={createNewTask} />
-            <div>
-              <TaskSection title="Today" tasks={tasks.today} />
-              <TaskSection title="Scheduled" tasks={tasks.scheduled} />
-              <TaskSection title="Anytime" tasks={tasks.anytime} />
-            </div>
+            <React.Suspense fallback={null}>
+              <TaskSection title="Today" query={getTodayTaskQuery()} />
+            </React.Suspense>
           </ErrorBoundary>
         </div>
       </div>

@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
-import useUserConfigs from "./useUserConfigs";
+import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { userConfigsState } from '../state/user-configs';
 
 const useThemeMode = () => {
-  const userConfigs = useUserConfigs();
+  // const userConfigs = useUserConfigs();
+  const userConfigs = useRecoilValue(userConfigsState);
   const [themeMode, setThemeMode] = useState(userConfigs.preferredThemeMode);
-  const isLightMode = themeMode === "light";
-  const isDarkMode = themeMode === "dark";
+  const isLightMode = themeMode === 'light';
+  const isDarkMode = themeMode === 'dark';
 
   useEffect(() => {
     setThemeMode(userConfigs.preferredThemeMode);

@@ -1,11 +1,12 @@
 import { AppUserConfigs } from '@logseq/libs/dist/LSPlugin.user';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { TaskEntityObject } from '../models/TaskEntity';
 import getAnytimeTaskQuery from '../querys/anytime';
 import getScheduledTaskQuery from '../querys/scheduled';
 import getTodayTaskQuery from '../querys/today';
+import { DEFAULT_USER_CONFIGS, userConfigsState } from '../state/user-configs';
 import useTaskQuery from './useTaskQuery';
-import useUserConfigs, { DEFAULT_USER_CONFIGS } from './useUserConfigs';
 
 export interface IAppState {
   userConfigs: Partial<AppUserConfigs>;
@@ -57,7 +58,7 @@ export const withAppState = <P extends {}>(
     const [settings, setSettings] = useState(
       (logseq.settings as unknown as IAppState['settings']) ?? DEFAULT_SETTINGS,
     );
-    const userConfigs = useUserConfigs();
+    const userConfigs = useRecoilValue(userConfigsState);
     const todayTask = useTaskQuery(getTodayTaskQuery());
     const scheduledTask = useTaskQuery(getScheduledTaskQuery());
     const anytimeTask = useTaskQuery(getAnytimeTaskQuery());

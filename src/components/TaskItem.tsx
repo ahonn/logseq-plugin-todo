@@ -11,13 +11,14 @@ import useThemeStyle from '../hooks/useThemeStyle';
 
 export interface ITaskItemProps {
   item: TaskEntityObject;
+  onChange(): void;
 }
 
 const TaskItem: React.FC<ITaskItemProps> = (props) => {
   const {
     userConfigs: { preferredDateFormat, preferredWorkflow },
   } = useAppState();
-  const task = useTaskManager(props.item);
+  const task = useTaskManager(props.item, props.onChange);
   const [checked, setChecked] = React.useState(task.completed);
   const themeStyle = useThemeStyle();
 

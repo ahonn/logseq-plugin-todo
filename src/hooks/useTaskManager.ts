@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
 import { useCallback, useMemo } from 'react';
+import { useRecoilValue } from 'recoil';
 import { TaskEntityObject, TaskMarker } from '../models/TaskEntity';
-import useAppState from './useAppState';
+import { userConfigsState } from '../state/user-configs';
 
-const useTaskManager = (task: TaskEntityObject) => {
+const useTaskManager = (task: TaskEntityObject, onChange: () => void) => {
   const { uuid, marker, scheduled, completed } = task;
-  const { userConfigs, refresh } = useAppState();
-  const { preferredTodo } = userConfigs;
+  const { preferredTodo } = useRecoilValue(userConfigsState);
 
   const isToday = useMemo(() => {
     if (!scheduled) return false;
@@ -19,8 +19,8 @@ const useTaskManager = (task: TaskEntityObject) => {
       uuid,
       task.rawContent.replace(marker, nextMarker),
     );
-    refresh();
-  }, [completed, preferredTodo, task, refresh]);
+    onChange();
+  }, [completed, preferredTodo, task, onChange]);
 
   const openTask = useCallback(async () => {
     window.logseq.Editor.scrollToBlockInPage(task.page.uuid, uuid);
@@ -29,7 +29,7 @@ const useTaskManager = (task: TaskEntityObject) => {
   const setMarker = useCallback(async (newMarker: TaskMarker) => {
     const nextContent = task.rawContent.replace(new RegExp(`^${marker}`), newMarker);
     await window.logseq.Editor.updateBlock(uuid, nextContent);
-    refresh();
+    onChange();
   }, [uuid])
 
   const setScheduled = useCallback(async (date: Date | null) => {
@@ -37,7 +37,7 @@ const useTaskManager = (task: TaskEntityObject) => {
     if (date === null) {
       nextContent = task.rawContent.replace(/SCHEDULED: <[^>]+>/, '');
       await window.logseq.Editor.updateBlock(uuid, nextContent);
-      refresh();
+      onChange();
       return;
     }
 
@@ -54,8 +54,8 @@ const useTaskManager = (task: TaskEntityObject) => {
     }
 
     await window.logseq.Editor.updateBlock(uuid, nextContent);
-    refresh();
-  }, [task, refresh]);
+    onChange();
+  }, [task, onChange]);
 
   return {
     ...task,

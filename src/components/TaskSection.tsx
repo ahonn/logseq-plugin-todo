@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import useThemeStyle from '../hooks/useThemeStyle';
-import { TaskEntityObject } from '../models/TaskEntity';
+import { tasksState } from '../state/tasks';
+import { visibleState } from '../state/visible';
 import TaskItem from './TaskItem';
 
 export interface ITaskSectionProps {
   title: string;
-  tasks: TaskEntityObject[];
+  query: string;
 }
 
 const TaskSection: React.FC<ITaskSectionProps> = (props) => {
-  const { title, tasks } = props;
+  const { title, query } = props;
+  const visible = useRecoilValue(visibleState);
+  const tasks = useRecoilValue(tasksState(query));
+  const refresh = useRecoilRefresher_UNSTABLE(tasksState(query));
   const themeStyle = useThemeStyle();
+
+  useEffect(() => {
+    if (visible) {
+      refresh();
+    }
+  }, [visible, refresh])
 
   if (tasks.length === 0) {
     return null;
@@ -28,7 +39,7 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
       </h2>
       <div>
         {tasks.map((task) => (
-          <TaskItem key={task.uuid} item={task} />
+          <TaskItem key={task.uuid} item={task} onChange={refresh} />
         ))}
       </div>
     </div>

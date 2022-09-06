@@ -1,6 +1,7 @@
 import '@logseq/libs';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
+import { RecoilRoot } from 'recoil';
 import { logseq as plugin } from '../package.json';
 import App from './App';
 import settings from './settings';
@@ -61,7 +62,9 @@ function main() {
     const root = ReactDOM.createRoot(document.getElementById('app')!);
     root.render(
       <React.StrictMode>
-        <App />
+        <RecoilRoot>
+          <App />
+        </RecoilRoot>
       </React.StrictMode>,
     );
   } catch (e: any) {
