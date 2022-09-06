@@ -13,6 +13,8 @@ import { userConfigsState } from './state/user-configs';
 import { themeStyleState } from './state/theme';
 import getTodayTaskQuery from './querys/today';
 import './style.css';
+import getScheduledTaskQuery from './querys/scheduled';
+import getAnytimeTaskQuery from './querys/anytime';
 
 dayjs.extend(advancedFormat);
 
@@ -30,13 +32,14 @@ function ErrorFallback({ error }: FallbackProps) {
 }
 
 function App() {
+  const innerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<ITaskInputRef>(null);
   const visible = useRecoilValue(visibleState);
   const userConfigs = useRecoilValue(userConfigsState);
   const themeStyle = useRecoilValue(themeStyleState);
-  const innerRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<ITaskInputRef>(null);
-
   const refreshTodayTasks = useRecoilRefresher_UNSTABLE(tasksState(getTodayTaskQuery()));
+  const refreshScheduledTasks = useRecoilRefresher_UNSTABLE(tasksState(getScheduledTaskQuery()));
+  const refreshAnytimeTasks = useRecoilRefresher_UNSTABLE(tasksState(getAnytimeTaskQuery()));
 
   useEffect(() => {
     if (visible) {
@@ -56,6 +59,8 @@ function App() {
 
   const refreshAll = () => {
     refreshTodayTasks();
+    refreshScheduledTasks();
+    refreshAnytimeTasks();
   };
 
   const handleClickOutside = (e: React.MouseEvent) => {
@@ -99,6 +104,8 @@ function App() {
             <TaskInput ref={inputRef} onCreateTask={createNewTask} />
             <React.Suspense fallback={null}>
               <TaskSection title="Today" query={getTodayTaskQuery()} />
+              <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
+              <TaskSection title="Anytime" query={getAnytimeTaskQuery()} />
             </React.Suspense>
           </ErrorBoundary>
         </div>
