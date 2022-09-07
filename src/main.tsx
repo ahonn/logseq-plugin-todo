@@ -1,10 +1,12 @@
 import '@logseq/libs';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { RecoilRoot } from 'recoil';
+import { MutableSnapshot, RecoilRoot } from 'recoil';
 import { logseq as plugin } from '../package.json';
 import App from './App';
+import getTodayTaskQuery from './querys/today';
 import settings from './settings';
+import { tasksState } from './state/tasks';
 
 async function openTaskPanel() {
   const rect = await logseq.App.queryElementRect('#' + plugin.id);

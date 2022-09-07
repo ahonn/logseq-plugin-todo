@@ -6,7 +6,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import TaskInput, { ITaskInputRef } from './components/TaskInput';
 import TaskSection from './components/TaskSection';
 import { logseq as plugin } from '../package.json';
-import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilRefresher_UNSTABLE, useRecoilSnapshot, useRecoilValue } from 'recoil';
 import { visibleState } from './state/visible';
 import { tasksState } from './state/tasks';
 import { userConfigsState } from './state/user-configs';
@@ -37,9 +37,15 @@ function App() {
   const visible = useRecoilValue(visibleState);
   const userConfigs = useRecoilValue(userConfigsState);
   const themeStyle = useRecoilValue(themeStyleState);
-  const refreshTodayTasks = useRecoilRefresher_UNSTABLE(tasksState(getTodayTaskQuery()));
-  const refreshScheduledTasks = useRecoilRefresher_UNSTABLE(tasksState(getScheduledTaskQuery()));
-  const refreshAnytimeTasks = useRecoilRefresher_UNSTABLE(tasksState(getAnytimeTaskQuery()));
+
+  const refreshAll = useRecoilCallback(({ snapshot, refresh }) =>
+    () => {
+      for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
+        refresh(node);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     if (visible) {
@@ -56,12 +62,6 @@ function App() {
       };
     }
   }, [visible]);
-
-  const refreshAll = () => {
-    refreshTodayTasks();
-    refreshScheduledTasks();
-    refreshAnytimeTasks();
-  };
 
   const handleClickOutside = (e: React.MouseEvent) => {
     if (!innerRef.current?.contains(e.target as any)) {

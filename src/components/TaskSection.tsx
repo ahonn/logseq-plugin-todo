@@ -39,7 +39,7 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
       </h2>
       <div>
         {tasks.map((task) => (
-          <TaskItem key={task.uuid} item={task} onChange={refresh} />
+          <TaskItem key={task.uuid} task={task} onChange={refresh} />
         ))}
       </div>
     </div>

@@ -3,22 +3,28 @@ import classnames from 'classnames';
 import dayjs from 'dayjs';
 import Checkbox from 'rc-checkbox';
 import { ArrowDownCircle, BrightnessUp } from 'tabler-icons-react';
-import useTaskManager from '../hooks/useTaskManager';
 import { TaskEntityObject, TaskMarker } from '../models/TaskEntity';
 import 'rc-checkbox/assets/index.css';
 import { useRecoilValue } from 'recoil';
 import { userConfigsState } from '../state/user-configs';
 import { themeStyleState } from '../state/theme';
+import {
+  isTodayTask,
+  openTask,
+  toggleTaskMarker,
+  setTaskScheduled,
+  toggleTaskStatus,
+} from '../api';
 
 export interface ITaskItemProps {
-  item: TaskEntityObject;
+  task: TaskEntityObject;
   onChange(): void;
 }
 
 const TaskItem: React.FC<ITaskItemProps> = (props) => {
+  const { task, onChange } = props;
   const themeStyle = useRecoilValue(themeStyleState);
-  const task = useTaskManager(props.item, props.onChange);
-  const { preferredDateFormat, preferredWorkflow } = useRecoilValue(userConfigsState);
+  const { preferredDateFormat, preferredTodo } = useRecoilValue(userConfigsState);
   const [checked, setChecked] = React.useState(task.completed);
 
   const isExpiredTask = useMemo(() => {
@@ -29,26 +35,19 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
     return date.isBefore(dayjs(), 'day');
   }, [task.scheduled]);
 
-  const handleTaskChange = async () => {
-    await task.toggle();
-    setChecked(!checked);
-  };
-
   const openTaskBlock = () => {
-    task.openTask();
+    openTask(task);
     window.logseq.hideMainUI();
   };
 
+  const toggleStatus = async () => {
+    await toggleTaskStatus(task, { preferredTodo });
+    setChecked(!checked);
+  };
+
   const toggleMarker = () => {
-    if (preferredWorkflow === 'now') {
-      task.setMarker(
-        task.marker === TaskMarker.NOW ? TaskMarker.LATER : TaskMarker.NOW,
-      );
-      return;
-    }
-    task.setMarker(
-      task.marker === TaskMarker.TODO ? TaskMarker.DOING : TaskMarker.TODO,
-    );
+    toggleTaskMarker(task, { preferredTodo });
+    onChange();
   };
 
   const contentClassName = classnames('mb-1 line-clamp-3 cursor-pointer', {
@@ -64,7 +63,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
       <div>
         <Checkbox
           checked={checked}
-          onChange={handleTaskChange}
+          onChange={toggleStatus}
           className="pt-1 mr-1"
         />
       </div>
@@ -96,8 +95,11 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
               )}
             </p>
           </div>
-          {task.isToday ? (
-            <div className="pl-2 pr-1" onClick={() => task.setScheduled(null)}>
+          {isTodayTask(task) ? (
+            <div
+              className="pl-2 pr-1"
+              onClick={() => setTaskScheduled(task, null)}
+            >
               <ArrowDownCircle
                 size={22}
                 className={classnames('stroke-gray-300', {
@@ -109,7 +111,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
           ) : (
             <div
               className="pl-2 pr-1"
-              onClick={() => task.setScheduled(new Date())}
+              onClick={() => setTaskScheduled(task, new Date())}
             >
               <BrightnessUp
                 size={22}
