@@ -72,13 +72,15 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
           <div className="flex-col">
             <div className={contentClassName}>
               <span
-                className="py-0.5 px-1 mr-1 text-xs font-gray-300 rounded"
+                className="py-0.5 px-1 mr-1 text-xs text-gray-600 dark:text-gray-400 rounded"
                 style={{ backgroundColor: themeStyle.secondaryBackgroundColor }}
                 onClick={toggleMarker}
               >
                 {task.marker}
               </span>
-              <span onClick={openTaskBlock}>{task.content}</span>
+              <span className="text-gray-700 dark:text-gray-300" onClick={openTaskBlock}>
+                {task.content}
+              </span>
             </div>
             <p>
               {task.scheduled && (

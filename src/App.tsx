@@ -9,11 +9,11 @@ import { logseq as plugin } from '../package.json';
 import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { visibleState } from './state/visible';
 import { userConfigsState } from './state/user-configs';
-import { themeStyleState } from './state/theme';
+import { themeModeState, themeStyleState } from './state/theme';
 import getTodayTaskQuery from './querys/today';
-import './style.css';
 import getScheduledTaskQuery from './querys/scheduled';
 import getAnytimeTaskQuery from './querys/anytime';
+import './style.css';
 
 dayjs.extend(advancedFormat);
 
@@ -36,6 +36,7 @@ function App() {
   const visible = useRecoilValue(visibleState);
   const userConfigs = useRecoilValue(userConfigsState);
   const themeStyle = useRecoilValue(themeStyleState);
+  const themeMode = useRecoilValue(themeModeState);
 
   const refreshAll = useRecoilCallback(({ snapshot, refresh }) =>
     () => {
@@ -61,6 +62,16 @@ function App() {
       };
     }
   }, [visible]);
+
+  useEffect(() => {
+    if (themeMode === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+  }, [themeMode]);
 
   const handleClickOutside = (e: React.MouseEvent) => {
     if (!innerRef.current?.contains(e.target as any)) {

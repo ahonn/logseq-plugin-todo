@@ -6,17 +6,12 @@ type ThemeMode = 'dark' | 'light';
 
 const themeModeChangedEffect: AtomEffect<ThemeMode> = ({
   setSelf,
-  trigger,
   getPromise,
 }) => {
-  const setThemeMode = async () => {
+  setTimeout(async () => {
     const userConfigs = await getPromise(userConfigsState);
     setSelf(userConfigs.preferredThemeMode ?? 'light');
-  };
-
-  if (trigger === 'get') {
-    setThemeMode();
-  }
+  }, 0);
 
   logseq.App.onThemeModeChanged((evt) => {
     setSelf(evt.mode);
