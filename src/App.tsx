@@ -6,9 +6,8 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import TaskInput, { ITaskInputRef } from './components/TaskInput';
 import TaskSection from './components/TaskSection';
 import { logseq as plugin } from '../package.json';
-import { useRecoilCallback, useRecoilRefresher_UNSTABLE, useRecoilSnapshot, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { visibleState } from './state/visible';
-import { tasksState } from './state/tasks';
 import { userConfigsState } from './state/user-configs';
 import { themeStyleState } from './state/theme';
 import getTodayTaskQuery from './querys/today';
@@ -102,11 +101,11 @@ function App() {
         >
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <TaskInput ref={inputRef} onCreateTask={createNewTask} />
-            <React.Suspense fallback={null}>
+            <div>
               <TaskSection title="Today" query={getTodayTaskQuery()} />
               <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
               <TaskSection title="Anytime" query={getAnytimeTaskQuery()} />
-            </React.Suspense>
+            </div>
           </ErrorBoundary>
         </div>
       </div>
