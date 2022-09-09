@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import dayjs from 'dayjs';
 import Checkbox from 'rc-checkbox';
 import { ArrowDownCircle, BrightnessUp } from 'tabler-icons-react';
-import { TaskEntityObject, TaskMarker } from '../models/TaskEntity';
+import { TaskEntityObject } from '../models/TaskEntity';
 import 'rc-checkbox/assets/index.css';
 import { useRecoilValue } from 'recoil';
 import { userConfigsState } from '../state/user-configs';
