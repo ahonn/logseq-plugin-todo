@@ -1,6 +1,5 @@
 import { AppUserConfigs } from '@logseq/libs/dist/LSPlugin';
-import { useEffect, useState } from 'react';
-import useAppVisible from './useAppVisible';
+import { atom, AtomEffect } from 'recoil';
 
 export const DEFAULT_USER_CONFIGS: Partial<AppUserConfigs> = {
   preferredLanguage: 'en',
@@ -23,24 +22,24 @@ function fixPreferredDateFormat(preferredDateFormat: string) {
   return format;
 }
 
-const useUserConfigs = () => {
-  const visible = useAppVisible();
-  const [configs, setConfigs] = useState<Partial<AppUserConfigs>>(DEFAULT_USER_CONFIGS);
-
-  useEffect(() => {
-    if (visible) {
-      window.logseq.App.getUserConfigs().then((configs) => {
-        setConfigs({
-          ...configs,
-          preferredDateFormat: fixPreferredDateFormat(
-            configs.preferredDateFormat,
-          ),
-        });
-      });
-    }
-  }, [visible]);
-
-  return configs;
+const updateUserConfigsEffect: AtomEffect<Partial<AppUserConfigs>> = ({
+  setSelf,
+  trigger,
+}) => {
+  if (trigger === 'get') {
+    window.logseq.App.getUserConfigs()
+      .then((configs) => ({
+        ...configs,
+        preferredDateFormat: fixPreferredDateFormat(
+          configs.preferredDateFormat,
+        ),
+      }))
+      .then(setSelf);
+  }
 };
 
-export default useUserConfigs;
+export const userConfigsState = atom({
+  key: 'userConfigs',
+  default: DEFAULT_USER_CONFIGS,
+  effects: [updateUserConfigsEffect],
+});
