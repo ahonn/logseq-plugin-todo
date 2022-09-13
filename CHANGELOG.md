@@ -1,3 +1,17 @@
+# [1.7.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.6.0...v1.7.0) (2022-09-13)
+
+
+### Bug Fixes
+
+* fixed theme mode not work ([db4b7e2](https://github.com/ahonn/logseq-plugin-todo/commit/db4b7e2177090d5ae9dc3565e4e37381288f867c))
+
+
+### Features
+
+* add scheduled/anytime tasks back ([4a41a7e](https://github.com/ahonn/logseq-plugin-todo/commit/4a41a7ea138742aa7ac6bd0a628638a83de7f66b))
+* create task api and remove useTaskManager ([48fa9e2](https://github.com/ahonn/logseq-plugin-todo/commit/48fa9e2cf7168103301d7a1c0cfa4d05c15544ac))
+* use useRecoilValueLoadable to load tasks ([b158a5b](https://github.com/ahonn/logseq-plugin-todo/commit/b158a5bf98dd8f10a3508be3a8634b258eb6953b))
+
 # [1.6.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.5.0...v1.6.0) (2022-08-06)
 
 
