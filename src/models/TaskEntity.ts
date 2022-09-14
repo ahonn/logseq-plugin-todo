@@ -31,6 +31,7 @@ export interface TaskEntityObject {
   marker: TaskMarker;
   priority: TaskPriority;
   scheduled: number;
+  repeated: boolean;
   completed: boolean;
   page: {
     name: string;
@@ -80,6 +81,10 @@ class TaskEntity {
     return this.block.scheduled ?? this.block.deadline ?? this.page.journalDay;
   }
 
+  public get repeated(): boolean {
+    return !!this.block.repeated;
+  }
+
   public get completed(): boolean {
     return this.marker === TaskMarker.DONE;
   }
@@ -97,6 +102,7 @@ class TaskEntity {
       marker: this.marker,
       priority: this.priority,
       scheduled: this.scheduled,
+      repeated: this.repeated,
       completed: this.completed,
       page: {
         name: this.page.name,

@@ -54,7 +54,6 @@ export async function setTaskScheduled(task: TaskEntityObject, date: Date | null
       scheduledString,
     );
   } else {
-    // FIXME: 多行文本会有问题
     const lines = rawContent.split('\n');
     lines.splice(1, 0, scheduledString);
     newRawContent = lines.join('\n');

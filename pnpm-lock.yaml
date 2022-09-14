@@ -6,6 +6,7 @@ specifiers:
   '@semantic-release/exec': 6.0.3
   '@semantic-release/git': 10.0.1
   '@semantic-release/npm': 9.0.1
+  '@types/lodash-es': ^4.17.6
   '@types/node': 17.0.23
   '@types/react': 18.0.6
   '@types/react-dom': 18.0.2
@@ -19,6 +20,7 @@ specifiers:
   eslint: 8.13.0
   eslint-plugin-react: 7.29.4
   eslint-plugin-react-hooks: ^4.6.0
+  lodash-es: ^4.17.21
   node-fetch: 3.2.3
   rc-checkbox: ^2.3.2
   react: ^18.0.0
@@ -40,6 +42,7 @@ dependencies:
   '@logseq/libs': 0.0.2
   classnames: 2.3.1
   dayjs: 1.11.1
+  lodash-es: 4.17.21
   rc-checkbox: 2.3.2_react-dom@18.0.0+react@18.0.0
   react: 18.0.0
   react-dom: 18.0.0_react@18.0.0
@@ -55,6 +58,7 @@ devDependencies:
   '@semantic-release/exec': 6.0.3_semantic-release@19.0.2
   '@semantic-release/git': 10.0.1_semantic-release@19.0.2
   '@semantic-release/npm': 9.0.1_semantic-release@19.0.2
+  '@types/lodash-es': 4.17.6
   '@types/node': 17.0.23
   '@types/react': 18.0.6
   '@types/react-dom': 18.0.2
@@ -702,6 +706,16 @@ packages:
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
+    dev: true
+
+  /@types/lodash-es/4.17.6:
+    resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
+    dependencies:
+      '@types/lodash': 4.14.185
+    dev: true
+
+  /@types/lodash/4.14.185:
+    resolution: {integrity: sha512-evMDG1bC4rgQg4ku9tKpuMh5iBNEwNa3tf9zRHdP1qlv+1WUg44xat4IxCE14gIpZRGUUWAx2VhItCZc25NfMA==}
     dev: true
 
   /@types/minimist/1.2.2:

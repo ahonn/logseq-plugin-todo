@@ -4,7 +4,7 @@ import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import TaskInput, { ITaskInputRef } from './components/TaskInput';
-import TaskSection from './components/TaskSection';
+import TaskSection, { GroupBy } from './components/TaskSection';
 import { logseq as plugin } from '../package.json';
 import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { visibleState } from './state/visible';
@@ -115,7 +115,7 @@ function App() {
             <div>
               <TaskSection title="Today" query={getTodayTaskQuery()} />
               <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
-              <TaskSection title="Anytime" query={getAnytimeTaskQuery()} />
+              <TaskSection title="Anytime" query={getAnytimeTaskQuery()} groupBy={GroupBy.Page} />
             </div>
           </ErrorBoundary>
         </div>

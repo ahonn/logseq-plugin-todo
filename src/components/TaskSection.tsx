@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   useRecoilRefresher_UNSTABLE,
   useRecoilValue,
   useRecoilValueLoadable,
 } from 'recoil';
+import { groupBy } from 'lodash-es';
 import { TaskEntityObject } from '../models/TaskEntity';
 import { tasksState } from '../state/tasks';
 import { themeStyleState } from '../state/theme';
 import { visibleState } from '../state/visible';
 import TaskItem from './TaskItem';
 
+export enum GroupBy {
+  Page,
+  Tag,
+  Namespace,
+}
+
 export interface ITaskSectionProps {
   title: string;
   query: string;
+  groupBy?: GroupBy;
 }
 
 const TaskSection: React.FC<ITaskSectionProps> = (props) => {
@@ -39,6 +47,15 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
     }
   }, [visible, refresh]);
 
+  const taskGroups = useMemo(() => {
+    switch (props.groupBy) {
+      case GroupBy.Page:
+        return groupBy(tasks, (task: TaskEntityObject) => task.page.name);
+      default:
+        return { '': tasks };
+    }
+  }, [props.groupBy, tasks]);
+
   if (tasks.length === 0) {
     return null;
   }
@@ -47,16 +64,21 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
     <div className="py-1">
       <h2
         className="py-1 text-blue-400"
-        style={{
-          color: themeStyle.sectionTitleColor,
-        }}
+        style={{ color: themeStyle.sectionTitleColor }}
       >
         {title}
       </h2>
       <div>
-        {tasks.map((task) => (
-          <TaskItem key={task.uuid} task={task} onChange={refresh} />
-        ))}
+        {Object.entries(taskGroups).map(([name, tasks]) => {
+          return (
+            <div key={name}>
+              {name && <h3 className="py-1 text-sm text-gray-400">{name}</h3>}
+              {tasks.map((task) => (
+                <TaskItem key={task.uuid} task={task} onChange={refresh} />
+              ))}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
