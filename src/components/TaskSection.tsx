@@ -69,11 +69,11 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
         {title}
       </h2>
       <div>
-        {Object.entries(taskGroups).map(([name, tasks]) => {
+        {(Object.entries(taskGroups) ?? []).map(([name, tasks]) => {
           return (
             <div key={name}>
               {name && <h3 className="py-1 text-sm text-gray-400">{name}</h3>}
-              {tasks.map((task) => (
+              {(tasks ?? []).map((task) => (
                 <TaskItem key={task.uuid} task={task} onChange={refresh} />
               ))}
             </div>
