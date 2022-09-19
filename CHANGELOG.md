@@ -1,3 +1,15 @@
+# [1.8.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.7.0...v1.8.0) (2022-09-19)
+
+
+### Bug Fixes
+
+* fixed reading map property error, reslove [#23](https://github.com/ahonn/logseq-plugin-todo/issues/23) ([1278fc7](https://github.com/ahonn/logseq-plugin-todo/commit/1278fc7753c0471952ce33d72599f62e49cf99c2))
+
+
+### Features
+
+* support anytime tasks group by page name, [#21](https://github.com/ahonn/logseq-plugin-todo/issues/21) ([8e42dc2](https://github.com/ahonn/logseq-plugin-todo/commit/8e42dc2aed413ee71b5e52833b3a3c34cef082f3))
+
 # [1.7.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.6.0...v1.7.0) (2022-09-13)
 
 
