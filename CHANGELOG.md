@@ -1,3 +1,15 @@
+# [1.9.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.8.0...v1.9.0) (2022-10-13)
+
+
+### Bug Fixes
+
+* fix not showing the page title when click, [#25](https://github.com/ahonn/logseq-plugin-todo/issues/25) ([c37f1c0](https://github.com/ahonn/logseq-plugin-todo/commit/c37f1c0e98630c0963e182493f150f5d8b08af00))
+
+
+### Features
+
+* support task section title clickable & add openInRightSidebar setting ([e995860](https://github.com/ahonn/logseq-plugin-todo/commit/e99586090c98bf030ffbe7659b9f4d984c8477e5))
+
 # [1.8.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.7.0...v1.8.0) (2022-09-19)
 
 
