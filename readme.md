@@ -8,7 +8,9 @@ A simple to-do list plugin for logseq
 - show all to-do's without schedule
 - ignore to-do items in the specified page
 
-![](./todo-demo.gif)
+![](./screenshots/plugin-panel.png)
+
+![](./screenshots/plugin-settings.png)
 
 ## Install
 
