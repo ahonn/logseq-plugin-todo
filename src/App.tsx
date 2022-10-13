@@ -50,6 +50,7 @@ function App() {
   useEffect(() => {
     if (visible) {
       inputRef.current?.focus();
+      refreshAll();
 
       const keydownHandler = (ev: KeyboardEvent) => {
         if (ev.key === 'Escape') {
@@ -61,7 +62,7 @@ function App() {
         document.removeEventListener('keydown', keydownHandler);
       };
     }
-  }, [visible]);
+  }, [visible, refreshAll]);
 
   useEffect(() => {
     if (themeMode === 'dark') {

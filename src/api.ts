@@ -23,9 +23,23 @@ export async function toggleTaskStatus(
   );
 }
 
-export function openTask(task: TaskEntityObject) {
+interface IOpenTaskOptions {
+  openInRightSidebar?: boolean;
+}
+
+export function openTask(task: TaskEntityObject, opts?: IOpenTaskOptions) {
   const { uuid } = task;
+  if (opts?.openInRightSidebar) {
+    return window.logseq.Editor.openInRightSidebar(uuid);
+  }
   return window.logseq.Editor.scrollToBlockInPage(task.page.name, uuid);
+}
+
+export function openTaskPage(page: TaskEntityObject['page'], opts?: IOpenTaskOptions) {
+  if (opts?.openInRightSidebar) {
+    return window.logseq.Editor.openInRightSidebar(page.uuid);
+  }
+  return window.logseq.Editor.scrollToBlockInPage(page.name, page.uuid);
 }
 
 export async function toggleTaskMarker(task: TaskEntityObject, options: IToggleOptions) {

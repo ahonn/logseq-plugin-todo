@@ -10,6 +10,8 @@ import { tasksState } from '../state/tasks';
 import { themeStyleState } from '../state/theme';
 import { visibleState } from '../state/visible';
 import TaskItem from './TaskItem';
+import { settingsState } from '../state/settings';
+import { openTaskPage } from '../api';
 
 export enum GroupBy {
   Page,
@@ -30,6 +32,7 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
   const tasksLoadable = useRecoilValueLoadable(tasksState(query));
   const refresh = useRecoilRefresher_UNSTABLE(tasksState(query));
   const themeStyle = useRecoilValue(themeStyleState);
+  const { openInRightSidebar } = useRecoilValue(settingsState);
 
   useEffect(() => {
     switch (tasksLoadable.state) {
@@ -70,9 +73,17 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
       </h2>
       <div>
         {(Object.entries(taskGroups) ?? []).map(([name, tasks]) => {
+          const [{ page }] = tasks;
           return (
             <div key={name}>
-              {name && <h3 className="py-1 text-sm text-gray-400">{name}</h3>}
+              {name && (
+                <h3
+                  className="py-1 text-sm text-gray-400 cursor-pointer"
+                  onClick={() => openTaskPage(page, { openInRightSidebar })}
+                >
+                  {name}
+                </h3>
+              )}
               {(tasks ?? []).map((task) => (
                 <TaskItem key={task.uuid} task={task} onChange={refresh} />
               ))}

@@ -15,6 +15,7 @@ import {
   setTaskScheduled,
   toggleTaskStatus,
 } from '../api';
+import { settingsState } from '../state/settings';
 
 export interface ITaskItemProps {
   task: TaskEntityObject;
@@ -25,6 +26,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   const { task, onChange } = props;
   const themeStyle = useRecoilValue(themeStyleState);
   const { preferredDateFormat, preferredTodo } = useRecoilValue(userConfigsState);
+  const { openInRightSidebar } = useRecoilValue(settingsState);
   const [checked, setChecked] = React.useState(task.completed);
 
   const isExpiredTask = useMemo(() => {
@@ -36,7 +38,9 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   }, [task.scheduled]);
 
   const openTaskBlock = () => {
-    openTask(task);
+    openTask(task, {
+      openInRightSidebar,
+    });
     window.logseq.hideMainUI();
   };
 

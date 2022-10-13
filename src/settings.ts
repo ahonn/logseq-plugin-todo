@@ -40,7 +40,14 @@ const settings: SettingSchemaDesc[] = [
     description: '🌚  secondary color of dark mode!',
     default: '#002B37',
     inputAs: 'color'
-  }
+  },
+  {
+    key: 'openInRightSidebar',
+    type: 'boolean',
+    title: 'Open task in right sidebar',
+    description: '👉 open task in the right sidebar',
+    default: false,
+  },
 ];
 
 export default settings;

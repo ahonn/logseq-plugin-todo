@@ -6,6 +6,7 @@ interface IPluginSettings {
   darkPrimaryBackgroundColor: string;
   darkSecondaryBackgroundColor: string;
   sectionTitleColor: string;
+  openInRightSidebar: boolean;
 }
 
 const DEFAULT_SETTINGS = {
@@ -14,10 +15,11 @@ const DEFAULT_SETTINGS = {
   lightSecondaryBackgroundColor: '#f7f7f7',
   darkPrimaryBackgroundColor: '#002B37',
   darkSecondaryBackgroundColor: '#106ba3',
+  openInRightSidebar: false,
 };
 
 const settingsChangedEffect: AtomEffect<IPluginSettings> = ({ setSelf }) => {
-  setSelf(logseq.settings as unknown as IPluginSettings);
+  setSelf({ ...logseq.settings } as unknown as IPluginSettings);
   const unlisten = logseq.onSettingsChanged((newSettings) => {
     setSelf(newSettings);
   });
