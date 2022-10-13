@@ -25,7 +25,7 @@ export async function toggleTaskStatus(
 
 export function openTask(task: TaskEntityObject) {
   const { uuid } = task;
-  return window.logseq.Editor.scrollToBlockInPage(task.page.uuid, uuid);
+  return window.logseq.Editor.scrollToBlockInPage(task.page.name, uuid);
 }
 
 export async function toggleTaskMarker(task: TaskEntityObject, options: IToggleOptions) {
