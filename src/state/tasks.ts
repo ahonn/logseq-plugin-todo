@@ -8,7 +8,7 @@ async function getTaskEntitiesByQuery(query: string) {
     query,
   );
   const tasks = await Promise.all(
-    collections.map(async ([item]) => {
+    (collections ?? []).map(async ([item]) => {
       const uuid = getBlockUUID(item);
       const block = await window.logseq.Editor.getBlock(uuid, {
         includeChildren: true,
