@@ -1,6 +1,11 @@
 import dayjs from 'dayjs';
 import { TaskEntityObject, TaskMarker } from './models/TaskEntity';
 
+export const MARKER_GROUPS: Record<string, TaskMarker[]> = {
+  [TaskMarker.TODO]: [TaskMarker.TODO, TaskMarker.DOING, TaskMarker.DONE],
+  [TaskMarker.LATER]: [TaskMarker.LATER, TaskMarker.NOW, TaskMarker.DONE],
+}
+
 export function isTodayTask(task: TaskEntityObject) {
   const { scheduled } = task;
   if (!scheduled) return false;
@@ -44,10 +49,16 @@ export function openTaskPage(page: TaskEntityObject['page'], opts?: IOpenTaskOpt
 
 export async function toggleTaskMarker(task: TaskEntityObject, options: IToggleOptions) {
   const { uuid, rawContent, marker } = task;
-  let newMarker = marker === TaskMarker.TODO ? TaskMarker.DOING : TaskMarker.TODO;
-  if (options.preferredTodo === TaskMarker.LATER) {
-    newMarker = marker === TaskMarker.LATER ? TaskMarker.NOW : TaskMarker.LATER;
+
+  let newMarker = marker;
+  if (marker === TaskMarker.WAITING) {
+    newMarker = options.preferredTodo === TaskMarker.LATER ? TaskMarker.LATER : TaskMarker.TODO;
+  } else {
+    const markerGroup = MARKER_GROUPS[options.preferredTodo];
+    const currentMarkIndex = markerGroup.findIndex(m => m === marker);
+    newMarker = markerGroup[(currentMarkIndex + 1) % markerGroup.length];
   }
+
   const newRawContent = rawContent.replace(new RegExp(`^${marker}`), newMarker);
   await window.logseq.Editor.updateBlock(uuid, newRawContent);
 }

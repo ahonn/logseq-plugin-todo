@@ -3,7 +3,7 @@ export default function getAnytimeTaskQuery() {
     [:find (pull ?b [*])
      :where
      [?b :block/marker ?marker]
-     [(contains? #{"NOW" "LATER" "TODO" "DOING"} ?marker)]
+     [(contains? #{"NOW" "LATER" "TODO" "DOING" "WAITING"} ?marker)]
      [?b :block/page ?p]
      (not [?p :block/journal? true])
      (not [?p :block/journalDay])

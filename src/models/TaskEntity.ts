@@ -8,6 +8,7 @@ export enum TaskMarker {
   TODO = 'TODO',
   DOING = 'DOING',
   DONE = 'DONE',
+  WAITING = 'WAITING',
 }
 
 export enum TaskPriority {
