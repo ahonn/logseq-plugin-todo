@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.9.0...v1.9.1) (2022-10-14)
+
+
+### Bug Fixes
+
+* fixed cannot read map of null errors ([8866d0b](https://github.com/ahonn/logseq-plugin-todo/commit/8866d0b284bf1da2194913e3237efe1331ffe1cb))
+
 # [1.9.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.8.0...v1.9.0) (2022-10-13)
 
 
