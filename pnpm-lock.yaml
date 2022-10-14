@@ -7,6 +7,7 @@ specifiers:
   '@semantic-release/git': 10.0.1
   '@semantic-release/npm': 9.0.1
   '@types/lodash-es': ^4.17.6
+  '@types/mousetrap': ^1.6.9
   '@types/node': 17.0.23
   '@types/react': 18.0.6
   '@types/react-dom': 18.0.2
@@ -21,6 +22,8 @@ specifiers:
   eslint-plugin-react: 7.29.4
   eslint-plugin-react-hooks: ^4.6.0
   lodash-es: ^4.17.21
+  mousetrap: ^1.6.5
+  mousetrap-global-bind: ^1.1.0
   node-fetch: 3.2.3
   rc-checkbox: ^2.3.2
   react: ^18.0.0
@@ -43,6 +46,8 @@ dependencies:
   classnames: 2.3.1
   dayjs: 1.11.1
   lodash-es: 4.17.21
+  mousetrap: 1.6.5
+  mousetrap-global-bind: 1.1.0_mousetrap@1.6.5
   rc-checkbox: 2.3.2_react-dom@18.0.0+react@18.0.0
   react: 18.0.0
   react-dom: 18.0.0_react@18.0.0
@@ -59,6 +64,7 @@ devDependencies:
   '@semantic-release/git': 10.0.1_semantic-release@19.0.2
   '@semantic-release/npm': 9.0.1_semantic-release@19.0.2
   '@types/lodash-es': 4.17.6
+  '@types/mousetrap': 1.6.9
   '@types/node': 17.0.23
   '@types/react': 18.0.6
   '@types/react-dom': 18.0.2
@@ -720,6 +726,10 @@ packages:
 
   /@types/minimist/1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
+    dev: true
+
+  /@types/mousetrap/1.6.9:
+    resolution: {integrity: sha512-HUAiN65VsRXyFCTicolwb5+I7FM6f72zjMWr+ajGk+YTvzBgXqa2A5U7d+rtsouAkunJ5U4Sb5lNJjo9w+nmXg==}
     dev: true
 
   /@types/node/17.0.23:
@@ -2879,6 +2889,18 @@ packages:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /mousetrap-global-bind/1.1.0_mousetrap@1.6.5:
+    resolution: {integrity: sha512-AfxKB0OYc/wU66E2n2HXcZmKHrd5O/6mEdtSrZAt3tsMqcpcpYAolQdj602L0SgrP38ncm/6iOpxr9SIGgxOpQ==}
+    peerDependencies:
+      mousetrap: ^1.6.0
+    dependencies:
+      mousetrap: 1.6.5
+    dev: false
+
+  /mousetrap/1.6.5:
+    resolution: {integrity: sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==}
+    dev: false
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}

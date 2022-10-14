@@ -1,12 +1,10 @@
 import '@logseq/libs';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { MutableSnapshot, RecoilRoot } from 'recoil';
+import { RecoilRoot } from 'recoil';
 import { logseq as plugin } from '../package.json';
 import App from './App';
-import getTodayTaskQuery from './querys/today';
 import settings from './settings';
-import { tasksState } from './state/tasks';
 
 async function openTaskPanel() {
   const rect = await logseq.App.queryElementRect('#' + plugin.id);
@@ -28,6 +26,14 @@ function createModel() {
   };
 }
 
+function registerHotKey(binding: string) {
+  if (!binding) {
+    return;
+  }
+
+  logseq.App.registerCommandShortcut({ binding }, openTaskPanel);
+}
+
 function main() {
   try {
     logseq.setMainUIInlineStyle({
@@ -44,20 +50,20 @@ function main() {
       `,
     });
 
+    if (logseq.settings?.hotkey) {
+      registerHotKey(logseq.settings?.hotkey);
+    }
+    logseq.onSettingsChanged((settings) => {
+      registerHotKey(settings?.hotkey);
+    });
+
     logseq.App.registerCommandPalette(
       {
         key: 'logseq-plugin-todo',
-        label: 'Quick open task panel',
-        keybinding: {
-          binding: 'mod+shift+t',
-        },
+        label: 'Open todo list',
       },
       () => {
-        if (logseq.isMainUIVisible) {
-          logseq.hideMainUI();
-        } else {
-          openTaskPanel();
-        }
+        openTaskPanel();
       },
     );
 

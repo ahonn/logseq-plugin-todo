@@ -1,6 +1,7 @@
 import { atom, AtomEffect } from 'recoil';
 
 interface IPluginSettings {
+  hotkey: string;
   lightPrimaryBackgroundColor: string;
   lightSecondaryBackgroundColor: string;
   darkPrimaryBackgroundColor: string;
@@ -10,6 +11,7 @@ interface IPluginSettings {
 }
 
 const DEFAULT_SETTINGS = {
+  hotkey: 'mod+shift+t',
   sectionTitleColor: '#0a0a0a',
   lightPrimaryBackgroundColor: '#ffffff',
   lightSecondaryBackgroundColor: '#f7f7f7',

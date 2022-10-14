@@ -2,6 +2,13 @@ import { SettingSchemaDesc } from "@logseq/libs/dist/LSPlugin";
 
 const settings: SettingSchemaDesc[] = [
   {
+    key: 'hotkey',
+    type: 'string',
+    title: 'Quick open hotkey',
+    description: 'quick open task panel',
+    default: 'mod+shift+t',
+  },
+  {
     key: 'sectionTitleColor',
     type: 'string',
     title: 'The title color',

@@ -14,6 +14,9 @@ import getTodayTaskQuery from './querys/today';
 import getScheduledTaskQuery from './querys/scheduled';
 import getAnytimeTaskQuery from './querys/anytime';
 import './style.css';
+import { settingsState } from './state/settings';
+import Mousetrap from 'mousetrap';
+import 'mousetrap-global-bind';
 
 dayjs.extend(advancedFormat);
 
@@ -37,24 +40,48 @@ function App() {
   const userConfigs = useRecoilValue(userConfigsState);
   const themeStyle = useRecoilValue(themeStyleState);
   const themeMode = useRecoilValue(themeModeState);
+  const settings = useRecoilValue(settingsState);
 
-  const refreshAll = useRecoilCallback(({ snapshot, refresh }) =>
-    () => {
-      for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
-        refresh(node);
-      }
-    },
+  const refreshAll = useRecoilCallback(
+    ({ snapshot, refresh }) =>
+      () => {
+        for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
+          refresh(node);
+        }
+      },
     [],
   );
 
   useEffect(() => {
+    if (!settings.hotkey) {
+      return;
+    }
+
+    // @ts-ignore
+    Mousetrap.bindGlobal(
+      settings.hotkey,
+      () => {
+        window.logseq.hideMainUI();
+      },
+      'keydown',
+    );
+    return () => {
+      // @ts-ignore
+      Mousetrap.unbindGlobal(settings.hotkey, 'keydown');
+    };
+  }, [settings.hotkey]);
+
+  useEffect(() => {
     if (visible) {
-      inputRef.current?.focus();
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
       refreshAll();
 
       const keydownHandler = (ev: KeyboardEvent) => {
         if (ev.key === 'Escape') {
           window.logseq.hideMainUI();
+          return;
         }
       };
       document.addEventListener('keydown', keydownHandler);
@@ -116,7 +143,11 @@ function App() {
             <div>
               <TaskSection title="Today" query={getTodayTaskQuery()} />
               <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
-              <TaskSection title="Anytime" query={getAnytimeTaskQuery()} groupBy={GroupBy.Page} />
+              <TaskSection
+                title="Anytime"
+                query={getAnytimeTaskQuery()}
+                groupBy={GroupBy.Page}
+              />
             </div>
           </ErrorBoundary>
         </div>
