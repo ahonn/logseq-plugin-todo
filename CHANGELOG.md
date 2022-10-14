@@ -1,3 +1,11 @@
+# [1.10.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.9.1...v1.10.0) (2022-10-14)
+
+
+### Features
+
+* add quick open hotkey and toggle panel with same key ([56404cd](https://github.com/ahonn/logseq-plugin-todo/commit/56404cda5b1aa0b186eac1547ec88a3ce46fb5e0))
+* suport WAITING task status, [#17](https://github.com/ahonn/logseq-plugin-todo/issues/17) ([f0869b3](https://github.com/ahonn/logseq-plugin-todo/commit/f0869b3a2d878242db5af52efdc7fe045ddfea4f))
+
 ## [1.9.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.9.0...v1.9.1) (2022-10-14)
 
 
