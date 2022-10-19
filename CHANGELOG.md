@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.11.0...v1.11.1) (2022-10-19)
+
+
+### Bug Fixes
+
+* avoid duplicate binding hotkey ([9f9ab25](https://github.com/ahonn/logseq-plugin-todo/commit/9f9ab25ab651899897b53e065e970c5156e6b422))
+
 # [1.11.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.10.0...v1.11.0) (2022-10-19)
 
 
