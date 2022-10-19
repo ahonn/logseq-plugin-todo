@@ -26,12 +26,14 @@ function createModel() {
   };
 }
 
+const registeredHotKeySet = new Set();
 function registerHotKey(binding: string) {
-  if (!binding) {
+  if (!binding || registeredHotKeySet.has(binding)) {
     return;
   }
 
   logseq.App.registerCommandShortcut({ binding }, openTaskPanel);
+  registeredHotKeySet.add(binding);
 }
 
 function main() {
