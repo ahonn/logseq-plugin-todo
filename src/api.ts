@@ -1,9 +1,15 @@
+import { BlockEntity } from '@logseq/libs/dist/LSPlugin.user';
 import dayjs from 'dayjs';
 import { TaskEntityObject, TaskMarker } from './models/TaskEntity';
 
 export const MARKER_GROUPS: Record<string, TaskMarker[]> = {
   [TaskMarker.TODO]: [TaskMarker.TODO, TaskMarker.DOING, TaskMarker.DONE],
   [TaskMarker.LATER]: [TaskMarker.LATER, TaskMarker.NOW, TaskMarker.DONE],
+};
+
+export interface ITaskOptions {
+  preferredTodo: string;
+  whereToPlaceNewTask?: string;
 }
 
 export function isTodayTask(task: TaskEntityObject) {
@@ -12,13 +18,48 @@ export function isTodayTask(task: TaskEntityObject) {
   return dayjs(new Date()).format('YYYYMMDD') === scheduled.toString();
 }
 
-export interface IToggleOptions {
-  preferredTodo: string;
+export async function createNewTask(
+  date: string,
+  content: string,
+  opts: ITaskOptions,
+) {
+  const { preferredTodo, whereToPlaceNewTask } = opts;
+  let page = await window.logseq.Editor.getPage(date);
+  if (page === null) {
+    page = await window.logseq.Editor.createPage(date, {
+      journal: true,
+      redirect: false,
+    });
+  }
+  const blocksTree = await window.logseq.Editor.getPageBlocksTree(date);
+
+  if (whereToPlaceNewTask) {
+    let parentBlock = blocksTree.find((block: BlockEntity) => block.content === whereToPlaceNewTask);
+    if (parentBlock === undefined) {
+      parentBlock = (await window.logseq.Editor.appendBlockInPage(
+        page!.name,
+        whereToPlaceNewTask,
+      )) as BlockEntity;
+    }
+    await window.logseq.Editor.insertBlock(
+      parentBlock!.uuid,
+      `${preferredTodo} ${content}`,
+    );
+  } else {
+    await window.logseq.Editor.appendBlockInPage(
+      page!.name,
+      `${preferredTodo} ${content}`,
+    );
+  }
+
+  if (blocksTree.length === 1 && blocksTree[0].content === '') {
+    await window.logseq.Editor.removeBlock(blocksTree[0].uuid);
+  }
 }
 
 export async function toggleTaskStatus(
   task: TaskEntityObject,
-  options: IToggleOptions,
+  options: ITaskOptions,
 ) {
   const { uuid, completed, marker } = task;
   const nextMarker = completed ? options.preferredTodo : TaskMarker.DONE;
@@ -40,22 +81,31 @@ export function openTask(task: TaskEntityObject, opts?: IOpenTaskOptions) {
   return window.logseq.Editor.scrollToBlockInPage(task.page.name, uuid);
 }
 
-export function openTaskPage(page: TaskEntityObject['page'], opts?: IOpenTaskOptions) {
+export function openTaskPage(
+  page: TaskEntityObject['page'],
+  opts?: IOpenTaskOptions,
+) {
   if (opts?.openInRightSidebar) {
     return window.logseq.Editor.openInRightSidebar(page.uuid);
   }
   return window.logseq.Editor.scrollToBlockInPage(page.name, page.uuid);
 }
 
-export async function toggleTaskMarker(task: TaskEntityObject, options: IToggleOptions) {
+export async function toggleTaskMarker(
+  task: TaskEntityObject,
+  options: ITaskOptions,
+) {
   const { uuid, rawContent, marker } = task;
 
   let newMarker = marker;
   if (marker === TaskMarker.WAITING) {
-    newMarker = options.preferredTodo === TaskMarker.LATER ? TaskMarker.LATER : TaskMarker.TODO;
+    newMarker =
+      options.preferredTodo === TaskMarker.LATER
+        ? TaskMarker.LATER
+        : TaskMarker.TODO;
   } else {
     const markerGroup = MARKER_GROUPS[options.preferredTodo];
-    const currentMarkIndex = markerGroup.findIndex(m => m === marker);
+    const currentMarkIndex = markerGroup.findIndex((m) => m === marker);
     newMarker = markerGroup[(currentMarkIndex + 1) % markerGroup.length];
   }
 
@@ -63,7 +113,10 @@ export async function toggleTaskMarker(task: TaskEntityObject, options: IToggleO
   await window.logseq.Editor.updateBlock(uuid, newRawContent);
 }
 
-export async function setTaskScheduled(task: TaskEntityObject, date: Date | null) {
+export async function setTaskScheduled(
+  task: TaskEntityObject,
+  date: Date | null,
+) {
   const { uuid, rawContent } = task;
   let newRawContent = task.rawContent;
   if (date === null) {
@@ -72,12 +125,11 @@ export async function setTaskScheduled(task: TaskEntityObject, date: Date | null
     return;
   }
 
-  const scheduledString = `SCHEDULED: <${dayjs(date).format('YYYY-MM-DD ddd')}>`;
+  const scheduledString = `SCHEDULED: <${dayjs(date).format(
+    'YYYY-MM-DD ddd',
+  )}>`;
   if (rawContent.includes('SCHEDULED')) {
-    newRawContent = rawContent.replace(
-      /SCHEDULED: <[^>]+>/,
-      scheduledString,
-    );
+    newRawContent = rawContent.replace(/SCHEDULED: <[^>]+>/, scheduledString);
   } else {
     const lines = rawContent.split('\n');
     lines.splice(1, 0, scheduledString);

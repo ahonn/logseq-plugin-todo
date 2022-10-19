@@ -13,10 +13,11 @@ import { themeModeState, themeStyleState } from './state/theme';
 import getTodayTaskQuery from './querys/today';
 import getScheduledTaskQuery from './querys/scheduled';
 import getAnytimeTaskQuery from './querys/anytime';
-import './style.css';
 import { settingsState } from './state/settings';
+import * as api from './api';
 import Mousetrap from 'mousetrap';
 import 'mousetrap-global-bind';
+import './style.css';
 
 dayjs.extend(advancedFormat);
 
@@ -40,7 +41,7 @@ function App() {
   const userConfigs = useRecoilValue(userConfigsState);
   const themeStyle = useRecoilValue(themeStyleState);
   const themeMode = useRecoilValue(themeModeState);
-  const settings = useRecoilValue(settingsState);
+  const { hotkey, whereToPlaceNewTask } = useRecoilValue(settingsState);
 
   const refreshAll = useRecoilCallback(
     ({ snapshot, refresh }) =>
@@ -53,23 +54,17 @@ function App() {
   );
 
   useEffect(() => {
-    if (!settings.hotkey) {
+    if (!hotkey) {
       return;
     }
 
     // @ts-ignore
-    Mousetrap.bindGlobal(
-      settings.hotkey,
-      () => {
-        window.logseq.hideMainUI();
-      },
-      'keydown',
-    );
+    Mousetrap.bindGlobal(hotkey, () => window.logseq.hideMainUI(), 'keydown');
     return () => {
       // @ts-ignore
-      Mousetrap.unbindGlobal(settings.hotkey, 'keydown');
+      Mousetrap.unbindGlobal(hotkey, 'keydown');
     };
-  }, [settings.hotkey]);
+  }, [hotkey]);
 
   useEffect(() => {
     if (visible) {
@@ -102,7 +97,7 @@ function App() {
   }, [themeMode]);
 
   const handleClickOutside = (e: React.MouseEvent) => {
-    if (!innerRef.current?.contains(e.target as any)) {
+    if (!innerRef.current?.contains(e.target as unknown as Node)) {
       window.logseq.hideMainUI();
     }
   };
@@ -110,18 +105,7 @@ function App() {
   const createNewTask = async (content: string) => {
     const { preferredDateFormat, preferredTodo } = userConfigs!;
     const date = dayjs().format(preferredDateFormat);
-    let page = await window.logseq.Editor.getPage(date);
-    if (page === null) {
-      page = await window.logseq.Editor.createPage(date, {
-        journal: true,
-        redirect: false,
-      });
-    }
-    await window.logseq.Editor.insertBlock(
-      page!.name,
-      `${preferredTodo} ${content}`,
-      { isPageBlock: true, before: false },
-    );
+    await api.createNewTask(date, content, { preferredTodo, whereToPlaceNewTask });
     refreshAll();
   };
 

@@ -9,6 +9,20 @@ const settings: SettingSchemaDesc[] = [
     default: 'mod+shift+t',
   },
   {
+    key: 'whereToPlaceNewTask',
+    type: 'string',
+    title: 'where to place new task',
+    description: 'Where to place new task on journal page',
+    default: '',
+  },
+  {
+    key: 'openInRightSidebar',
+    type: 'boolean',
+    title: 'Open task in right sidebar',
+    description: '👉 open task in the right sidebar',
+    default: false,
+  },
+  {
     key: 'sectionTitleColor',
     type: 'string',
     title: 'The title color',
@@ -47,13 +61,6 @@ const settings: SettingSchemaDesc[] = [
     description: '🌚  secondary color of dark mode!',
     default: '#002B37',
     inputAs: 'color'
-  },
-  {
-    key: 'openInRightSidebar',
-    type: 'boolean',
-    title: 'Open task in right sidebar',
-    description: '👉 open task in the right sidebar',
-    default: false,
   },
 ];
 
