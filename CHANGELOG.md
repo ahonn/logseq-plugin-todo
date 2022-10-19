@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.10.0...v1.11.0) (2022-10-19)
+
+
+### Features
+
+* add whereToPlaceNewTask setting item, [#24](https://github.com/ahonn/logseq-plugin-todo/issues/24) ([a42ed45](https://github.com/ahonn/logseq-plugin-todo/commit/a42ed456a7bee33042f4dcf07e0387e56b7f6948))
+
 # [1.10.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.9.1...v1.10.0) (2022-10-14)
 
 
