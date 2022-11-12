@@ -12,6 +12,7 @@ import { visibleState } from '../state/visible';
 import TaskItem from './TaskItem';
 import { settingsState } from '../state/settings';
 import { openTaskPage } from '../api';
+import { inputState } from '../state/input';
 
 export enum GroupBy {
   Page,
@@ -34,21 +35,21 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
   const refresh = useRecoilRefresher_UNSTABLE(tasksState(query));
   const themeStyle = useRecoilValue(themeStyleState);
   const { openInRightSidebar } = useRecoilValue(settingsState);
+  const input = useRecoilValue(inputState);
 
   useEffect(() => {
     switch (tasksLoadable.state) {
-      case 'hasValue':
-        setTasks(
-          tasksLoadable.contents.filter(
-            (t) =>
-              t.content.toLowerCase().indexOf(props.filter.toLowerCase()) != -1
-          )
-        );
+      case 'hasValue': {
+        const tasks = tasksLoadable.contents.filter((task: TaskEntityObject) => {
+          return task.content.toLowerCase().includes(input.toLowerCase());
+        });
+        setTasks(tasks);
         break;
+      }
       case 'hasError':
         throw tasksLoadable.contents;
     }
-  }, [tasksLoadable.state, tasksLoadable.contents, props.filter]);
+  }, [tasksLoadable.state, tasksLoadable.contents, input]);
 
   useEffect(() => {
     if (visible) {

@@ -1,6 +1,7 @@
 import React, { useImperativeHandle, useRef } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { CirclePlus } from 'tabler-icons-react';
+import { inputState } from '../state/input';
 import { themeStyleState } from '../state/theme';
 
 export interface ITaskInputRef {
@@ -9,14 +10,13 @@ export interface ITaskInputRef {
 
 export interface ITaskInputProps {
   onCreateTask(content: string): void;
-  onChange(content: string): void;
 }
 
 const TaskInput: React.ForwardRefRenderFunction<
   ITaskInputRef,
   ITaskInputProps
 > = (props, ref) => {
-  const [content, setContent] = React.useState('');
+  const [input, setInput] = useRecoilState(inputState);
   const inputRef = useRef<HTMLInputElement>(null);
   const themeStyle = useRecoilValue(themeStyleState);
 
@@ -43,17 +43,14 @@ const TaskInput: React.ForwardRefRenderFunction<
           type="text"
           ref={inputRef}
           className="flex-1 bg-transparent p-1 outline-none text-sm dark:text-gray-100"
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-            props.onChange(e.target.value)
-          }}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="Type to search, enter to create"
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
               e.preventDefault();
-              props.onCreateTask(content);
-              setContent('');
+              props.onCreateTask(input);
+              setInput('');
             }
           }}
         />
