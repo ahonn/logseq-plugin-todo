@@ -41,6 +41,7 @@ function App() {
   const userConfigs = useRecoilValue(userConfigsState);
   const themeStyle = useRecoilValue(themeStyleState);
   const themeMode = useRecoilValue(themeModeState);
+  const [filter, setFilter] = useState("");
   const { hotkey, whereToPlaceNewTask } = useRecoilValue(settingsState);
 
   const refreshAll = useRecoilCallback(
@@ -123,14 +124,19 @@ function App() {
           }}
         >
           <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <TaskInput ref={inputRef} onCreateTask={createNewTask} />
+            <TaskInput
+              ref={inputRef}
+              onCreateTask={createNewTask}
+              onChange={setFilter}
+            />
             <div>
-              <TaskSection title="Today" query={getTodayTaskQuery()} />
-              <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
+              <TaskSection title="Today" query={getTodayTaskQuery()} filter={filter} />
+              <TaskSection title="Scheduled" query={getScheduledTaskQuery()} filter={filter} />
               <TaskSection
                 title="Anytime"
                 query={getAnytimeTaskQuery()}
                 groupBy={GroupBy.Page}
+                filter={filter}
               />
             </div>
           </ErrorBoundary>

@@ -23,6 +23,7 @@ export interface ITaskSectionProps {
   title: string;
   query: string;
   groupBy?: GroupBy;
+  filter: string;
 }
 
 const TaskSection: React.FC<ITaskSectionProps> = (props) => {
@@ -37,12 +38,17 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
   useEffect(() => {
     switch (tasksLoadable.state) {
       case 'hasValue':
-        setTasks(tasksLoadable.contents);
+        setTasks(
+          tasksLoadable.contents.filter(
+            (t) =>
+              t.content.toLowerCase().indexOf(props.filter.toLowerCase()) != -1
+          )
+        );
         break;
       case 'hasError':
         throw tasksLoadable.contents;
     }
-  }, [tasksLoadable.state, tasksLoadable.contents]);
+  }, [tasksLoadable.state, tasksLoadable.contents, props.filter]);
 
   useEffect(() => {
     if (visible) {
