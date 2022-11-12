@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  useRecoilRefresher_UNSTABLE,
+  useRecoilCallback,
   useRecoilValue,
   useRecoilValueLoadable,
 } from 'recoil';
@@ -32,17 +32,28 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
   const [tasks, setTasks] = useState<TaskEntityObject[]>([]);
   const visible = useRecoilValue(visibleState);
   const tasksLoadable = useRecoilValueLoadable(tasksState(query));
-  const refresh = useRecoilRefresher_UNSTABLE(tasksState(query));
   const themeStyle = useRecoilValue(themeStyleState);
   const { openInRightSidebar } = useRecoilValue(settingsState);
   const input = useRecoilValue(inputState);
 
+  const refreshAll = useRecoilCallback(
+    ({ snapshot, refresh }) =>
+      () => {
+        for (const node of snapshot.getNodes_UNSTABLE()) {
+          refresh(node);
+        }
+      },
+    [],
+  );
+
   useEffect(() => {
     switch (tasksLoadable.state) {
       case 'hasValue': {
-        const tasks = tasksLoadable.contents.filter((task: TaskEntityObject) => {
-          return task.content.toLowerCase().includes(input.toLowerCase());
-        });
+        const tasks = tasksLoadable.contents.filter(
+          (task: TaskEntityObject) => {
+            return task.content.toLowerCase().includes(input.toLowerCase());
+          },
+        );
         setTasks(tasks);
         break;
       }
@@ -53,9 +64,9 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
 
   useEffect(() => {
     if (visible) {
-      refresh();
+      refreshAll();
     }
-  }, [visible, refresh]);
+  }, [visible, refreshAll]);
 
   const taskGroups = useMemo(() => {
     switch (props.groupBy) {
@@ -92,7 +103,7 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
                 </h3>
               )}
               {(tasks ?? []).map((task) => (
-                <TaskItem key={task.uuid} task={task} onChange={refresh} />
+                <TaskItem key={task.uuid} task={task} onChange={refreshAll} />
               ))}
             </div>
           );

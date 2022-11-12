@@ -104,7 +104,10 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
           {isTodayTask(task) ? (
             <div
               className="pl-2 pr-1"
-              onClick={() => setTaskScheduled(task, null)}
+              onClick={() => {
+                setTaskScheduled(task, null)
+                onChange();
+              }}
             >
               <ArrowDownCircle
                 size={22}
@@ -117,7 +120,10 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
           ) : (
             <div
               className="pl-2 pr-1"
-              onClick={() => setTaskScheduled(task, new Date())}
+              onClick={() => {
+                setTaskScheduled(task, new Date());
+                onChange();
+              }}
             >
               <BrightnessUp
                 size={22}
