@@ -5,6 +5,7 @@ import { AppUserConfigs } from '@logseq/libs/dist/LSPlugin.user';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import TaskInput, { ITaskInputRef } from './components/TaskInput';
+import { TaskCategoryTab, TaskCategoryTabSection } from './components/TaskCategoryTabSection';
 import TaskSection, { GroupBy } from './components/TaskSection';
 import { logseq as plugin } from '../package.json';
 import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
@@ -118,6 +119,12 @@ function App(props: IAppProps) {
     refreshAll();
   };
 
+  const categoryTabs: TaskCategoryTab[] = [
+    new TaskCategoryTab('Today', <TaskSection title="Today" query={getTodayTaskQuery()}/>),
+    new TaskCategoryTab('Scheduled', <TaskSection title="Scheduled" query={getScheduledTaskQuery()}/>),
+    new TaskCategoryTab('Anytime', <TaskSection title="Anytime" query={getAnytimeTaskQuery()} groupBy={GroupBy.Page}/>),
+  ]
+
   return (
     <main
       className={`w-screen h-screen ${visible ? 'block' : 'hidden'}`}
@@ -136,15 +143,7 @@ function App(props: IAppProps) {
               ref={inputRef}
               onCreateTask={createNewTask}
             />
-            <div>
-              <TaskSection title="Today" query={getTodayTaskQuery()} />
-              <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
-              <TaskSection
-                title="Anytime"
-                query={getAnytimeTaskQuery()}
-                groupBy={GroupBy.Page}
-              />
-            </div>
+            <TaskCategoryTabSection tabs={categoryTabs}/>
           </ErrorBoundary>
         </div>
       </div>
