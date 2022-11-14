@@ -1,3 +1,15 @@
+# [1.12.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.11.1...v1.12.0) (2022-11-14)
+
+
+### Bug Fixes
+
+* fix not refresh when set task schedule ([9d46240](https://github.com/ahonn/logseq-plugin-todo/commit/9d462408927a2fca00c1a75549379a3a494a391f))
+
+
+### Features
+
+* let the input box can be search tasks by title ([1a4ba2d](https://github.com/ahonn/logseq-plugin-todo/commit/1a4ba2dfeab93a49006d423dc8f279d6734a21ec))
+
 ## [1.11.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.11.0...v1.11.1) (2022-10-19)
 
 
