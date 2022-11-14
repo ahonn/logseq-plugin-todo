@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.12.0...v1.12.1) (2022-11-14)
+
+
+### Bug Fixes
+
+* fixed first load not follow current theme mode, [#31](https://github.com/ahonn/logseq-plugin-todo/issues/31) ([2a8b515](https://github.com/ahonn/logseq-plugin-todo/commit/2a8b5155eacdbf1b06cdaf2cbc6b3b268f690a66))
+
 # [1.12.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.11.1...v1.12.0) (2022-11-14)
 
 
