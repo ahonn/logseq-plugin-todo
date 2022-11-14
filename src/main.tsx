@@ -69,14 +69,16 @@ function main() {
       },
     );
 
-    const root = ReactDOM.createRoot(document.getElementById('app')!);
-    root.render(
-      <React.StrictMode>
-        <RecoilRoot>
-          <App />
-        </RecoilRoot>
-      </React.StrictMode>,
-    );
+    logseq.App.getUserConfigs().then((configs) => {
+      const root = ReactDOM.createRoot(document.getElementById('app')!);
+      root.render(
+        <React.StrictMode>
+          <RecoilRoot>
+            <App userConfigs={configs} />
+          </RecoilRoot>
+        </React.StrictMode>,
+      );
+    })
   } catch (e: any) {
     logseq.App.showMsg(e.message, 'error');
   }

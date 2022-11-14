@@ -1,12 +1,13 @@
 import 'virtual:windi.css';
 import React, { useEffect, useRef } from 'react';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import { AppUserConfigs } from '@logseq/libs/dist/LSPlugin.user';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import TaskInput, { ITaskInputRef } from './components/TaskInput';
 import TaskSection, { GroupBy } from './components/TaskSection';
 import { logseq as plugin } from '../package.json';
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
 import { visibleState } from './state/visible';
 import { userConfigsState } from './state/user-configs';
 import { themeModeState, themeStyleState } from './state/theme';
@@ -34,11 +35,15 @@ function ErrorFallback({ error }: FallbackProps) {
   );
 }
 
-function App() {
+interface IAppProps {
+  userConfigs: AppUserConfigs;
+}
+
+function App(props: IAppProps) {
   const innerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<ITaskInputRef>(null);
   const visible = useRecoilValue(visibleState);
-  const userConfigs = useRecoilValue(userConfigsState);
+  const [userConfigs, setUserConfigs] = useRecoilState(userConfigsState);
   const themeStyle = useRecoilValue(themeStyleState);
   const themeMode = useRecoilValue(themeModeState);
   const { hotkey, whereToPlaceNewTask } = useRecoilValue(settingsState);
@@ -52,6 +57,10 @@ function App() {
       },
     [],
   );
+
+  useEffect(() => {
+    setUserConfigs(props.userConfigs);
+  }, [props.userConfigs, setUserConfigs]);
 
   useEffect(() => {
     if (!hotkey) {
