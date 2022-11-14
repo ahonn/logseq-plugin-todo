@@ -24,7 +24,6 @@ export interface ITaskSectionProps {
   title: string;
   query: string;
   groupBy?: GroupBy;
-  filter: string;
 }
 
 const TaskSection: React.FC<ITaskSectionProps> = (props) => {
