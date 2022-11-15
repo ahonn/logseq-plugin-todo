@@ -31,13 +31,14 @@ export interface TaskEntityObject {
   rawContent: string;
   marker: TaskMarker;
   priority: TaskPriority;
-  scheduled: number;
+  scheduled: number | undefined;
   repeated: boolean;
   completed: boolean;
   page: {
     name: string;
     uuid: string;
     journalDay: number | undefined;
+    updatedAt: number | undefined;
   }
 }
 
@@ -78,7 +79,7 @@ class TaskEntity {
     return this.block.priority ?? TaskPriority.NONE;
   }
 
-  public get scheduled(): number {
+  public get scheduled(): number | undefined {
     return this.block.scheduled ?? this.block.deadline ?? this.page.journalDay;
   }
 
@@ -109,6 +110,7 @@ class TaskEntity {
         name: this.page.name,
         uuid: this.page.uuid,
         journalDay: this.page['journalDay'],
+        updatedAt: this.page.updatedAt,
       },
     };
   }

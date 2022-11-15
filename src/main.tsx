@@ -13,7 +13,9 @@ async function openTaskPanel() {
   // @ts-ignore
   Object.assign(taskPanel.style, {
     position: 'fixed',
+  // @ts-ignore
     top: `${rect.top + 40}px`,
+    // @ts-ignore
     left: rect.left + 'px',
   });
 

@@ -32,12 +32,25 @@ async function getTaskEntitiesByQuery(query: string) {
       })
       .map((task) => task!.toObject())
       .sort((a, b) => {
-        if (a.scheduled === b.scheduled) {
-          return (
-            TASK_PRIORITY_WEIGHT[b.priority] - TASK_PRIORITY_WEIGHT[a.priority]
-          );
+        if (a.scheduled !== undefined || b.scheduled !== undefined) {
+          if (a.scheduled === b.scheduled) {
+            return (
+              TASK_PRIORITY_WEIGHT[b.priority] - TASK_PRIORITY_WEIGHT[a.priority]
+            );
+          }
+          return (b.scheduled ?? 0) - (a.scheduled ?? 0);
         }
-        return b.scheduled - a.scheduled;
+
+        if (a.page.updatedAt !== undefined || b.page.updatedAt !== undefined) {
+          if (a.page.updatedAt === b.page.updatedAt) {
+            return (
+              TASK_PRIORITY_WEIGHT[b.priority] - TASK_PRIORITY_WEIGHT[a.priority]
+            );
+          }
+          return (b.page.updatedAt ?? 0) - (a.page.updatedAt ?? 0);
+        }
+
+        return 0
       })
   );
 }
