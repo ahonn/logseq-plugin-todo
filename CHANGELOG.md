@@ -1,3 +1,11 @@
+# [1.13.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.12.1...v1.13.0) (2023-01-08)
+
+
+### Features
+
+* add next n days task section and add setting item for enable/disable it ([ead0825](https://github.com/ahonn/logseq-plugin-todo/commit/ead0825bfcecffb060e26499a2d5872a8f72086f))
+* sort unscheduled tasks with page's updatedAt property. ([12f1461](https://github.com/ahonn/logseq-plugin-todo/commit/12f1461ba46b25c2066175474c9b832f7c464d52))
+
 ## [1.12.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.12.0...v1.12.1) (2022-11-14)
 
 
