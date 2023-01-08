@@ -19,6 +19,8 @@ import * as api from './api';
 import Mousetrap from 'mousetrap';
 import 'mousetrap-global-bind';
 import './style.css';
+import getNextNDaysTaskQuery from './querys/next-n-days';
+import { fixPreferredDateFormat } from './utils';
 
 dayjs.extend(advancedFormat);
 
@@ -46,7 +48,7 @@ function App(props: IAppProps) {
   const [userConfigs, setUserConfigs] = useRecoilState(userConfigsState);
   const themeStyle = useRecoilValue(themeStyleState);
   const themeMode = useRecoilValue(themeModeState);
-  const { hotkey, whereToPlaceNewTask } = useRecoilValue(settingsState);
+  const settings = useRecoilValue(settingsState);
 
   const refreshAll = useRecoilCallback(
     ({ snapshot, refresh }) =>
@@ -63,17 +65,17 @@ function App(props: IAppProps) {
   }, [props.userConfigs, setUserConfigs]);
 
   useEffect(() => {
-    if (!hotkey) {
+    if (!settings.hotkey) {
       return;
     }
 
     // @ts-ignore
-    Mousetrap.bindGlobal(hotkey, () => window.logseq.hideMainUI(), 'keydown');
+    Mousetrap.bindGlobal(settings.hotkey, () => window.logseq.hideMainUI(), 'keydown');
     return () => {
       // @ts-ignore
-      Mousetrap.unbindGlobal(hotkey, 'keydown');
+      Mousetrap.unbindGlobal(settings.hotkey, 'keydown');
     };
-  }, [hotkey]);
+  }, [settings.hotkey]);
 
   useEffect(() => {
     if (visible) {
@@ -81,6 +83,7 @@ function App(props: IAppProps) {
         inputRef.current?.focus();
       }, 0);
       refreshAll();
+      window.logseq.App.getUserConfigs().then(setUserConfigs);
 
       const keydownHandler = (ev: KeyboardEvent) => {
         if (ev.key === 'Escape') {
@@ -93,7 +96,7 @@ function App(props: IAppProps) {
         document.removeEventListener('keydown', keydownHandler);
       };
     }
-  }, [visible, refreshAll]);
+  }, [visible, refreshAll, setUserConfigs]);
 
   useEffect(() => {
     if (themeMode === 'dark') {
@@ -113,8 +116,12 @@ function App(props: IAppProps) {
 
   const createNewTask = async (content: string) => {
     const { preferredDateFormat, preferredTodo } = userConfigs!;
-    const date = dayjs().format(preferredDateFormat);
-    await api.createNewTask(date, content, { preferredTodo, whereToPlaceNewTask });
+    const { whereToPlaceNewTask } = settings;
+    const date = dayjs().format(fixPreferredDateFormat(preferredDateFormat!));
+    await api.createNewTask(date, content, {
+      preferredTodo,
+      whereToPlaceNewTask,
+    });
     refreshAll();
   };
 
@@ -132,13 +139,23 @@ function App(props: IAppProps) {
           }}
         >
           <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <TaskInput
-              ref={inputRef}
-              onCreateTask={createNewTask}
-            />
+            <TaskInput ref={inputRef} onCreateTask={createNewTask} />
             <div>
               <TaskSection title="Today" query={getTodayTaskQuery()} />
-              <TaskSection title="Scheduled" query={getScheduledTaskQuery()} />
+              {settings.showNextNDaysTask && (
+                <TaskSection
+                  title={`Next ${settings.numberOfNextNDays} Days`}
+                  query={getNextNDaysTaskQuery(settings.numberOfNextNDays)}
+                />
+              )}
+              <TaskSection
+                title="Scheduled"
+                query={
+                  settings.showNextNDaysTask
+                    ? getScheduledTaskQuery(dayjs().add(settings.numberOfNextNDays, 'd'))
+                    : getScheduledTaskQuery()
+                }
+              />
               <TaskSection
                 title="Anytime"
                 query={getAnytimeTaskQuery()}

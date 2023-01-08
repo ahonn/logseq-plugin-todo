@@ -1,7 +1,8 @@
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
-export default function getScheduledTaskQuery(startDate: Dayjs | Date = new Date()) {
-  const start = dayjs(startDate).format('YYYYMMDD');
+export default function getNextNDaysTaskQuery(days: number) {
+  const start = dayjs().format('YYYYMMDD');
+  const next = dayjs().add(days, 'd').format('YYYYMMDD');
 
   const query = `
     [:find (pull ?b [*])
@@ -13,6 +14,7 @@ export default function getScheduledTaskQuery(startDate: Dayjs | Date = new Date
        [?b :block/scheduled ?d]
        [?b :block/deadline ?d])
      [(> ?d ${start})]]
+     [(> ?d ${next})]]
   `;
   return query;
 }

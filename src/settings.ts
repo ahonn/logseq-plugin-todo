@@ -16,6 +16,20 @@ const settings: SettingSchemaDesc[] = [
     default: '',
   },
   {
+    key: 'showNextNDaysTask',
+    type: 'boolean',
+    title: 'show next n days task section',
+    description: 'Show next N days task section after today',
+    default: false,
+  },
+  {
+    key: 'numberOfNextNDays',
+    type: 'number',
+    title: 'how many number of days task',
+    description: 'How many number of days task show in section',
+    default: 14,
+  },
+  {
     key: 'openInRightSidebar',
     type: 'boolean',
     title: 'Open task in right sidebar',

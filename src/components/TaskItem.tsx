@@ -16,6 +16,7 @@ import {
   toggleTaskStatus,
 } from '../api';
 import { settingsState } from '../state/settings';
+import { fixPreferredDateFormat } from '../utils';
 
 export interface ITaskItemProps {
   task: TaskEntityObject;
@@ -95,7 +96,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
                   })}
                 >
                   {dayjs(task.scheduled.toString(), 'YYYYMMDD').format(
-                    preferredDateFormat,
+                    fixPreferredDateFormat(preferredDateFormat!),
                   )}
                 </time>
               )}
