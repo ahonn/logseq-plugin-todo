@@ -1,7 +1,10 @@
 import { atom, AtomEffect } from 'recoil';
+import settings from '../settings';
 
 interface IPluginSettings {
   hotkey: string;
+  showNextNDaysTask: boolean;
+  numberOfNextNDays: number;
   lightPrimaryBackgroundColor: string;
   lightSecondaryBackgroundColor: string;
   darkPrimaryBackgroundColor: string;
@@ -10,17 +13,6 @@ interface IPluginSettings {
   openInRightSidebar: boolean;
   whereToPlaceNewTask: string;
 }
-
-const DEFAULT_SETTINGS = {
-  hotkey: 'mod+shift+t',
-  sectionTitleColor: '#0a0a0a',
-  lightPrimaryBackgroundColor: '#ffffff',
-  lightSecondaryBackgroundColor: '#f7f7f7',
-  darkPrimaryBackgroundColor: '#002B37',
-  darkSecondaryBackgroundColor: '#106ba3',
-  openInRightSidebar: false,
-  whereToPlaceNewTask: '',
-};
 
 const settingsChangedEffect: AtomEffect<IPluginSettings> = ({ setSelf }) => {
   setSelf({ ...logseq.settings } as unknown as IPluginSettings);
@@ -32,6 +24,6 @@ const settingsChangedEffect: AtomEffect<IPluginSettings> = ({ setSelf }) => {
 
 export const settingsState = atom<IPluginSettings>({
   key: 'settings',
-  default: DEFAULT_SETTINGS,
+  default: settings.reduce((result, item) => ({ ...result, [item.key]: item.default }), {}) as IPluginSettings,
   effects: [settingsChangedEffect],
 });

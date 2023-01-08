@@ -10,31 +10,12 @@ export const DEFAULT_USER_CONFIGS: Partial<AppUserConfigs> = {
   preferredDateFormat: 'MMM do, yyyy',
 };
 
-function fixPreferredDateFormat(preferredDateFormat: string) {
-  const format = preferredDateFormat
-    .replace('yyyy', 'YYYY')
-    .replace('dd', 'DD')
-    .replace('do', 'Do')
-    .replace('EEEE', 'dddd')
-    .replace('EEE', 'ddd')
-    .replace('EE', 'dd')
-    .replace('E', 'dd');
-  return format;
-}
-
 const updateUserConfigsEffect: AtomEffect<Partial<AppUserConfigs>> = ({
   setSelf,
   trigger,
 }) => {
   if (trigger === 'get') {
-    window.logseq.App.getUserConfigs()
-      .then((configs) => ({
-        ...configs,
-        preferredDateFormat: fixPreferredDateFormat(
-          configs.preferredDateFormat,
-        ),
-      }))
-      .then(setSelf);
+    window.logseq.App.getUserConfigs().then(setSelf);
   }
 };
 
