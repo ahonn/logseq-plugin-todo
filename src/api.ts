@@ -55,6 +55,8 @@ export async function createNewTask(
   if (blocksTree.length === 1 && blocksTree[0].content === '') {
     await window.logseq.Editor.removeBlock(blocksTree[0].uuid);
   }
+
+  window.logseq.Editor.exitEditingMode(true);
 }
 
 export async function toggleTaskStatus(
