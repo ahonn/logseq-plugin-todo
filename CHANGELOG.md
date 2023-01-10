@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.13.0...v1.14.0) (2023-01-10)
+
+
+### Features
+
+* exit editing mode when create task where today journal page ([ae96a9f](https://github.com/ahonn/logseq-plugin-todo/commit/ae96a9f302417862eb2b99a3a1f9b65acc90a2b5))
+
 # [1.13.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.12.1...v1.13.0) (2023-01-08)
 
 
