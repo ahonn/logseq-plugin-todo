@@ -3,8 +3,8 @@ import dayjs from 'dayjs';
 import { TaskEntityObject, TaskMarker } from './models/TaskEntity';
 
 export const MARKER_GROUPS: Record<string, TaskMarker[]> = {
-  [TaskMarker.TODO]: [TaskMarker.TODO, TaskMarker.DOING, TaskMarker.DONE],
-  [TaskMarker.LATER]: [TaskMarker.LATER, TaskMarker.NOW, TaskMarker.DONE],
+  [TaskMarker.TODO]: [TaskMarker.TODO, TaskMarker.DOING],
+  [TaskMarker.LATER]: [TaskMarker.LATER, TaskMarker.NOW],
 };
 
 export interface ITaskOptions {
