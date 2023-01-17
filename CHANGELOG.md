@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.14.0...v1.14.1) (2023-01-17)
+
+
+### Bug Fixes
+
+* label should not let task be removed from the list, [#37](https://github.com/ahonn/logseq-plugin-todo/issues/37) ([a17cad7](https://github.com/ahonn/logseq-plugin-todo/commit/a17cad761c155555a781794d5bdb5137490e2450))
+
 # [1.14.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.13.0...v1.14.0) (2023-01-10)
 
 
