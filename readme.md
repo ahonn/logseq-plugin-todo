@@ -25,3 +25,12 @@ A simple to-do list plugin for logseq
 ## Page Properties
 
 - `todo-ignore`: Whether to hide the todo task in the current page. see [How to use todo-ignore #8](https://github.com/ahonn/logseq-plugin-todo/issues/8)
+
+## Contribution
+Issues and PRs are welcome!
+
+## Buy me a coffee
+If my plugin solve your situation and you will, you can choose to [buy me a coffee](https://www.buymeacoffee.com/yuexunjiang).
+
+## Licence
+MIT
