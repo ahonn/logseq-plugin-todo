@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import TaskInput, { ITaskInputRef } from './components/TaskInput';
 import TaskSection, { GroupBy } from './components/TaskSection';
+import TaskFilter from './components/TaskFilter';
 import { logseq as plugin } from '../package.json';
 import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
 import { visibleState } from './state/visible';
@@ -18,9 +19,9 @@ import { settingsState } from './state/settings';
 import * as api from './api';
 import Mousetrap from 'mousetrap';
 import 'mousetrap-global-bind';
-import './style.css';
 import getNextNDaysTaskQuery from './querys/next-n-days';
 import { fixPreferredDateFormat } from './utils';
+import './style.css';
 
 dayjs.extend(advancedFormat);
 
@@ -70,7 +71,11 @@ function App(props: IAppProps) {
     }
 
     // @ts-ignore
-    Mousetrap.bindGlobal(settings.hotkey, () => window.logseq.hideMainUI(), 'keydown');
+    Mousetrap.bindGlobal(
+      settings.hotkey,
+      () => window.logseq.hideMainUI(),
+      'keydown',
+    );
     return () => {
       // @ts-ignore
       Mousetrap.unbindGlobal(settings.hotkey, 'keydown');
@@ -140,6 +145,7 @@ function App(props: IAppProps) {
         >
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <TaskInput ref={inputRef} onCreateTask={createNewTask} />
+            <TaskFilter />
             <div>
               <TaskSection title="Today" query={getTodayTaskQuery()} />
               {settings.showNextNDaysTask && (
@@ -152,7 +158,9 @@ function App(props: IAppProps) {
                 title="Scheduled"
                 query={
                   settings.showNextNDaysTask
-                    ? getScheduledTaskQuery(dayjs().add(settings.numberOfNextNDays, 'd'))
+                    ? getScheduledTaskQuery(
+                        dayjs().add(settings.numberOfNextNDays, 'd'),
+                      )
                     : getScheduledTaskQuery()
                 }
               />
