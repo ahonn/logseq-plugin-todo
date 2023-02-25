@@ -22,6 +22,7 @@ import 'mousetrap-global-bind';
 import getNextNDaysTaskQuery from './querys/next-n-days';
 import { fixPreferredDateFormat } from './utils';
 import './style.css';
+import { markerFilterState, priorityFilterState } from './state/filter';
 
 dayjs.extend(advancedFormat);
 
@@ -50,6 +51,8 @@ function App(props: IAppProps) {
   const themeStyle = useRecoilValue(themeStyleState);
   const themeMode = useRecoilValue(themeModeState);
   const settings = useRecoilValue(settingsState);
+  const marker = useRecoilValue(markerFilterState);
+  const priority = useRecoilValue(priorityFilterState);
 
   const refreshAll = useRecoilCallback(
     ({ snapshot, refresh }) =>
@@ -124,7 +127,8 @@ function App(props: IAppProps) {
     const { whereToPlaceNewTask } = settings;
     const date = dayjs().format(fixPreferredDateFormat(preferredDateFormat!));
     await api.createNewTask(date, content, {
-      preferredTodo,
+      marker: marker.value || preferredTodo,
+      priority: priority.value,
       whereToPlaceNewTask,
     });
     refreshAll();

@@ -1,11 +1,16 @@
 import { atom } from "recoil";
 
+export const DEFAULT_OPTION = {
+  label: 'ALL',
+  value: '',
+}
+
 export const markerFilterState = atom({
   key: 'filter/marker',
-  default: "",
+  default: DEFAULT_OPTION,
 });
 
 export const priorityFilterState = atom({
   key: 'filter/priority',
-  default: "",
+  default: DEFAULT_OPTION,
 });
