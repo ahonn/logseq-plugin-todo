@@ -31,9 +31,9 @@ const TaskInput: React.ForwardRefRenderFunction<
   }));
 
   return (
-    <div className="flex mb-2">
+    <div className="flex border-b-1 border-dashed dark:border-gray-400 border-gray-300">
       <div
-        className="px-2 h-9 flex items-center flex-1 inline rounded-lg"
+        className="px-2 h-9 flex items-center flex-1 inline rounded-t-md"
         style={{
           backgroundColor: themeStyle.secondaryBackgroundColor,
         }}

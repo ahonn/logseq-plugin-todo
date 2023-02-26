@@ -6,7 +6,7 @@ import {
 } from 'recoil';
 import { groupBy } from 'lodash-es';
 import { TaskEntityObject } from '../models/TaskEntity';
-import { tasksState } from '../state/tasks';
+import { filterdTasksState, tasksState } from '../state/tasks';
 import { themeStyleState } from '../state/theme';
 import { visibleState } from '../state/visible';
 import TaskItem from './TaskItem';
@@ -30,7 +30,7 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
   const { title, query } = props;
   const [tasks, setTasks] = useState<TaskEntityObject[]>([]);
   const visible = useRecoilValue(visibleState);
-  const tasksLoadable = useRecoilValueLoadable(tasksState(query));
+  const tasksLoadable = useRecoilValueLoadable(filterdTasksState(query));
   const themeStyle = useRecoilValue(themeStyleState);
   const { openInRightSidebar } = useRecoilValue(settingsState);
   const input = useRecoilValue(inputState);

@@ -46,12 +46,12 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   };
 
   const toggleStatus = async () => {
-    await toggleTaskStatus(task, { preferredTodo });
+    await toggleTaskStatus(task, { marker: preferredTodo });
     setChecked(!checked);
   };
 
   const toggleMarker = () => {
-    toggleTaskMarker(task, { preferredTodo });
+    toggleTaskMarker(task, { marker: preferredTodo });
     onChange();
   };
 
