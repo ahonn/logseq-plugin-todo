@@ -2,7 +2,7 @@ import { BlockEntity, PageEntity } from '@logseq/libs/dist/LSPlugin';
 import { selectorFamily } from 'recoil';
 import TaskEntity, { TaskEntityObject, TASK_PRIORITY_WEIGHT } from '../models/TaskEntity';
 import { getBlockUUID } from '../utils';
-import { markerFilterState, priorityFilterState } from './filter';
+import { markerState, priorityState } from './filter';
 
 async function getTaskEntitiesByQuery(query: string) {
   const collections = await window.logseq.DB.datascriptQuery<BlockEntity[][]>(
@@ -68,8 +68,8 @@ export const filterdTasksState = selectorFamily({
   key: 'filterd-tasks',
   get: (query: string) => ({ get }) => {
     const tasks = get(tasksState(query));
-    const marker = get(markerFilterState);
-    const priority = get(priorityFilterState);
+    const marker = get(markerState);
+    const priority = get(priorityState);
 
     return tasks.filter((task: TaskEntityObject) => {
       if (marker.value && task.marker !== marker.value) {

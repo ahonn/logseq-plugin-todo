@@ -4,12 +4,9 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { CircleOff } from 'tabler-icons-react';
 import { userConfigsState } from '../state/user-configs';
 import { TaskMarker, TaskPriority } from '../models/TaskEntity';
-import {
-  DEFAULT_OPTION,
-  markerFilterState,
-  priorityFilterState,
-} from '../state/filter';
+import { DEFAULT_OPTION, markerState, priorityState } from '../state/filter';
 import { themeStyleState } from '../state/theme';
+import { settingsState } from '../state/settings';
 
 const PRIORITY_OPTIONS = [
   TaskPriority.HIGH,
@@ -20,9 +17,10 @@ const PRIORITY_OPTIONS = [
 
 const TaskFilter: React.FC = () => {
   const { preferredWorkflow } = useRecoilValue(userConfigsState);
-  const [marker, setMarker] = useRecoilState(markerFilterState);
-  const [priority, setPriority] = useRecoilState(priorityFilterState);
+  const [marker, setMarker] = useRecoilState(markerState);
+  const [priority, setPriority] = useRecoilState(priorityState);
   const themeStyle = useRecoilValue(themeStyleState);
+  const settings = useRecoilValue(settingsState);
 
   const workflow = React.useMemo(() => {
     return preferredWorkflow === 'now'
@@ -62,15 +60,34 @@ const TaskFilter: React.FC = () => {
     [],
   );
 
-  const selectTheme = React.useCallback((theme: Theme) => ({
-    ...theme,
-    colors: {
-      ...theme.colors,
-      primary: themeStyle.sectionTitleColor,
-      primary25: themeStyle.secondaryBackgroundColor,
-      neutral0: themeStyle.primaryBackgroundColor,
+  const selectTheme = React.useCallback(
+    (theme: Theme) => ({
+      ...theme,
+      colors: {
+        ...theme.colors,
+        primary: themeStyle.sectionTitleColor,
+        primary25: themeStyle.secondaryBackgroundColor,
+        neutral0: themeStyle.primaryBackgroundColor,
+      },
+    }),
+    [themeStyle],
+  );
+
+  React.useEffect(() => {
+    const marker = markerOptions.find(
+      (marker) => marker.value === settings.defaultMarker,
+    );
+    if (marker) {
+      setMarker(marker);
     }
-  }), [themeStyle]);
+
+    const priority = priorityOptions.find(
+      (priority) => priority.value === settings.defaultPriority,
+    );
+    if (priority) {
+      setPriority(priority);
+    }
+  }, [settings, markerOptions, priorityOptions, setMarker, setPriority]);
 
   const handleReset = () => {
     setMarker(DEFAULT_OPTION);
@@ -109,7 +126,11 @@ const TaskFilter: React.FC = () => {
         </div>
       </div>
       {(marker.value || priority.value) && (
-        <CircleOff size={14} className="stroke-gray-600 dark:stroke-gray-200" onClick={handleReset} />
+        <CircleOff
+          size={14}
+          className="stroke-gray-600 dark:stroke-gray-200"
+          onClick={handleReset}
+        />
       )}
     </div>
   );

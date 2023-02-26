@@ -1,8 +1,11 @@
 import { atom, AtomEffect } from 'recoil';
+import { TaskMarker, TaskPriority } from '../models/TaskEntity';
 import settings from '../settings';
 
 interface IPluginSettings {
   hotkey: string;
+  defaultMarker: TaskMarker;
+  defaultPriority: TaskPriority;
   showNextNDaysTask: boolean;
   numberOfNextNDays: number;
   lightPrimaryBackgroundColor: string;

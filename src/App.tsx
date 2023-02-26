@@ -22,7 +22,7 @@ import 'mousetrap-global-bind';
 import getNextNDaysTaskQuery from './querys/next-n-days';
 import { fixPreferredDateFormat } from './utils';
 import './style.css';
-import { markerFilterState, priorityFilterState } from './state/filter';
+import { markerState, priorityState } from './state/filter';
 
 dayjs.extend(advancedFormat);
 
@@ -51,8 +51,8 @@ function App(props: IAppProps) {
   const themeStyle = useRecoilValue(themeStyleState);
   const themeMode = useRecoilValue(themeModeState);
   const settings = useRecoilValue(settingsState);
-  const marker = useRecoilValue(markerFilterState);
-  const priority = useRecoilValue(priorityFilterState);
+  const marker = useRecoilValue(markerState);
+  const priority = useRecoilValue(priorityState);
 
   const refreshAll = useRecoilCallback(
     ({ snapshot, refresh }) =>

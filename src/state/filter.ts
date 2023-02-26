@@ -5,12 +5,12 @@ export const DEFAULT_OPTION = {
   value: '',
 }
 
-export const markerFilterState = atom({
+export const markerState = atom({
   key: 'filter/marker',
   default: DEFAULT_OPTION,
 });
 
-export const priorityFilterState = atom({
+export const priorityState = atom({
   key: 'filter/priority',
   default: DEFAULT_OPTION,
 });
