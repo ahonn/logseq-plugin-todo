@@ -23,6 +23,7 @@ import getNextNDaysTaskQuery from './querys/next-n-days';
 import { fixPreferredDateFormat } from './utils';
 import './style.css';
 import { markerState, priorityState } from './state/filter';
+import { TaskPriority } from './models/TaskEntity';
 
 dayjs.extend(advancedFormat);
 
@@ -128,7 +129,7 @@ function App(props: IAppProps) {
     const date = dayjs().format(fixPreferredDateFormat(preferredDateFormat!));
     await api.createNewTask(date, content, {
       marker: marker.value || preferredTodo,
-      priority: priority.value,
+      priority: priority.value as TaskPriority,
       whereToPlaceNewTask,
     });
     refreshAll();

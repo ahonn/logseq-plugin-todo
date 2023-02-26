@@ -1,6 +1,6 @@
 import { BlockEntity } from '@logseq/libs/dist/LSPlugin.user';
 import dayjs from 'dayjs';
-import { TaskEntityObject, TaskMarker } from './models/TaskEntity';
+import { TaskEntityObject, TaskMarker, TaskPriority } from './models/TaskEntity';
 
 export const MARKER_GROUPS: Record<string, TaskMarker[]> = {
   [TaskMarker.TODO]: [TaskMarker.TODO, TaskMarker.DOING],
@@ -8,8 +8,8 @@ export const MARKER_GROUPS: Record<string, TaskMarker[]> = {
 };
 
 export interface ITaskOptions {
-  marker: string;
-  priority: string;
+  marker: TaskMarker;
+  priority?: TaskPriority;
   whereToPlaceNewTask?: string;
 }
 
