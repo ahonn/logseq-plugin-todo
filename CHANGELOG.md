@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.15.0...v1.16.0) (2023-02-26)
+
+
+### Features
+
+* add button for open section tasks in the right side ([8c37636](https://github.com/ahonn/logseq-plugin-todo/commit/8c37636a6681ed2fcb45b5d809cb28018600d921))
+
 # [1.15.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.14.1...v1.15.0) (2023-02-26)
 
 
