@@ -1,3 +1,17 @@
+# [1.15.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.14.1...v1.15.0) (2023-02-26)
+
+
+### Bug Fixes
+
+* fix type error ([705af59](https://github.com/ahonn/logseq-plugin-todo/commit/705af594f9133e6f1543beedaa1f827759b38cf3))
+
+
+### Features
+
+* add defaultMarker and defaultPriority settings ([137dbc7](https://github.com/ahonn/logseq-plugin-todo/commit/137dbc7a848f5def1165b040ed7ec87ece31c474))
+* add task filter component ([eb8c41b](https://github.com/ahonn/logseq-plugin-todo/commit/eb8c41bc0c286b7958bbb168ec3cd3ea1456102f))
+* add the ability to filter tasks by marker or priority level. ([412415f](https://github.com/ahonn/logseq-plugin-todo/commit/412415f10a7c8e003781b9f42f8737a9d253317c))
+
 ## [1.14.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.14.0...v1.14.1) (2023-01-17)
 
 
