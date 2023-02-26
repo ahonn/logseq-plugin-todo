@@ -11,8 +11,9 @@ import { themeStyleState } from '../state/theme';
 import { visibleState } from '../state/visible';
 import TaskItem from './TaskItem';
 import { settingsState } from '../state/settings';
-import { openTaskPage } from '../api';
+import { openTask, openTaskPage } from '../api';
 import { inputState } from '../state/input';
+import { ChevronsRight, LayoutSidebarRight } from 'tabler-icons-react';
 
 export enum GroupBy {
   Page,
@@ -76,18 +77,36 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
     }
   }, [props.groupBy, tasks]);
 
+  const openTaskGroups = React.useCallback(() => {
+    console.log(tasks);
+    tasks.forEach((task) => {
+      openTask(task, {
+        openInRightSidebar: true,
+      });
+    });
+    window.logseq.hideMainUI();
+  }, [tasks]);
+
   if (tasks.length === 0) {
     return null;
   }
 
   return (
     <div className="py-1">
-      <h2
-        className="py-1 text-blue-400"
-        style={{ color: themeStyle.sectionTitleColor }}
-      >
-        {title}
-      </h2>
+      <div className="flex flex-row justify-between items-center">
+        <h2
+          className="py-1 mr-2 text-blue-400"
+          style={{ color: themeStyle.sectionTitleColor }}
+        >
+          {title}
+        </h2>
+        <div className="pl-2 pr-1" onClick={openTaskGroups}>
+          <ChevronsRight
+            size={20}
+            className="stroke-gray-300 cursor-pointer"
+          />
+        </div>
+      </div>
       <div>
         {(Object.entries(taskGroups) ?? []).map(([name, tasks]) => {
           const [{ page }] = tasks;
