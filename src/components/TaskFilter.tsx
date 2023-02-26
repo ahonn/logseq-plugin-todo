@@ -52,7 +52,7 @@ const TaskFilter: React.FC = () => {
       control: () =>
         '!h-6 !min-h-6 w-14 !border-none !shadow-none !bg-transparent ',
       valueContainer: () => '!py-0 !px-1 cursor-pointer bg-transparent',
-      singleValue: () => `!text-gray-600 !dark:text-gray-300`,
+      singleValue: () => `!text-gray-500 !dark:text-gray-300`,
       indicatorsContainer: () => '!hidden',
       menu: () => `!-mt-0.5`,
       option: () => `!py-1 !px-2`,
@@ -96,12 +96,12 @@ const TaskFilter: React.FC = () => {
 
   return (
     <div
-      className="flex flex-row text-gray-600 dark:text-gray-300 px-2 rounded-b-md items-center justify-between"
+      className="flex flex-row text-gray-500 dark:text-gray-300 px-2 rounded-b-md items-center justify-between"
       style={{
         backgroundColor: themeStyle.secondaryBackgroundColor,
       }}
     >
-      <div className="flex flex-row">
+      <div className="flex flex-row pl-0.5">
         <div className="flex flex-row items-center">
           <span className="text-xs">Marker:</span>
           <Select
