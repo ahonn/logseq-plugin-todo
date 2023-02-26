@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.0...v1.16.1) (2023-02-26)
+
+
+### Bug Fixes
+
+* make the font color of the filter more comfortable ([f37aceb](https://github.com/ahonn/logseq-plugin-todo/commit/f37aceb49b156e93756d4b1587e1196ac3734ce6))
+
 # [1.16.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.15.0...v1.16.0) (2023-02-26)
 
 
