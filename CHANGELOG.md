@@ -1,3 +1,10 @@
+## [1.16.2](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.1...v1.16.2) (2023-02-28)
+
+
+### Bug Fixes
+
+* update logseq sdk ([b1f4138](https://github.com/ahonn/logseq-plugin-todo/commit/b1f413812e6cb66116545bee1f2a52f8ac2f47f5))
+
 ## [1.16.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.0...v1.16.1) (2023-02-26)
 
 
