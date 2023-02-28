@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@logseq/libs': ^0.0.10
+  '@logseq/libs': ^0.0.14
   '@semantic-release/changelog': 6.0.1
   '@semantic-release/exec': 6.0.3
   '@semantic-release/git': 10.0.1
@@ -44,7 +44,7 @@ specifiers:
   windicss: 3.5.6
 
 dependencies:
-  '@logseq/libs': 0.0.10
+  '@logseq/libs': 0.0.14
   classnames: 2.3.2
   dayjs: 1.11.6
   less: 4.1.3
@@ -602,8 +602,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.11
     dev: true
 
-  /@logseq/libs/0.0.10:
-    resolution: {integrity: sha512-Ah5wAhLcgrlOtk/9nEe11UsqOzvpcEaEWDV+oFD3TIGTeP4mfv2HjDiPYPBGXuMZRgvsW6klQLzzaxMieksXXg==}
+  /@logseq/libs/0.0.14:
+    resolution: {integrity: sha512-QcNeVxb4LIvV4Tid0ABZXV7fxYdZHynzLlukSk6Ydkuus+hBzLcjfK15nzybIRbiV7ANqSgTooDZkV/E4WP57Q==}
     dependencies:
       csstype: 3.1.0
       debug: 4.3.4
@@ -3741,7 +3741,7 @@ packages:
     engines: {node: '>=8'}
 
   /path/0.12.7:
-    resolution: {integrity: sha1-1NwqUGxM4hl+tIHr/NWzbAFAsQ8=}
+    resolution: {integrity: sha512-aXXC6s+1w7otVF9UletFkFcDsJeO7lSZBPUQhtb5O0xJe8LtYhj/GxldoL09bBj9+ZmE2hNoHqQSFMN5fikh4Q==}
     dependencies:
       process: 0.11.10
       util: 0.10.4
