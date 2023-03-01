@@ -72,7 +72,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
           className="pt-1 mr-1"
         />
       </div>
-      <div className="flex-1 border-b border-gray-100 dark:border-gray-400 pb-2 pt-1 text-sm leading-normal break-all">
+      <div className="flex-1 border-b border-gray-100 dark:border-gray-400 pb-2 pt-1 text-sm leading-normal">
         <div className="flex justify-between items-center">
           <div className="flex-col">
             <div className={contentClassName}>
