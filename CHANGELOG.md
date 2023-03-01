@@ -1,3 +1,10 @@
+## [1.16.3](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.2...v1.16.3) (2023-03-01)
+
+
+### Bug Fixes
+
+* fixed task item work break issue, [#41](https://github.com/ahonn/logseq-plugin-todo/issues/41) ([e624f03](https://github.com/ahonn/logseq-plugin-todo/commit/e624f0380181b5979743d9f4310f274efa2cc1ce))
+
 ## [1.16.2](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.1...v1.16.2) (2023-02-28)
 
 
