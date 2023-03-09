@@ -2,6 +2,8 @@
 
 A simple to-do list plugin for logseq
 
+> If my plugin has solved your problem and you would like to show your appreciation, you can choose to support me by [buy me a coffee](https://www.buymeacoffee.com/yuexunjiang).
+
 ### Feature
 - quick add new to-do items to today's journal page
 - show all today's to-do items (include scheduled & today's journal page)
@@ -28,9 +30,6 @@ A simple to-do list plugin for logseq
 
 ## Contribution
 Issues and PRs are welcome!
-
-## Buy me a coffee
-If my plugin solve your situation and you will, you can choose to [buy me a coffee](https://www.buymeacoffee.com/yuexunjiang).
 
 ## Licence
 MIT
