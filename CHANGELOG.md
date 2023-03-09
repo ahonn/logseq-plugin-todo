@@ -1,3 +1,10 @@
+## [1.16.4](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.3...v1.16.4) (2023-03-09)
+
+
+### Bug Fixes
+
+* update userConfigsState to use getUserConfigs() as default value, [#31](https://github.com/ahonn/logseq-plugin-todo/issues/31) ([a1a80eb](https://github.com/ahonn/logseq-plugin-todo/commit/a1a80eb53b5296d715f9f2bdc923da53db16d6cc))
+
 ## [1.16.3](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.2...v1.16.3) (2023-03-01)
 
 
