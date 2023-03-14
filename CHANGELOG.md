@@ -1,3 +1,10 @@
+## [1.16.5](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.4...v1.16.5) (2023-03-14)
+
+
+### Bug Fixes
+
+* refactor with new hooks, and fix theme mode issue ([65d5706](https://github.com/ahonn/logseq-plugin-todo/commit/65d5706736a7f815446f596f772fa9099cf07f51))
+
 ## [1.16.4](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.3...v1.16.4) (2023-03-09)
 
 
