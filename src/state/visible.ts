@@ -1,4 +1,5 @@
-import { atom, AtomEffect } from 'recoil';
+import { atom, AtomEffect, selector } from 'recoil';
+import { themeModeState } from './theme';
 
 const visibleChangedEffect: AtomEffect<boolean> = ({ setSelf }) => {
   const eventName = 'ui:visible:changed';
@@ -14,7 +15,5 @@ const visibleChangedEffect: AtomEffect<boolean> = ({ setSelf }) => {
 export const visibleState = atom({
   key: 'visible',
   default: logseq.isMainUIVisible,
-  effects: [
-    visibleChangedEffect,
-  ],
+  effects: [visibleChangedEffect],
 });
