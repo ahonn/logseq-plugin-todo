@@ -13,7 +13,7 @@ async function openTaskPanel() {
   // @ts-ignore
   Object.assign(taskPanel.style, {
     position: 'fixed',
-  // @ts-ignore
+    // @ts-ignore
     top: `${rect.top + 40}px`,
     // @ts-ignore
     left: rect.left + 'px',
@@ -39,51 +39,45 @@ function registerHotKey(binding: string) {
 }
 
 function main() {
-  try {
-    logseq.setMainUIInlineStyle({
-      position: 'fixed',
-      zIndex: 11,
-    });
+  logseq.setMainUIInlineStyle({
+    position: 'fixed',
+    zIndex: 11,
+  });
 
-    logseq.App.registerUIItem('toolbar', {
-      key: plugin.id,
-      template: `
+  logseq.App.registerUIItem('toolbar', {
+    key: plugin.id,
+    template: `
         <a id="${plugin.id}" data-on-click="openTaskPanel" data-rect class="button">
           <i class="ti ti-checkbox" style="font-size: 20px"></i>
         </a>
       `,
-    });
+  });
 
-    if (logseq.settings?.hotkey) {
-      registerHotKey(logseq.settings?.hotkey);
-    }
-    logseq.onSettingsChanged((settings) => {
-      registerHotKey(settings?.hotkey);
-    });
-
-    logseq.App.registerCommandPalette(
-      {
-        key: 'logseq-plugin-todo',
-        label: 'Open todo list',
-      },
-      () => {
-        openTaskPanel();
-      },
-    );
-
-    logseq.App.getUserConfigs().then((configs) => {
-      const root = ReactDOM.createRoot(document.getElementById('app')!);
-      root.render(
-        <React.StrictMode>
-          <RecoilRoot>
-            <App userConfigs={configs} />
-          </RecoilRoot>
-        </React.StrictMode>,
-      );
-    })
-  } catch (e: any) {
-    logseq.App.showMsg(e.message, 'error');
+  if (logseq.settings?.hotkey) {
+    registerHotKey(logseq.settings?.hotkey);
   }
+  logseq.onSettingsChanged((settings) => {
+    registerHotKey(settings?.hotkey);
+  });
+
+  logseq.App.registerCommandPalette(
+    {
+      key: 'logseq-plugin-todo',
+      label: 'Open todo list',
+    },
+    () => {
+      openTaskPanel();
+    },
+  );
+
+  const root = ReactDOM.createRoot(document.getElementById('app')!);
+  root.render(
+    <React.StrictMode>
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
+    </React.StrictMode>,
+  );
 }
 
 logseq

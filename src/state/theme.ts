@@ -1,27 +1,13 @@
-import { atom, AtomEffect, selector } from 'recoil';
+import { selector } from 'recoil';
 import { settingsState } from './settings';
 import { userConfigsState } from './user-configs';
 
-type ThemeMode = 'dark' | 'light';
-
-const themeModeChangedEffect: AtomEffect<ThemeMode> = ({
-  setSelf,
-  getPromise,
-}) => {
-  setTimeout(async () => {
-    const userConfigs = await getPromise(userConfigsState);
-    setSelf(userConfigs.preferredThemeMode ?? 'light');
-  }, 0);
-
-  logseq.App.onThemeModeChanged((evt) => {
-    setSelf(evt.mode);
-  });
-};
-
-export const themeModeState = atom<ThemeMode>({
+export const themeModeState = selector({
   key: 'themeMode',
-  default: 'light',
-  effects: [themeModeChangedEffect],
+  get: ({ get }) => {
+    const userConfigs = get(userConfigsState);
+    return userConfigs.preferredThemeMode;
+  }
 });
 
 export const themeStyleState = selector({
