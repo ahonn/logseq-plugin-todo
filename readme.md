@@ -2,13 +2,15 @@
 
 A simple to-do list plugin for logseq
 
+> This plugin relies solely on the Logseq Plugin API to access local data, and does not store it externally.
+
 > If my plugin has solved your problem and you would like to show your appreciation, you can choose to support me by [buy me a coffee](https://www.buymeacoffee.com/yuexunjiang).
 
-### Feature
-- quick add new to-do items to today's journal page
-- show all today's to-do items (include scheduled & today's journal page)
-- show all to-do's without schedule
-- ignore to-do items in the specified page
+### Features
+- Quickly add new to-do items to today's journal page.
+- View all of today's to-do items (include scheduled & today's journal page).
+- View all to-do items without a schedule.
+- Ignore to-do items on a specified page.
 
 ![](./screenshots/plugin-panel.png)
 
