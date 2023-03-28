@@ -85,7 +85,7 @@ function App() {
     >
       <div ref={innerRef} id={plugin.id}>
         <div
-          className="absolute p-4 w-90 h-120 -left-13rem bg-white shadow rounded-lg overflow-y-auto border-2 transition-all transition-200"
+          className="absolute p-4 w-90 h-120 -left-13rem bg-white shadow rounded-lg overflow-y-auto scrollbar-hide border-2 transition-all transition-200"
           style={{
             backgroundColor: themeStyle.primaryBackgroundColor,
             borderColor: themeStyle.secondaryBackgroundColor,
