@@ -1,3 +1,11 @@
+# [1.17.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.5...v1.17.0) (2023-03-28)
+
+
+### Features
+
+* add shift click hotkey to open task in right sidebar, [#47](https://github.com/ahonn/logseq-plugin-todo/issues/47) ([1b5fcd7](https://github.com/ahonn/logseq-plugin-todo/commit/1b5fcd7848027dd2fcb15b786cca2c28c6c3ebde))
+* support trigger the opposite behavior of openInRightSidebar, [#47](https://github.com/ahonn/logseq-plugin-todo/issues/47) ([196d5e1](https://github.com/ahonn/logseq-plugin-todo/commit/196d5e13730bb1b679b297808bcd3fac778382d5))
+
 ## [1.16.5](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.4...v1.16.5) (2023-03-14)
 
 
