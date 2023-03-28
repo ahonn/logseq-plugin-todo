@@ -27,7 +27,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   const { task, onChange } = props;
   const themeStyle = useRecoilValue(themeStyleState);
   const { preferredDateFormat, preferredTodo } = useRecoilValue(userConfigsState);
-  const { openInRightSidebar } = useRecoilValue(settingsState);
+  const settings = useRecoilValue(settingsState);
   const [checked, setChecked] = React.useState(task.completed);
 
   const isExpiredTask = useMemo(() => {
@@ -39,8 +39,11 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   }, [task.scheduled]);
 
   const openTaskBlock = (e: React.MouseEvent<HTMLDivElement>) => {
+    const openInRightSidebar = e.nativeEvent.shiftKey
+      ? !settings.openInRightSidebar
+      : settings.openInRightSidebar;
     openTask(task, {
-      openInRightSidebar: openInRightSidebar || e.nativeEvent.shiftKey,
+      openInRightSidebar,
     });
     window.logseq.hideMainUI();
   };
