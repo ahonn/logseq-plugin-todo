@@ -38,9 +38,9 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
     return date.isBefore(dayjs(), 'day');
   }, [task.scheduled]);
 
-  const openTaskBlock = () => {
+  const openTaskBlock = (e: React.MouseEvent<HTMLDivElement>) => {
     openTask(task, {
-      openInRightSidebar,
+      openInRightSidebar: openInRightSidebar || e.nativeEvent.shiftKey,
     });
     window.logseq.hideMainUI();
   };
