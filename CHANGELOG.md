@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.18.0...v1.19.0) (2023-04-23)
+
+
+### Features
+
+* including TODOs from future daily note pages, [#52](https://github.com/ahonn/logseq-plugin-todo/issues/52) ([035ebac](https://github.com/ahonn/logseq-plugin-todo/commit/035ebaca809445b57cdb87a0ceb4ff7cc5cb3baf))
+
 # [1.18.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.17.0...v1.18.0) (2023-04-23)
 
 
