@@ -5,6 +5,7 @@ import settings from '../settings';
 interface IPluginSettings {
   hotkey: string;
   defaultMarker: TaskMarker;
+  customMarkers: string;
   defaultPriority: TaskPriority;
   showNextNDaysTask: boolean;
   numberOfNextNDays: number;

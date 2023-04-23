@@ -1,5 +1,4 @@
-import { atom, AtomEffect, selector } from 'recoil';
-import { themeModeState } from './theme';
+import { atom, AtomEffect } from 'recoil';
 
 const visibleChangedEffect: AtomEffect<boolean> = ({ setSelf }) => {
   const eventName = 'ui:visible:changed';

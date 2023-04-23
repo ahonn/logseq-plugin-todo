@@ -2,8 +2,8 @@ import React from 'react';
 import Select, { Theme } from 'react-select';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { CircleOff } from 'tabler-icons-react';
-import { userConfigsState } from '../state/user-configs';
-import { TaskMarker, TaskPriority } from '../models/TaskEntity';
+import { taskMarkersState } from '../state/user-configs';
+import { TaskPriority } from '../models/TaskEntity';
 import { DEFAULT_OPTION, markerState, priorityState } from '../state/filter';
 import { themeStyleState } from '../state/theme';
 import { settingsState } from '../state/settings';
@@ -16,26 +16,20 @@ const PRIORITY_OPTIONS = [
 ];
 
 const TaskFilter: React.FC = () => {
-  const { preferredWorkflow } = useRecoilValue(userConfigsState);
   const [marker, setMarker] = useRecoilState(markerState);
   const [priority, setPriority] = useRecoilState(priorityState);
+  const taskMarkers = useRecoilValue(taskMarkersState);
   const themeStyle = useRecoilValue(themeStyleState);
   const settings = useRecoilValue(settingsState);
 
-  const workflow = React.useMemo(() => {
-    return preferredWorkflow === 'now'
-      ? [TaskMarker.NOW, TaskMarker.LATER]
-      : [TaskMarker.TODO, TaskMarker.DOING];
-  }, [preferredWorkflow]);
-
   const markerOptions = React.useMemo(() => {
-    return workflow.reduce(
+    return taskMarkers.reduce(
       (options, marker) => {
         return [...options, { label: marker, value: marker }];
       },
       [DEFAULT_OPTION],
     );
-  }, [workflow]);
+  }, [taskMarkers]);
 
   const priorityOptions = React.useMemo(() => {
     return PRIORITY_OPTIONS.reduce(
@@ -50,7 +44,7 @@ const TaskFilter: React.FC = () => {
     () => ({
       container: () => 'text-xs',
       control: () =>
-        '!h-6 !min-h-6 w-14 !border-none !shadow-none !bg-transparent ',
+        '!h-6 !min-h-6 w-16 !border-none !shadow-none !bg-transparent ',
       valueContainer: () => '!py-0 !px-1 cursor-pointer bg-transparent',
       singleValue: () => `!text-gray-500 !dark:text-gray-300`,
       indicatorsContainer: () => '!hidden',

@@ -8,7 +8,8 @@ export const MARKER_GROUPS: Record<string, TaskMarker[]> = {
 };
 
 export interface ITaskOptions {
-  marker: TaskMarker;
+  marker?: TaskMarker;
+  markerGroup?: (TaskMarker | string)[];
   priority?: TaskPriority;
   whereToPlaceNewTask?: string;
 }
@@ -63,7 +64,7 @@ export async function createNewTask(
 
 export async function toggleTaskStatus(
   task: TaskEntityObject,
-  options: ITaskOptions,
+  options: ITaskOptions & Required<Pick<ITaskOptions, 'marker'>>,
 ) {
   const { uuid, completed, marker } = task;
   const nextMarker = completed ? options.marker : TaskMarker.DONE;
@@ -97,21 +98,12 @@ export function openTaskPage(
 
 export async function toggleTaskMarker(
   task: TaskEntityObject,
-  options: ITaskOptions,
+  options: ITaskOptions & Required<Pick<ITaskOptions, 'markerGroup'>>,
 ) {
   const { uuid, rawContent, marker } = task;
-
-  let newMarker = marker;
-  if (marker === TaskMarker.WAITING) {
-    newMarker =
-      options.marker === TaskMarker.LATER
-        ? TaskMarker.LATER
-        : TaskMarker.TODO;
-  } else {
-    const markerGroup = MARKER_GROUPS[options.marker];
-    const currentMarkIndex = markerGroup.findIndex((m) => m === marker);
-    newMarker = markerGroup[(currentMarkIndex + 1) % markerGroup.length];
-  }
+  const { markerGroup } = options;
+  const currentMarkIndex = markerGroup.findIndex((m) => m === marker);
+  const newMarker = markerGroup[(currentMarkIndex + 1) % markerGroup.length];
 
   const newRawContent = rawContent.replace(new RegExp(`^${marker}`), newMarker);
   await window.logseq.Editor.updateBlock(uuid, newRawContent);

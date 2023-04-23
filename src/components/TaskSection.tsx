@@ -6,14 +6,14 @@ import {
 } from 'recoil';
 import { groupBy } from 'lodash-es';
 import { TaskEntityObject } from '../models/TaskEntity';
-import { filterdTasksState, tasksState } from '../state/tasks';
+import { filterdTasksState } from '../state/tasks';
 import { themeStyleState } from '../state/theme';
 import { visibleState } from '../state/visible';
 import TaskItem from './TaskItem';
 import { settingsState } from '../state/settings';
 import { openTask, openTaskPage } from '../api';
 import { inputState } from '../state/input';
-import { ChevronsRight, LayoutSidebarRight } from 'tabler-icons-react';
+import { ChevronsRight } from 'tabler-icons-react';
 
 export enum GroupBy {
   Page,
@@ -78,7 +78,6 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
   }, [props.groupBy, tasks]);
 
   const openTaskGroups = React.useCallback(() => {
-    console.log(tasks);
     tasks.forEach((task) => {
       openTask(task, {
         openInRightSidebar: true,

@@ -17,6 +17,13 @@ const settings: SettingSchemaDesc[] = [
     default: '',
   },
   {
+    key: 'customMarkers',
+    type: 'string',
+    title: 'Custom Markers',
+    description: 'Custom Markers, separate multiple tags with commas',
+    default: 'WAITING',
+  },
+  {
     key: 'defaultPriority',
     type: 'string',
     title: 'Default Priority',

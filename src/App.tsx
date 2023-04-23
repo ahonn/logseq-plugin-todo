@@ -78,6 +78,8 @@ function App() {
     refreshAll();
   };
 
+  const customMarkers = settings.customMarkers.split(',');
+
   return (
     <main
       className={`w-screen h-screen ${visible ? 'block' : 'hidden'}`}
@@ -95,11 +97,17 @@ function App() {
             <TaskInput ref={inputRef} onCreateTask={createNewTask} />
             <TaskFilter />
             <div>
-              <TaskSection title="Today" query={getTodayTaskQuery()} />
+              <TaskSection
+                title="Today"
+                query={getTodayTaskQuery(customMarkers)}
+              />
               {settings.showNextNDaysTask && (
                 <TaskSection
                   title={`Next ${settings.numberOfNextNDays} Days`}
-                  query={getNextNDaysTaskQuery(settings.numberOfNextNDays)}
+                  query={getNextNDaysTaskQuery(
+                    settings.numberOfNextNDays,
+                    customMarkers,
+                  )}
                 />
               )}
               <TaskSection
@@ -108,13 +116,14 @@ function App() {
                   settings.showNextNDaysTask
                     ? getScheduledTaskQuery(
                         dayjs().add(settings.numberOfNextNDays, 'd'),
+                        customMarkers,
                       )
-                    : getScheduledTaskQuery()
+                    : getScheduledTaskQuery(dayjs(), customMarkers)
                 }
               />
               <TaskSection
                 title="Anytime"
-                query={getAnytimeTaskQuery()}
+                query={getAnytimeTaskQuery(customMarkers)}
                 groupBy={GroupBy.Page}
               />
             </div>

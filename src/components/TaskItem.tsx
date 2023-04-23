@@ -6,7 +6,7 @@ import { ArrowDownCircle, BrightnessUp } from 'tabler-icons-react';
 import { TaskEntityObject } from '../models/TaskEntity';
 import 'rc-checkbox/assets/index.css';
 import { useRecoilValue } from 'recoil';
-import { userConfigsState } from '../state/user-configs';
+import { taskMarkersState, userConfigsState } from '../state/user-configs';
 import { themeStyleState } from '../state/theme';
 import {
   isTodayTask,
@@ -27,6 +27,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   const { task, onChange } = props;
   const themeStyle = useRecoilValue(themeStyleState);
   const { preferredDateFormat, preferredTodo } = useRecoilValue(userConfigsState);
+  const taskMarkers = useRecoilValue(taskMarkersState);
   const settings = useRecoilValue(settingsState);
   const [checked, setChecked] = React.useState(task.completed);
 
@@ -54,7 +55,7 @@ const TaskItem: React.FC<ITaskItemProps> = (props) => {
   };
 
   const toggleMarker = () => {
-    toggleTaskMarker(task, { marker: preferredTodo });
+    toggleTaskMarker(task, { markerGroup: taskMarkers });
     onChange();
   };
 

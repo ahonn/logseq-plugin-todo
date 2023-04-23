@@ -1,6 +1,8 @@
 import { AppUserConfigs } from '@logseq/libs/dist/LSPlugin';
-import { atom, AtomEffect } from 'recoil';
+import { atom, AtomEffect, selector } from 'recoil';
 import { logseq as plugin } from '../../package.json';
+import { TaskMarker } from '../models/TaskEntity';
+import { settingsState } from './settings';
 
 export const USER_CONFIGS_KEY = `${plugin.id}#userConfigs`;
 
@@ -42,4 +44,18 @@ export const userConfigsState = atom<AppUserConfigs>({
   key: 'userConfigs',
   default: DEFAULT_USER_CONFIGS as AppUserConfigs,
   effects: [localStorageEffect, themeModeChangeEffect],
+});
+
+export const taskMarkersState = selector<(TaskMarker | string)[]>({
+  key: 'taskMarkers',
+  get: ({ get }) => {
+    const { preferredWorkflow } = get(userConfigsState);
+    const settings = get(settingsState);
+    const customMarkers =
+      settings.customMarkers === '' ? [] : settings.customMarkers.split(',');
+    if (preferredWorkflow === 'now') {
+      return [TaskMarker.LATER, TaskMarker.NOW, ...customMarkers];
+    }
+    return [TaskMarker.TODO, TaskMarker.DOING, ...customMarkers];
+  },
 });
