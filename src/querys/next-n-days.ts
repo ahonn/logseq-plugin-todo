@@ -1,18 +1,14 @@
 import dayjs from 'dayjs';
 
-export default function getNextNDaysTaskQuery(
-  days: number,
-  customMarkers: string[] = [],
-) {
+export default function getNextNDaysTaskQuery(days: number) {
   const start = dayjs().format('YYYYMMDD');
   const next = dayjs().add(days, 'd').format('YYYYMMDD');
-  const markers = customMarkers.map((m) => '"' + m + '"').join(' ');
 
   const query = `
     [:find (pull ?b [*])
      :where
      [?b :block/marker ?marker]
-     [(contains? #{"NOW" "LATER" "TODO" "DOING" ${markers}} ?marker)]
+     [(contains? #{"NOW" "LATER" "TODO" "DOING"} ?marker)]
      [?b :block/page ?p]
      (or
        [?b :block/scheduled ?d]

@@ -104,10 +104,7 @@ function App() {
               {settings.showNextNDaysTask && (
                 <TaskSection
                   title={`Next ${settings.numberOfNextNDays} Days`}
-                  query={getNextNDaysTaskQuery(
-                    settings.numberOfNextNDays,
-                    customMarkers,
-                  )}
+                  query={getNextNDaysTaskQuery(settings.numberOfNextNDays)}
                 />
               )}
               <TaskSection
@@ -116,9 +113,8 @@ function App() {
                   settings.showNextNDaysTask
                     ? getScheduledTaskQuery(
                         dayjs().add(settings.numberOfNextNDays, 'd'),
-                        customMarkers,
                       )
-                    : getScheduledTaskQuery(dayjs(), customMarkers)
+                    : getScheduledTaskQuery()
                 }
               />
               <TaskSection
