@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.17.0...v1.18.0) (2023-04-23)
+
+
+### Features
+
+* add custom markers setting support and adjust query logic ([d1714e1](https://github.com/ahonn/logseq-plugin-todo/commit/d1714e1f6da1e76809c1a9e6c3a2b50751e661a4))
+
 # [1.17.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.16.5...v1.17.0) (2023-03-28)
 
 
