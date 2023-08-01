@@ -4,7 +4,7 @@ A simple to-do list plugin for logseq
 
 > This plugin relies solely on the Logseq Plugin API to access local data, and does not store it externally.
 
-> If my plugin has solved your problem and you would like to show your appreciation, you can choose to support me by [buy me a coffee](https://www.buymeacoffee.com/yuexunjiang).
+<a href="https://www.buymeacoffee.com/yuexunjiang"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=yuexunjiang&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 ### Features
 - Quickly add new to-do items to today's journal page.
