@@ -102,7 +102,7 @@ class TaskEntity {
   }
 
   public setContent(value: string) {
-   this.cotnent = value;
+   this.content = value;
   }
   
   public toObject(): TaskEntityObject {
