@@ -45,17 +45,19 @@ export interface TaskEntityObject {
 class TaskEntity {
   private block: BlockEntity;
   private page: PageEntity;
+  private content: string;
 
   constructor(block: BlockEntity, page: PageEntity) {
     this.block = block;
     this.page = page;
+    this.content = this.rawContent;
   }
 
   public get uuid(): string {
     return getBlockUUID(this.block);
   }
 
-  public get content(): string {
+  public get trimContent(): string {
     let content = this.rawContent;
     content = content.replace(this.block.marker, '');
     content = content.replace(`[#${this.block.priority}]`, '');
@@ -96,6 +98,14 @@ class TaskEntity {
     return this.page.properties?.[key];
   }
 
+  public getContent() {
+    return this.trimContent(this.content);
+  }
+
+  public setContent(value: string) {
+   this.cotnent = value;
+  }
+  
   public toObject(): TaskEntityObject {
     return {
       uuid: this.uuid,
