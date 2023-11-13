@@ -57,7 +57,7 @@ class TaskEntity {
     return getBlockUUID(this.block);
   }
 
-  public get trimContent(conten: string): string {
+  public get trimContent(content: string): string {
     content = content.replace(this.block.marker, '');
     content = content.replace(`[#${this.block.priority}]`, '');
     content = content.replace(/SCHEDULED: <[^>]+>/, '');
