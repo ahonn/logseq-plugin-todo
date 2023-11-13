@@ -57,8 +57,7 @@ class TaskEntity {
     return getBlockUUID(this.block);
   }
 
-  public get trimContent(): string {
-    let content = this.rawContent;
+  public get trimContent(conten: string): string {
     content = content.replace(this.block.marker, '');
     content = content.replace(`[#${this.block.priority}]`, '');
     content = content.replace(/SCHEDULED: <[^>]+>/, '');
