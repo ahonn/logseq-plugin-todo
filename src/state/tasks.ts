@@ -21,7 +21,18 @@ async function getTaskEntitiesByQuery(query: string) {
       const page = await window.logseq.Editor.getPage(
         (block?.page as PageEntity).name,
       );
-      return new TaskEntity(block!, page!);
+      let task = new TaskEntity(block!, page!);
+      try {
+        task.setContent(task.getContent().replace('((', '').replace('))',''));
+        const in_block = await window.logseq.Editor.getBlock(task.getContent(), {
+          includeChildren: false,
+        });
+        if (in_block != null) {
+          task.setContent(task.trimContent(in_block.content));
+        }
+      } catch {
+      }
+      return task;
     }),
   );
 
