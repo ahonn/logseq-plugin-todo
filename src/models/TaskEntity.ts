@@ -45,10 +45,12 @@ export interface TaskEntityObject {
 class TaskEntity {
   private block: BlockEntity;
   private page: PageEntity;
+  private _content: string;
 
   constructor(block: BlockEntity, page: PageEntity) {
     this.block = block;
     this.page = page;
+    this._content = this.trimContent(block.content);
   }
 
   public get uuid(): string {
@@ -56,7 +58,15 @@ class TaskEntity {
   }
 
   public get content(): string {
-    let content = this.rawContent;
+    return this._content;
+  }
+
+  public set content(value: string) {
+    this._content = this.trimContent(value);
+  }
+
+  public trimContent(rawContent: string): string {
+    let content = rawContent;
     content = content.replace(this.block.marker, '');
     content = content.replace(`[#${this.block.priority}]`, '');
     content = content.replace(/SCHEDULED: <[^>]+>/, '');
@@ -99,7 +109,7 @@ class TaskEntity {
   public toObject(): TaskEntityObject {
     return {
       uuid: this.uuid,
-      content: this.content,
+      content: this._content,
       rawContent: this.rawContent,
       marker: this.marker,
       priority: this.priority,
