@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.19.0...v1.20.0) (2023-11-24)
+
+
+### Features
+
+* show ref block task content ([ec6659c](https://github.com/ahonn/logseq-plugin-todo/commit/ec6659c057744e0e5226e4431ff7d3204f0bbf39))
+
 # [1.19.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.18.0...v1.19.0) (2023-04-23)
 
 
