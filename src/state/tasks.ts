@@ -1,7 +1,10 @@
 import { BlockEntity, PageEntity } from '@logseq/libs/dist/LSPlugin';
 import { selectorFamily } from 'recoil';
-import TaskEntity, { TaskEntityObject, TASK_PRIORITY_WEIGHT } from '../models/TaskEntity';
-import { getBlockUUID } from '../utils';
+import TaskEntity, {
+  TaskEntityObject,
+  TASK_PRIORITY_WEIGHT,
+} from '../models/TaskEntity';
+import { getBlockUUID, isValidUUID } from '../utils';
 import { markerState, priorityState } from './filter';
 
 async function getTaskEntitiesByQuery(query: string) {
@@ -21,7 +24,23 @@ async function getTaskEntitiesByQuery(query: string) {
       const page = await window.logseq.Editor.getPage(
         (block?.page as PageEntity).name,
       );
-      return new TaskEntity(block!, page!);
+      const taskEntity = new TaskEntity(block!, page!);
+      if (
+        taskEntity.content.startsWith('((') &&
+        taskEntity.content.endsWith('))')
+      ) {
+        const uuid = taskEntity.content.slice(2, -2);
+        if (isValidUUID(uuid)) {
+          const block = await window.logseq.Editor.getBlock(uuid, {
+            includeChildren: true,
+          });
+          if (block) {
+            taskEntity.content = block.content;
+          }
+        }
+      }
+      console.log(taskEntity.toObject());
+      return taskEntity;
     }),
   );
 
@@ -36,7 +55,8 @@ async function getTaskEntitiesByQuery(query: string) {
         if (a.scheduled !== undefined || b.scheduled !== undefined) {
           if (a.scheduled === b.scheduled) {
             return (
-              TASK_PRIORITY_WEIGHT[b.priority] - TASK_PRIORITY_WEIGHT[a.priority]
+              TASK_PRIORITY_WEIGHT[b.priority] -
+              TASK_PRIORITY_WEIGHT[a.priority]
             );
           }
           return (b.scheduled ?? 0) - (a.scheduled ?? 0);
@@ -45,13 +65,14 @@ async function getTaskEntitiesByQuery(query: string) {
         if (a.page.updatedAt !== undefined || b.page.updatedAt !== undefined) {
           if (a.page.updatedAt === b.page.updatedAt) {
             return (
-              TASK_PRIORITY_WEIGHT[b.priority] - TASK_PRIORITY_WEIGHT[a.priority]
+              TASK_PRIORITY_WEIGHT[b.priority] -
+              TASK_PRIORITY_WEIGHT[a.priority]
             );
           }
           return (b.page.updatedAt ?? 0) - (a.page.updatedAt ?? 0);
         }
 
-        return 0
+        return 0;
       })
   );
 }
@@ -66,21 +87,23 @@ export const tasksState = selectorFamily({
 
 export const filterdTasksState = selectorFamily({
   key: 'filterd-tasks',
-  get: (query: string) => ({ get }) => {
-    const tasks = get(tasksState(query));
-    const marker = get(markerState);
-    const priority = get(priorityState);
+  get:
+    (query: string) =>
+    ({ get }) => {
+      const tasks = get(tasksState(query));
+      const marker = get(markerState);
+      const priority = get(priorityState);
 
-    return tasks.filter((task: TaskEntityObject) => {
-      if (marker.value && task.marker !== marker.value) {
-        return false;
-      }
+      return tasks.filter((task: TaskEntityObject) => {
+        if (marker.value && task.marker !== marker.value) {
+          return false;
+        }
 
-      if (priority.value && task.priority !== priority.value) {
-        return false;
-      }
+        if (priority.value && task.priority !== priority.value) {
+          return false;
+        }
 
-      return true;
-    });
-  },
-})
+        return true;
+      });
+    },
+});
