@@ -6,17 +6,49 @@ import { logseq as plugin } from '../package.json';
 import App from './App';
 import settings from './settings';
 
-async function openTaskPanel(e: any) {
-  const { rect } = e;
-  const taskPanel = document.querySelector("#" + plugin.id)!;
+type Rect = {
+  top: number;
+  right: number;
+  left: number;
+  bottom: number;
+};
+
+let cachedRect: Rect | undefined = undefined;
+
+async function openTaskPanel(e?: { rect: Rect }) {
+  const taskPanel = document.querySelector('#' + plugin.id)!;
+  let rect = e?.rect ?? cachedRect;
+
+  if (!rect) {
+    try {
+      const elRect = await logseq.App.queryElementRect('#' + plugin.id);
+      if (elRect) {
+        rect = elRect;
+        cachedRect = elRect;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  if (rect) {
+    cachedRect = rect;
+  }
+
+  const position = rect
+    ? {
+      top: `${rect.top + 40}px`,
+      left: rect.left + 'px',
+    }
+    : {
+      top: '40px',
+      right: '200px',
+    };
 
   // @ts-ignore
   Object.assign(taskPanel.style, {
     position: 'fixed',
-    // @ts-ignore
-    top: `${rect.top + 40}px`,
-    // @ts-ignore
-    left: rect.left + 'px',
+    ...position,
   });
 
   logseq.showMainUI();
@@ -80,8 +112,4 @@ function main() {
   );
 }
 
-logseq
-  .useSettingsSchema(settings)
-  .ready(createModel())
-  .then(main)
-  .catch(console.error);
+logseq.useSettingsSchema(settings).ready(createModel()).then(main).catch(console.error);
