@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.20.0...v1.20.1) (2023-12-24)
+
+
+### Bug Fixes
+
+* fix queryElementRect issue and add fallback position, [#64](https://github.com/ahonn/logseq-plugin-todo/issues/64) ([bb3a551](https://github.com/ahonn/logseq-plugin-todo/commit/bb3a55100cb6ad31923383fd30e3f57b44e5efbc))
+
 # [1.20.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.19.0...v1.20.0) (2023-11-24)
 
 
