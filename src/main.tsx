@@ -6,9 +6,9 @@ import { logseq as plugin } from '../package.json';
 import App from './App';
 import settings from './settings';
 
-async function openTaskPanel() {
-  const rect = await logseq.App.queryElementRect('#' + plugin.id);
-  const taskPanel = document.querySelector('#' + plugin.id)!;
+async function openTaskPanel(e: any) {
+  const { rect } = e;
+  const taskPanel = document.querySelector("#" + plugin.id)!;
 
   // @ts-ignore
   Object.assign(taskPanel.style, {
