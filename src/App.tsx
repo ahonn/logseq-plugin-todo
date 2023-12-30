@@ -20,7 +20,7 @@ import getNextNDaysTaskQuery from './querys/next-n-days';
 import { fixPreferredDateFormat } from './utils';
 import './style.css';
 import { markerState, priorityState } from './state/filter';
-import { TaskPriority } from './models/TaskEntity';
+import { TaskMarker, TaskPriority } from './models/TaskEntity'
 import { useRefreshAll } from './hooks/useRefreshAll';
 import { useHotKey } from './hooks/useHotKey';
 
@@ -67,11 +67,11 @@ function App() {
   };
 
   const createNewTask = async (content: string) => {
-    const { preferredDateFormat, preferredTodo } = userConfigs!;
+    const { preferredDateFormat, preferredTodo} = userConfigs!;
     const { whereToPlaceNewTask } = settings;
     const date = dayjs().format(fixPreferredDateFormat(preferredDateFormat!));
     await api.createNewTask(date, content, {
-      marker: marker.value || preferredTodo,
+      marker: marker.value || preferredTodo as TaskMarker,
       priority: priority.value as TaskPriority,
       whereToPlaceNewTask,
     });
