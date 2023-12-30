@@ -67,7 +67,7 @@ class TaskEntity {
 
   public trimContent(rawContent: string): string {
     let content = rawContent;
-    content = content.replace(this.block.marker, '');
+    content = content.replace(this.block.marker as string, '');
     content = content.replace(`[#${this.block.priority}]`, '');
     content = content.replace(/SCHEDULED: <[^>]+>/, '');
     content = content.replace(/DEADLINE: <[^>]+>/, '');
@@ -82,15 +82,15 @@ class TaskEntity {
   }
 
   public get marker(): TaskMarker {
-    return this.block.marker;
+    return this.block.marker as TaskMarker;
   }
 
   public get priority(): TaskPriority {
-    return this.block.priority ?? TaskPriority.NONE;
+    return (this.block.priority ?? TaskPriority.NONE) as TaskPriority;
   }
 
   public get scheduled(): number | undefined {
-    return this.block.scheduled ?? this.block.deadline ?? this.page.journalDay;
+    return (this.block.scheduled ?? this.block.deadline ?? this.page.journalDay) as number;
   }
 
   public get repeated(): boolean {

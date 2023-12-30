@@ -8,7 +8,7 @@ export const MARKER_GROUPS: Record<string, TaskMarker[]> = {
 };
 
 export interface ITaskOptions {
-  marker?: TaskMarker;
+  marker?: TaskMarker | string;
   markerGroup?: (TaskMarker | string)[];
   priority?: TaskPriority;
   whereToPlaceNewTask?: string;

@@ -21,7 +21,7 @@ async function openTaskPanel(e?: { rect: Rect }) {
 
   if (!rect) {
     try {
-      const elRect = await logseq.App.queryElementRect('#' + plugin.id);
+      const elRect = await logseq.UI.queryElementRect('#' + plugin.id);
       if (elRect) {
         rect = elRect;
         cachedRect = elRect;
@@ -86,7 +86,7 @@ function main() {
   });
 
   if (logseq.settings?.hotkey) {
-    registerHotKey(logseq.settings?.hotkey);
+    registerHotKey(logseq.settings?.hotkey as string);
   }
   logseq.onSettingsChanged((settings) => {
     registerHotKey(settings?.hotkey);
