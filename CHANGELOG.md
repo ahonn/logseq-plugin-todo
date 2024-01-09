@@ -1,3 +1,10 @@
+## [1.20.2](https://github.com/ahonn/logseq-plugin-todo/compare/v1.20.1...v1.20.2) (2024-01-09)
+
+
+### Bug Fixes
+
+* types and apis ([797f99b](https://github.com/ahonn/logseq-plugin-todo/commit/797f99b7acf671b5369e3de3aeb83f0197463cca))
+
 ## [1.20.1](https://github.com/ahonn/logseq-plugin-todo/compare/v1.20.0...v1.20.1) (2023-12-24)
 
 
