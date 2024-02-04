@@ -1,3 +1,16 @@
+# [1.21.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.20.2...v1.21.0) (2024-02-04)
+
+
+### Bug Fixes
+
+* fixed journals template properties missing, [#63](https://github.com/ahonn/logseq-plugin-todo/issues/63) ([450cdf9](https://github.com/ahonn/logseq-plugin-todo/commit/450cdf9616d37a4be375f2eee275526bb9d1eb14))
+
+
+### Features
+
+* refactor task creation process, force focus after create new task, [#68](https://github.com/ahonn/logseq-plugin-todo/issues/68) ([c7dc80e](https://github.com/ahonn/logseq-plugin-todo/commit/c7dc80e9f0b23c027a7dcecdd1fd5fdd60d6fcfd))
+* support task scheduled time sorting ([9570e68](https://github.com/ahonn/logseq-plugin-todo/commit/9570e682cd4857131a276be118184f9f69cc12a3))
+
 ## [1.20.2](https://github.com/ahonn/logseq-plugin-todo/compare/v1.20.1...v1.20.2) (2024-01-09)
 
 
