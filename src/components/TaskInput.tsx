@@ -1,15 +1,16 @@
 import React, { useImperativeHandle, useRef } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { CirclePlus } from 'tabler-icons-react';
 import { inputState } from '../state/input';
 import { themeStyleState } from '../state/theme';
+import { visibleState } from '../state/visible';
 
 export interface ITaskInputRef {
   focus: () => void;
 }
 
 export interface ITaskInputProps {
-  onCreateTask(content: string): void;
+  onCreateTask(content: string): Promise<void>;
 }
 
 const TaskInput: React.ForwardRefRenderFunction<
@@ -17,6 +18,7 @@ const TaskInput: React.ForwardRefRenderFunction<
   ITaskInputProps
 > = (props, ref) => {
   const [input, setInput] = useRecoilState(inputState);
+  const setVisible = useSetRecoilState(visibleState);
   const inputRef = useRef<HTMLInputElement>(null);
   const themeStyle = useRecoilValue(themeStyleState);
 
@@ -46,11 +48,17 @@ const TaskInput: React.ForwardRefRenderFunction<
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type to search, enter to create"
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
+          onKeyPress={async (e) => {
+            if (e.key === 'Enter' && input.trim() !== '') {
               e.preventDefault();
-              props.onCreateTask(input);
+              await props.onCreateTask(input);
               setInput('');
+              // HACK: Force focus to solve the problem that the focus cannot be
+              // focused after creating the task on current page
+              setVisible(false);
+              setTimeout(() => {
+                setVisible(true);
+              });
             }
           }}
         />
