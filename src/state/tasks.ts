@@ -5,7 +5,7 @@ import TaskEntity, {
   TASK_PRIORITY_WEIGHT,
 } from '../models/TaskEntity';
 import { getBlockUUID, isValidUUID } from '../utils';
-import { markerState, priorityState } from './filter';
+import { markerState, priorityState, sortState, SortType } from './filter';
 
 async function getTaskEntitiesByQuery(query: string) {
   const collections = await window.logseq.DB.datascriptQuery<BlockEntity[][]>(
@@ -101,6 +101,7 @@ export const filterdTasksState = selectorFamily({
       const tasks = get(tasksState(query));
       const marker = get(markerState);
       const priority = get(priorityState);
+      const sort = get(sortState);
 
       return tasks.filter((task: TaskEntityObject) => {
         if (marker.value && task.marker !== marker.value) {
@@ -112,6 +113,14 @@ export const filterdTasksState = selectorFamily({
         }
 
         return true;
+      }).sort((a, b) => {
+        if (a.scheduled === undefined || b.scheduled === undefined) {
+          return 0;
+        }
+        if (sort.value === SortType.Asc) {
+          return a.scheduled - b.scheduled;
+        }
+        return b.scheduled - a.scheduled;
       });
     },
 });

@@ -3,21 +3,21 @@ import Select, { Theme } from 'react-select';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { CircleOff } from 'tabler-icons-react';
 import { taskMarkersState } from '../state/user-configs';
-import { TaskPriority } from '../models/TaskEntity';
-import { DEFAULT_OPTION, markerState, priorityState } from '../state/filter';
+import {
+  DEFAULT_OPTION,
+  markerState,
+  priorityState,
+  PRIORITY_OPTIONS,
+  sortState,
+  SortType,
+} from '../state/filter';
 import { themeStyleState } from '../state/theme';
 import { settingsState } from '../state/settings';
-
-const PRIORITY_OPTIONS = [
-  TaskPriority.HIGH,
-  TaskPriority.MEDIUM,
-  TaskPriority.LOW,
-  TaskPriority.NONE,
-];
 
 const TaskFilter: React.FC = () => {
   const [marker, setMarker] = useRecoilState(markerState);
   const [priority, setPriority] = useRecoilState(priorityState);
+  const [sort, setSort] = useRecoilState(sortState);
   const taskMarkers = useRecoilValue(taskMarkersState);
   const themeStyle = useRecoilValue(themeStyleState);
   const settings = useRecoilValue(settingsState);
@@ -43,8 +43,7 @@ const TaskFilter: React.FC = () => {
   const selectClassNames = React.useMemo(
     () => ({
       container: () => 'text-xs',
-      control: () =>
-        '!h-6 !min-h-6 w-16 !border-none !shadow-none !bg-transparent ',
+      control: () => '!h-6 !min-h-6 w-12 !border-none !shadow-none !bg-transparent ',
       valueContainer: () => '!py-0 !px-1 cursor-pointer bg-transparent',
       singleValue: () => `!text-gray-500 !dark:text-gray-300`,
       indicatorsContainer: () => '!hidden',
@@ -68,9 +67,7 @@ const TaskFilter: React.FC = () => {
   );
 
   React.useEffect(() => {
-    const marker = markerOptions.find(
-      (marker) => marker.value === settings.defaultMarker,
-    );
+    const marker = markerOptions.find((marker) => marker.value === settings.defaultMarker);
     if (marker) {
       setMarker(marker);
     }
@@ -90,12 +87,12 @@ const TaskFilter: React.FC = () => {
 
   return (
     <div
-      className="flex flex-row text-gray-500 dark:text-gray-300 px-2 rounded-b-md items-center justify-between"
+      className="flex flex-row gap-4 text-gray-500 dark:text-gray-300 px-2 rounded-b-md items-center justify-between"
       style={{
         backgroundColor: themeStyle.secondaryBackgroundColor,
       }}
     >
-      <div className="flex flex-row pl-0.5">
+      <div className="flex flex-row">
         <div className="flex flex-row items-center">
           <span className="text-xs">Marker:</span>
           <Select
@@ -116,6 +113,26 @@ const TaskFilter: React.FC = () => {
             options={priorityOptions}
             value={priority}
             onChange={(option) => setPriority(option!)}
+          />
+        </div>
+        <div className="flex flex-row items-center">
+          <span className="text-xs">Sort:</span>
+          <Select
+            classNames={selectClassNames}
+            theme={selectTheme}
+            isSearchable={false}
+            options={[
+              {
+                label: 'Desc',
+                value: SortType.Desc,
+              },
+              {
+                label: 'ASC',
+                value: SortType.Asc,
+              },
+            ]}
+            value={sort}
+            onChange={(option) => setSort(option!)}
           />
         </div>
       </div>
