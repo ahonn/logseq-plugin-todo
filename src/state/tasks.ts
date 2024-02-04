@@ -24,6 +24,15 @@ async function getTaskEntitiesByQuery(query: string) {
       const page = await window.logseq.Editor.getPage(
         (block?.page as PageEntity).name,
       );
+      if (page === undefined) {
+        return null;
+      }
+
+      if (page?.journalDay) {
+        const blocksTree = await window.logseq.Editor.getPageBlocksTree(page!.uuid);
+        page.properties = Object.assign(page.properties ?? {}, blocksTree[0].properties)
+      }
+
       const taskEntity = new TaskEntity(block!, page!);
       if (
         taskEntity.content.startsWith('((') &&
@@ -39,7 +48,6 @@ async function getTaskEntitiesByQuery(query: string) {
           }
         }
       }
-      console.log(taskEntity.toObject());
       return taskEntity;
     }),
   );
