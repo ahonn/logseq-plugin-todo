@@ -20,11 +20,7 @@ export function isTodayTask(task: TaskEntityObject) {
   return dayjs(new Date()).format('YYYYMMDD') === scheduled.toString();
 }
 
-export async function createNewTask(
-  date: string,
-  content: string,
-  opts: ITaskOptions,
-) {
+export async function createNewTask(date: string, content: string, opts: ITaskOptions) {
   const { marker, priority, whereToPlaceNewTask } = opts;
   const rawContent = `${marker} ${priority ? `[#${priority}]` : ''} ${content}`;
   let page = await window.logseq.Editor.getPage(date);
@@ -37,29 +33,23 @@ export async function createNewTask(
   const blocksTree = await window.logseq.Editor.getPageBlocksTree(date);
 
   if (whereToPlaceNewTask) {
-    let parentBlock = blocksTree.find((block: BlockEntity) => block.content === whereToPlaceNewTask);
+    let parentBlock = blocksTree.find(
+      (block: BlockEntity) => block.content === whereToPlaceNewTask,
+    );
     if (parentBlock === undefined) {
       parentBlock = (await window.logseq.Editor.appendBlockInPage(
         page!.name,
         whereToPlaceNewTask,
       )) as BlockEntity;
     }
-    await window.logseq.Editor.insertBlock(
-      parentBlock!.uuid,
-      rawContent,
-    );
+    await window.logseq.Editor.insertBlock(parentBlock!.uuid, rawContent);
   } else {
-    await window.logseq.Editor.appendBlockInPage(
-      page!.name,
-      rawContent,
-    );
+    await window.logseq.Editor.appendBlockInPage(page!.name, rawContent);
   }
 
   if (blocksTree.length === 1 && blocksTree[0].content === '') {
     await window.logseq.Editor.removeBlock(blocksTree[0].uuid);
   }
-
-  window.logseq.Editor.exitEditingMode(true);
 }
 
 export async function toggleTaskStatus(
@@ -68,10 +58,7 @@ export async function toggleTaskStatus(
 ) {
   const { uuid, completed, marker } = task;
   const nextMarker = completed ? options.marker : TaskMarker.DONE;
-  await window.logseq.Editor.updateBlock(
-    uuid,
-    task.rawContent.replace(marker, nextMarker),
-  );
+  await window.logseq.Editor.updateBlock(uuid, task.rawContent.replace(marker, nextMarker));
 }
 
 interface IOpenTaskOptions {
@@ -86,10 +73,7 @@ export function openTask(task: TaskEntityObject, opts?: IOpenTaskOptions) {
   return window.logseq.Editor.scrollToBlockInPage(task.page.name, uuid);
 }
 
-export function openTaskPage(
-  page: TaskEntityObject['page'],
-  opts?: IOpenTaskOptions,
-) {
+export function openTaskPage(page: TaskEntityObject['page'], opts?: IOpenTaskOptions) {
   if (opts?.openInRightSidebar) {
     return window.logseq.Editor.openInRightSidebar(page.uuid);
   }
@@ -109,10 +93,7 @@ export async function toggleTaskMarker(
   await window.logseq.Editor.updateBlock(uuid, newRawContent);
 }
 
-export async function setTaskScheduled(
-  task: TaskEntityObject,
-  date: Date | null,
-) {
+export async function setTaskScheduled(task: TaskEntityObject, date: Date | null) {
   const { uuid, rawContent } = task;
   let newRawContent = task.rawContent;
   if (date === null) {
@@ -121,9 +102,7 @@ export async function setTaskScheduled(
     return;
   }
 
-  const scheduledString = `SCHEDULED: <${dayjs(date).format(
-    'YYYY-MM-DD ddd',
-  )}>`;
+  const scheduledString = `SCHEDULED: <${dayjs(date).format('YYYY-MM-DD ddd')}>`;
   if (rawContent.includes('SCHEDULED')) {
     newRawContent = rawContent.replace(/SCHEDULED: <[^>]+>/, scheduledString);
   } else {
