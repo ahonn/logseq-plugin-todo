@@ -78,7 +78,10 @@ const TaskSection: React.FC<ITaskSectionProps> = (props) => {
   }, [props.groupBy, tasks]);
 
   const openTaskGroups = React.useCallback(() => {
-    tasks.forEach((task) => {
+    const tasksCopy = [...tasks];
+    tasksCopy.reverse();
+
+    tasksCopy.forEach((task) => {
       openTask(task, {
         openInRightSidebar: true,
       });
