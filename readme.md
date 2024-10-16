@@ -7,7 +7,6 @@ A simple to-do list plugin for logseq
 <a href="https://www.buymeacoffee.com/yuexunjiang"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=yuexunjiang&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 ### Features
-- To-do items can be easily accessed from the menu bar through a dedicated icon.
 - Quickly add new to-do items to today's journal page.
 - View all of today's to-do items (include scheduled & today's journal page).
 - View all to-do items without a schedule.
@@ -26,6 +25,11 @@ A simple to-do list plugin for logseq
 - turn on Logseq developer mode
 - [download the prebuilt package here](https://github.com/ahonn/logseq-plugin-todo/releases)
 - unzip the zip file and load from Logseq plugins page
+
+## How to use
+
+- Pin the plugin to the top bar
+- Now To-do items can be easily created or edited from the menu bar through the dedicated icon.
 
 ## Page Properties
 
