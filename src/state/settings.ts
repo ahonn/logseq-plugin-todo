@@ -13,6 +13,7 @@ interface IPluginSettings {
   lightSecondaryBackgroundColor: string;
   darkPrimaryBackgroundColor: string;
   darkSecondaryBackgroundColor: string;
+  useDefaultColors: boolean;
   sectionTitleColor: string;
   openInRightSidebar: boolean;
   whereToPlaceNewTask: string;

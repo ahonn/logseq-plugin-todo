@@ -61,6 +61,13 @@ const settings: SettingSchemaDesc[] = [
     default: false,
   },
   {
+    key: 'useDefaultColors',
+    type: 'boolean',
+    title: 'Use Default Colors',
+    description: 'Use the colors from your current Logseq theme',
+    default: false,
+  },
+  {
     key: 'sectionTitleColor',
     type: 'string',
     title: 'Section Title Color',
