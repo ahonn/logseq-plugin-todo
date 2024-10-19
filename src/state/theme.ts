@@ -11,9 +11,9 @@ export const themeModeState = selector({
 });
 
 const getStyleVariable = (variableName: string) => {
-  const rootElement = document.querySelector(":root");
-  if (rootElement) {
-    return getComputedStyle(rootElement).getPropertyValue(variableName);
+  const bodyElement = window.parent.document.body;
+  if (bodyElement) {
+    return getComputedStyle(bodyElement).getPropertyValue(variableName);
   } else {
     return null;
   }
