@@ -26,6 +26,11 @@ A simple to-do list plugin for logseq
 - [download the prebuilt package here](https://github.com/ahonn/logseq-plugin-todo/releases)
 - unzip the zip file and load from Logseq plugins page
 
+## How to use
+
+- Pin the plugin to the top bar
+- Now To-do items can be easily created or edited from the menu bar through the dedicated icon.
+
 ## Page Properties
 
 - `todo-ignore`: Whether to hide the todo task in the current page. see [How to use todo-ignore #8](https://github.com/ahonn/logseq-plugin-todo/issues/8)
