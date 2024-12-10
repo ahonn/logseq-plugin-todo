@@ -10,13 +10,39 @@ export const themeModeState = selector({
   }
 });
 
+const getStyleVariable = (variableName: string) => {
+  const bodyElement = window.parent.document.body;
+  if (bodyElement) {
+    return getComputedStyle(bodyElement).getPropertyValue(variableName);
+  } else {
+    return null;
+  }
+}
+
+export const themeColorsState = selector({
+  key: 'themeColors',
+  get: () => {
+    const themeColors = {
+      primaryBackgroundColor: getStyleVariable('--ls-primary-background-color'),
+      secondaryBackgroundColor: getStyleVariable('--ls-secondary-background-color'),
+      sectionTitleColor: getStyleVariable('--ls-link-text-color'),
+    }
+
+    if (Object.values(themeColors).some((value) => value === null)) return null
+    return themeColors
+  }
+});
+
 export const themeStyleState = selector({
   key: 'themeStyle',
   get: ({ get }) => {
     const settings = get(settingsState);
     const themeMode = get(themeModeState);
+    const themeColors = get(themeColorsState);
 
     const isLightMode = themeMode === 'light';
+
+    if (settings.useDefaultColors && themeColors) return themeColors;
 
     const primaryBackgroundColor = isLightMode
       ? settings.lightPrimaryBackgroundColor
