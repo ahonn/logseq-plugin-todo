@@ -23,9 +23,9 @@ export const themeColorsState = selector({
   key: 'themeColors',
   get: () => {
     const themeColors = {
-      primaryBackgroundColor: getStyleVariable('--ls-primary-background-color'),
-      secondaryBackgroundColor: getStyleVariable('--ls-secondary-background-color'),
-      sectionTitleColor: getStyleVariable('--ls-link-text-color'),
+      primaryBackgroundColor: getStyleVariable('--ls-primary-background-color')!,
+      secondaryBackgroundColor: getStyleVariable('--ls-secondary-background-color')!,
+      sectionTitleColor: getStyleVariable('--ls-link-text-color')!,
     }
 
     if (Object.values(themeColors).some((value) => value === null)) return null
