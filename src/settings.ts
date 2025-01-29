@@ -54,6 +54,13 @@ const settings: SettingSchemaDesc[] = [
     default: 14,
   },
   {
+    key: 'treatJournalEntriesAsScheduled',
+    type: 'boolean',
+    title: 'Treat journal entries as scheduled',
+    description: 'Treat entries an a journal page as scheduled on that day',
+    default: true,
+  },
+  {
     key: 'openInRightSidebar',
     type: 'boolean',
     title: 'Open Task in Right Sidebar',

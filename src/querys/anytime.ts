@@ -1,5 +1,12 @@
-export default function getAnytimeTaskQuery(customMarkers: string[] = []) {
+export default function getAnytimeTaskQuery(
+  customMarkers: string[] = [],
+  treatJournalEntriesAsScheduled = true,
+) {
   const markers = customMarkers.map((m) => '"' + m + '"').join(' ');
+  const excludeJournalEntries = treatJournalEntriesAsScheduled ? `
+   (not [?p :block/journal? true])
+   (not [?p :block/journalDay])
+  ` : '';
   const cond =
     customMarkers.length > 0
       ? `
@@ -7,21 +14,20 @@ export default function getAnytimeTaskQuery(customMarkers: string[] = []) {
      (and
       [(contains? #{"NOW" "LATER" "TODO" "DOING"} ?marker)]
       [?b :block/page ?p]
-      (not [?p :block/journal? true])
-      (not [?p :block/journalDay])
+      ${excludeJournalEntries}
       (not [?b :block/scheduled])
       (not [?b :block/deadline]))
      (and
       [(contains? #{${markers}} ?marker)]
         [?b :block/page ?p]
+        ${excludeJournalEntries}
         (not [?b :block/scheduled])
         (not [?b :block/deadline])))
   `
       : `
     [(contains? #{"NOW" "LATER" "TODO" "DOING"} ?marker)]
     [?b :block/page ?p]
-    (not [?p :block/journal? true])
-    (not [?p :block/journalDay])
+    ${excludeJournalEntries}
     (not [?b :block/scheduled])
     (not [?b :block/deadline])
   `;

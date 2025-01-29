@@ -79,6 +79,7 @@ function App() {
   };
 
   const customMarkers = settings.customMarkers.split(',');
+  const treatJournalEntriesAsScheduled = settings.treatJournalEntriesAsScheduled;
 
   return (
     <main
@@ -99,7 +100,12 @@ function App() {
             <div>
               <TaskSection
                 title="Today"
-                query={getTodayTaskQuery(customMarkers)}
+                query={
+                  getTodayTaskQuery(
+                    customMarkers,
+                    treatJournalEntriesAsScheduled,
+                  )
+                }
               />
               {settings.showNextNDaysTask && (
                 <TaskSection
@@ -112,14 +118,20 @@ function App() {
                 query={
                   settings.showNextNDaysTask
                     ? getScheduledTaskQuery(
+                        treatJournalEntriesAsScheduled,
                         dayjs().add(settings.numberOfNextNDays, 'd'),
                       )
-                    : getScheduledTaskQuery()
+                    : getScheduledTaskQuery(treatJournalEntriesAsScheduled)
                 }
               />
               <TaskSection
                 title="Anytime"
-                query={getAnytimeTaskQuery(customMarkers)}
+                query={
+                  getAnytimeTaskQuery(
+                    customMarkers,
+                    treatJournalEntriesAsScheduled,
+                  )
+                }
                 groupBy={GroupBy.Page}
               />
             </div>
