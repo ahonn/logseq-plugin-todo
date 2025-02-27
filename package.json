@@ -1,6 +1,6 @@
 {
   "name": "logseq-plugin-todo",
-  "version": "1.21.0",
+  "version": "1.22.0",
   "main": "dist/index.html",
   "scripts": {
     "dev": "vite",

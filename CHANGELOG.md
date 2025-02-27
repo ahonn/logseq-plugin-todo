@@ -1,3 +1,15 @@
+# [1.22.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.21.0...v1.22.0) (2025-02-27)
+
+
+### Bug Fixes
+
+* fix type and add devbox ([62a9ee9](https://github.com/ahonn/logseq-plugin-todo/commit/62a9ee95fb073b8d52cc8a1b8de54e45afcae168))
+
+
+### Features
+
+* optionally do not treat journal entries as scheduled ([020bf6f](https://github.com/ahonn/logseq-plugin-todo/commit/020bf6f9e486c201aedc9cb5e9fad5cf0de0e87c))
+
 # [1.21.0](https://github.com/ahonn/logseq-plugin-todo/compare/v1.20.2...v1.21.0) (2024-02-04)
 
 
