@@ -1,10 +1,23 @@
 import dayjs from 'dayjs';
 
-export default function getTodayTaskQuery(customMarkers: string[] = []) {
+export default function getTodayTaskQuery(
+  customMarkers: string[] = [],
+  treatJournalEntriesAsScheduled = true,
+) {
   const today = dayjs().format('YYYYMMDD');
   const markers = customMarkers.map((m) => '"' + m + '"').join(' ');
 
-  const cond = customMarkers.length > 0 ? `
+  const journalEntryCond = treatJournalEntriesAsScheduled ? `
+   (and
+    [(contains? #{"NOW" "LATER" "TODO" "DOING"} ?marker)]
+    [?p :block/journal? true]
+    [?p :block/journal-day ?d]
+    (not [?b :block/scheduled])
+    (not [?b :block/deadline])
+    [(<= ?d ${today})])
+  ` : '';
+
+  const customMarkerCond = customMarkers.length > 0 ? `
    (and
     [(contains? #{${markers}} ?marker)]
     (or
@@ -21,18 +34,12 @@ export default function getTodayTaskQuery(customMarkers: string[] = []) {
      (or
        (and
         [(contains? #{"NOW" "LATER" "TODO" "DOING"} ?marker)]
-        [?p :block/journal? true]
-        [?p :block/journal-day ?d]
-        (not [?b :block/scheduled])
-        (not [?b :block/deadline])
-        [(<= ?d ${today})])
-       (and
-        [(contains? #{"NOW" "LATER" "TODO" "DOING"} ?marker)]
         (or
           [?b :block/scheduled ?d]
           [?b :block/deadline ?d])
         [(<= ?d ${today})])
-       ${cond})]
+       ${journalEntryCond}
+       ${customMarkerCond})]
   `;
 
   return query;

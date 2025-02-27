@@ -17,6 +17,7 @@ interface IPluginSettings {
   sectionTitleColor: string;
   openInRightSidebar: boolean;
   whereToPlaceNewTask: string;
+  treatJournalEntriesAsScheduled: boolean;
 }
 
 const settingsChangedEffect: AtomEffect<IPluginSettings> = ({ setSelf }) => {
