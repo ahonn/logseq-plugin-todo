@@ -30,6 +30,7 @@ A simple to-do list plugin for logseq
 
 - Pin the plugin to the top bar
 - Now To-do items can be easily created or edited from the menu bar through the dedicated icon.
+- To set task priority (options are `A`=HIGH, `B`=MEDIUM, `C`=LOW), add `[#A]` to your marker. For example, `TODO [#C] text`.
 
 ## Page Properties
 
